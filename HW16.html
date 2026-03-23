@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HW16</title>
+
     <style>
         body{
             margin:0;
@@ -23,7 +23,6 @@
             font-size:72px;
             font-weight:bold;
             color:black;
-            line-height:1.1;
             margin-bottom:34px;
             box-sizing:border-box;
         }
@@ -32,7 +31,7 @@
         .box1{
             background:#e7f6f6;
             border:12px double #de6d5e;
-            padding:18px 18px;
+            padding:18px;
         }
 
         /* 第二個 */
@@ -40,32 +39,38 @@
             background:#ecec2f;
             border:5px solid #7b97c8;
             border-radius:22px;
-            padding:18px 20px;
+            padding:18px;
         }
 
         /* 第三個 */
         .box3{
             position:relative;
             background:#5ea25d;
-            padding:20px 20px;
+            padding:20px;
             margin-bottom:0;
             overflow:hidden;
         }
 
-        /* 用四層圓點 */
+        /* 不重疊圓點邊框 */
         .box3::before{
             content:"";
             position:absolute;
             inset:0;
             pointer-events:none;
+
             background:
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px) top left / 36px 18px repeat-x,
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px) bottom left / 36px 18px repeat-x,
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px) top left / 18px 36px repeat-y,
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px) top right / 18px 36px repeat-y;
+                /* 上 */
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px) top / 30px 15px repeat-x,
+                /* 下 */
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px) bottom / 30px 15px repeat-x,
+                /* 左 */
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px) left / 15px 30px repeat-y,
+                /* 右 */
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px) right / 15px 30px repeat-y;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="box box1">Hello World</div>
