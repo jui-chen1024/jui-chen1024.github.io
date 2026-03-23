@@ -46,6 +46,7 @@
             padding:20px 22px;
             margin-bottom:0;
             color:black;
+            overflow:hidden;
         }
 
         .box3 span{
@@ -53,28 +54,34 @@
             z-index:2;
         }
 
+        /* 上邊點點：左右各留 16px，避免撞到側邊 */
         .box3::before{
             content:"";
             position:absolute;
             top:0;
-            left:0;
-            right:0;
+            left:16px;
+            right:16px;
             height:16px;
+            z-index:1;
             background:
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px)
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 32px 16px repeat-x;
+            pointer-events:none;
         }
 
+        /* 下邊點點：左右各留 16px，避免撞到側邊 */
         .box3::after{
             content:"";
             position:absolute;
             bottom:0;
-            left:0;
-            right:0;
+            left:16px;
+            right:16px;
             height:16px;
+            z-index:1;
             background:
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px)
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 32px 16px repeat-x;
+            pointer-events:none;
         }
 
         .dot-left,
@@ -90,14 +97,14 @@
         .dot-left{
             left:0;
             background:
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px)
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 16px 32px repeat-y;
         }
 
         .dot-right{
             right:0;
             background:
-                radial-gradient(circle, #6c716b 0 7px, transparent 8px)
+                radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 16px 32px repeat-y;
         }
     </style>
