@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HW18</title>
+    <title>HW17</title>
+
     <style>
         body{
             margin:0;
@@ -17,44 +17,45 @@
             background:white;
             padding:18px 22px 20px 22px;
             box-shadow:0 4px 14px rgba(0,0,0,0.25);
-            box-sizing:border-box;
         }
 
+        /* 第一行（重點🔥） */
         .heading1{
             font-size:64px;
             font-weight:700;
-            line-height:1;
-            margin:0 0 34px 0;
-            display:inline-block;
-            padding-bottom:2px;
-            border-bottom:5px solid black;
+            margin-bottom:34px;
+
+            text-decoration: overline;
+            text-decoration-thickness:5px;
+            text-underline-offset:8px;
+
             text-shadow:2px 2px 0 #d8b6c8;
         }
 
+        /* 第二行 */
         .heading2{
             font-size:56px;
             font-weight:700;
             font-style:italic;
-            line-height:1.05;
-            margin:0 0 34px 0;
             border:4px solid #a3a300;
-            padding:6px 10px 5px 10px;
+            padding:6px 10px;
+            margin-bottom:34px;
         }
 
+        /* 第三行 */
         .heading3{
             font-size:34px;
             font-weight:700;
             font-style:italic;
-            line-height:1;
-            margin:0;
             text-align:right;
-            text-decoration:underline;
+
+            text-decoration: underline;
             text-decoration-thickness:3px;
             text-underline-offset:3px;
-            padding-right:14px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="heading1">This is heading 1</div>
