@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HW18</title>
+    <title>HW17</title>
 
     <style>
         body{
@@ -19,7 +19,7 @@
             box-shadow:0 4px 14px rgba(0,0,0,0.25);
         }
 
-        /* 第一行 */
+        /* 第一行（上方線 + 粉色陰影） */
         .heading1{
             font-size:64px;
             font-weight:700;
@@ -31,24 +31,25 @@
             text-shadow:2px 2px 0 #d8b6c8;
         }
 
-        /* 第二行 */
+        /* 第二行（黑框 + 黃色外框）🔥 */
         .heading2{
             font-size:56px;
             font-weight:700;
             font-style:italic;
 
-            border:2px solid black;
-            box-shadow:4px 4px 0 #c9c300;
+            border:2px solid black;        /* 內框 */
+            outline:4px solid #c9c300;     /* 外框（黃色） */
 
             padding:6px 10px;
             margin-bottom:34px;
         }
 
-        /* 第三行 */
+        /* 第三行（右下 + 底線） */
         .heading3{
             font-size:34px;
             font-weight:700;
             font-style:italic;
+
             text-align:right;
 
             text-decoration: underline;
