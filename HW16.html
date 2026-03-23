@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HW16</title>
+
     <style>
         body{
             margin:0;
@@ -27,12 +27,14 @@
             margin-bottom:34px;
         }
 
+        /* 第一個 */
         .box1{
             background:#eaf7f7;
             border:12px double #de6d5e;
             padding:18px 20px;
         }
 
+        /* 第二個 */
         .box2{
             background:#ecec2f;
             border:5px solid #8aa0c8;
@@ -40,13 +42,14 @@
             padding:18px 20px;
         }
 
+        /* 第三個 */
         .box3{
             position:relative;
             background:#5ea25d;
             padding:20px 22px;
             margin-bottom:0;
             color:black;
-            overflow:hidden;
+            overflow:visible; 
         }
 
         .box3 span{
@@ -54,61 +57,62 @@
             z-index:2;
         }
 
-        /* 上邊點點：左右各留 16px，避免撞到側邊 */
+        /* 上 */
         .box3::before{
             content:"";
             position:absolute;
             top:0;
-            left:16px;
-            right:16px;
+            left:12px;
+            right:12px;
             height:16px;
             z-index:1;
             background:
                 radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 32px 16px repeat-x;
-            pointer-events:none;
         }
 
-        /* 下邊點點：左右各留 16px，避免撞到側邊 */
+        /* 下 */
         .box3::after{
             content:"";
             position:absolute;
             bottom:0;
-            left:16px;
-            right:16px;
+            left:12px;
+            right:12px;
             height:16px;
             z-index:1;
             background:
                 radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 32px 16px repeat-x;
-            pointer-events:none;
         }
 
-        .dot-left,
-        .dot-right{
+        /* 左 */
+        .dot-left{
             position:absolute;
             top:0;
             bottom:0;
+            left:0;
             width:16px;
             z-index:1;
-            pointer-events:none;
-        }
-
-        .dot-left{
-            left:0;
             background:
                 radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 16px 32px repeat-y;
         }
 
+        /* 右 */
         .dot-right{
+            position:absolute;
+            top:0;
+            bottom:0;
             right:0;
+            width:16px;
+            z-index:1;
             background:
                 radial-gradient(circle, #6c716b 0 6px, transparent 7px)
                 0 0 / 16px 32px repeat-y;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="box box1">Hello World</div>
