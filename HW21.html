@@ -2,18 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HW21</title>
 
     <style>
         body {
             margin: 0;
             font-family: "Times New Roman", serif;
+            background-color: white;
         }
 
-        /* 外框 */
         .container {
-            width: 920px;
-            height: 230px;
+            width: 90%;
+            max-width: 920px;
+            min-height: 230px;
             margin: 40px auto;
             padding: 28px 32px;
             background-color: #f3f3f3;
@@ -22,30 +24,27 @@
             box-sizing: border-box;
         }
 
-        /* 右邊浮動框 */
         .float-box {
             float: right;
-            width: 170px;
+            width: 180px;
             height: 150px;
             border: 4px solid #66aa22;
             background-color: #f7f7f7;
             overflow: auto;
             padding: 10px 12px;
             box-sizing: border-box;
-            font-size: 26px;
-            line-height: 1.25;
+            font-size: 22px;
+            line-height: 1.2;
             margin-left: 25px;
-            margin-top: -10px; /* 更貼近上方 */
+            margin-top: 0;
         }
 
-        /* 左邊文字 */
         .text {
-            font-size: 26px;
+            font-size: 22px;
             line-height: 1.25;
             color: black;
         }
 
-        /* 黃色 inline-block */
         .highlight {
             display: inline-block;
             background-color: yellow;
@@ -54,11 +53,9 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="container">
-
         <div class="float-box">
             A float div with overflow auto. 
             A float div with overflow auto. 
@@ -78,7 +75,6 @@
             But bears it out even to the edge of doom. If this be error and upon me proved,
             I never writ, nor no man ever loved.
         </div>
-
     </div>
 
 </body>
