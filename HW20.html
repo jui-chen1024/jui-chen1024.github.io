@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HW20</title>
+
+    <style>
+        /* 表格基本設定 */
+        table {
+            border-collapse: collapse;
+            width: 250px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* 表頭 */
+        th {
+            background-color: gray;
+            color: white;
+        }
+
+        /* 不同背景色 */
+        .yellow {
+            background-color: yellow;
+        }
+
+        .gray {
+            background-color: lightgray;
+        }
+
+        /* 固定在右上角的 div */
+        .fixed-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            border: 3px solid green;
+            padding: 15px;
+            width: 200px;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 表格 -->
+    <table>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+        </tr>
+        <tr class="yellow">
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr class="gray">
+            <td>2</td>
+            <td>2</td>
+        </tr>
+        <tr class="yellow">
+            <td>3</td>
+            <td>3</td>
+        </tr>
+    </table>
+
+    <!-- 固定 div -->
+    <div class="fixed-box">
+        This div element has position: fixed;
+    </div>
+
+</body>
+</html>
