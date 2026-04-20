@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>HW21</title>
+
     <style>
         body {
             margin: 0;
             font-family: "Times New Roman", serif;
-            background-color: white;
         }
 
+        /* 外框 */
         .container {
             width: 920px;
             height: 230px;
             margin: 40px auto;
             padding: 28px 32px;
-            background-color: #efefef;
+            background-color: #f3f3f3;
             border: 1px solid #d9d9d9;
             box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
             box-sizing: border-box;
         }
 
+        /* 右邊浮動框 */
         .float-box {
             float: right;
             width: 170px;
@@ -30,30 +32,38 @@
             overflow: auto;
             padding: 10px 12px;
             box-sizing: border-box;
-            font-size: 24px;
+            font-size: 26px;
             line-height: 1.25;
             margin-left: 25px;
+            margin-top: -10px; /* 更貼近上方 */
         }
 
+        /* 左邊文字 */
         .text {
             font-size: 26px;
             line-height: 1.25;
             color: black;
         }
 
+        /* 黃色 inline-block */
         .highlight {
             display: inline-block;
             background-color: yellow;
-            border: 1px solid #666;
             padding: 2px 6px;
+            border: none;
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
+
         <div class="float-box">
-            A float div with overflow auto. A float div with overflow auto. A float div with overflow auto.
+            A float div with overflow auto. 
+            A float div with overflow auto. 
+            A float div with overflow auto. 
+            A float div with overflow auto.
         </div>
 
         <div class="text">
@@ -68,6 +78,7 @@
             But bears it out even to the edge of doom. If this be error and upon me proved,
             I never writ, nor no man ever loved.
         </div>
+
     </div>
 
 </body>
