@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Responsive Layout</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 40px;
+    background: #5aa0d6;
+    display: flex;
+    justify-content: center;
+}
+
+/* 白色卡片 */
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+}
+
+/* 綠色區塊 */
+.header {
+    background: #a8cf45;
+    height: 120px;
+    margin-bottom: 15px;
+}
+
+/* 藍色區塊 */
+.middle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.middle div {
+    background: #1fb5be;
+    height: 120px;
+    flex: 1;
+}
+
+/* 灰色區塊 */
+.footer {
+    display: flex;
+    gap: 10px;
+}
+
+.footer div {
+    background: #d3d3d3;
+    height: 80px;
+    flex: 1;
+}
+
+/* 📱 小於480px（直排） */
+@media (max-width: 480px) {
+    .middle {
+        flex-direction: column;
+    }
+
+    .footer {
+        flex-direction: column;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 綠色 -->
+    <div class="header"></div>
+
+    <!-- 藍色 -->
+    <div class="middle">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- 灰色 -->
+    <div class="footer">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+</div>
+
+</body>
+</html>
