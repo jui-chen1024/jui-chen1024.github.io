@@ -8,27 +8,24 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f6f6f6; /* 設計稿背景色 */
+            background-color: #f6f6f6;
             margin: 0;
             display: flex;
             justify-content: center;
             padding-top: 50px;
         }
 
-        /* 主容器，依據設計稿標註約 496px */
         .wrapper {
             width: 496px;
         }
 
-        /* 頂部按鈕區域 */
         .header-actions {
             display: flex;
-            justify-content: flex-end; /* 按鈕靠右 */
+            justify-content: flex-end;
             margin-bottom: 8px;
-            padding-right: 46px; /* 預留右側標註間距 */
+            width: 450px; /* 對齊圖片寬度 */
         }
 
-        /* 嚴格執行設計稿規格的按鈕 (h22/R8) */
         .spec-button {
             height: 22px;
             border-radius: 8px;
@@ -42,51 +39,62 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
         }
 
-        .spec-button:hover {
-            background-color: #eeeeee;
-        }
-
-        /* 預覽圖片區域 (450x240) */
         .preview-image {
             width: 450px;
             height: 240px;
-            background-image: url('https://picsum.photos/id/249/450/240'); /* 穩定的大橋示意圖 */
+            background-image: url('https://picsum.photos/id/249/450/240');
             background-size: cover;
             background-position: center;
             border: 1px solid #ddd;
             margin-bottom: 12px;
         }
 
-        /* 詳細資訊框 (預設隱藏) */
+        /* 詳細資訊框：加入 Scrolling Bar 功能 */
         #details {
             width: 450px;
-            background-color: #f3f3f3; /* 底部背景色 */
-            border-top: 1px solid #cfddff; /* 藍色分隔線樣式 */
+            max-height: 150px; /* 固定最大高度，超過即顯示捲動條 */
+            overflow-y: auto;  /* 垂直方向自動顯示捲動條 */
+            background-color: #f3f3f3;
+            border-top: 1px solid #cfddff;
             padding: 12px;
             display: none; 
             box-sizing: border-box;
         }
 
+        /* 自定義捲動條樣式 (WebKit 瀏覽器) */
+        #details::-webkit-scrollbar {
+            width: 6px;
+        }
+        #details::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        #details::-webkit-scrollbar-thumb {
+            background: #ccc; 
+            border-radius: 10px;
+        }
+        #details::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
         .info-row {
             font-size: 13px;
-            margin: 6px 0;
+            margin: 8px 0;
             display: flex;
         }
 
         .info-label {
-            color: #707070; /* 標籤淡灰色 */
+            color: #707070;
             width: 80px;
+            flex-shrink: 0;
         }
 
         .info-value {
-            color: #2f2f2f; /* 內容深灰色 */
+            color: #2f2f2f;
             flex: 1;
         }
 
-        /* 特殊樣式：綠色背景的路徑文字 */
         .path-highlight {
             color: #0084ff;
             background-color: #e8f3ff;
@@ -121,6 +129,10 @@
         <div class="info-row">
             <span class="info-label">路徑：</span>
             <span class="info-value path-highlight">\\designcenter.qnap.com.tw\DesignCenter\PM_RD 講放入\WEB\Stations\A_Image2PDF\v2\sample</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">其他說明：</span>
+            <span class="info-value">這是為了測試捲動條功能而增加的文字內容。當內容長度超過 150px 的時候，右側就會出現一條垂直的 scrolling bar，方便使用者往下翻閱。</span>
         </div>
     </div>
 </div>
