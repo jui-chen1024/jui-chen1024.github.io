@@ -9,32 +9,39 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
     padding: 40px;
-    font-family: Arial;
 }
 
-/* 左圖 */
-.img-left {
+/* 外層容器 */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+}
+
+/* 左右圖片 */
+.img-side {
     width: 33%;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* 左圖圓角 */
+.left {
     border-radius: 18px;
-    object-fit: cover; /* 不變形 */
 }
 
 /* 中間圓形 */
-.img-circle {
+.circle {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 5px solid #ccc;
-}
-
-/* 右圖 */
-.img-right {
-    width: 33%;
-    height: 300px;
-    object-fit: cover; /* 重點：裁切不變形 */
+    border: 8px solid #ccc; /* 加粗才像老師 */
+    position: relative;
+    z-index: 2;
 }
 </style>
 
@@ -42,11 +49,13 @@ body {
 
 <body>
 
-<img class="img-left" src="https://picsum.photos/id/1015/600/400">
+<div class="container">
+    <img class="img-side left" src="https://picsum.photos/id/1015/600/400">
 
-<img class="img-circle" src="https://picsum.photos/id/1016/600/400">
+    <img class="circle" src="https://picsum.photos/id/1016/600/400">
 
-<img class="img-right" src="https://picsum.photos/id/1015/600/400">
+    <img class="img-side" src="https://picsum.photos/id/1015/600/400">
+</div>
 
 </body>
 </html>
