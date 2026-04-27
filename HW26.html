@@ -9,13 +9,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 60px;
+    background-color: #fff;
 }
 
 /* 外層容器 */
 .container {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* 👈 關鍵：讓上緣對齊 */
     justify-content: center;
     gap: 40px;
     width: 100%;
@@ -39,9 +40,11 @@ body {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 8px solid #ccc; /* 加粗才像老師 */
+    border: 10px solid #ccc;
+
     position: relative;
-    z-index: 2;
+    top: -50px; /* 👈 往上浮，調這個可以微調 */
+    z-index: 10;
 }
 </style>
 
@@ -50,10 +53,13 @@ body {
 <body>
 
 <div class="container">
+    <!-- 左圖 -->
     <img class="img-side left" src="https://picsum.photos/id/1015/600/400">
 
+    <!-- 中間圓 -->
     <img class="circle" src="https://picsum.photos/id/1016/600/400">
 
+    <!-- 右圖 -->
     <img class="img-side" src="https://picsum.photos/id/1015/600/400">
 </div>
 
