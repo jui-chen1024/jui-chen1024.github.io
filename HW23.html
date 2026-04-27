@@ -8,18 +8,27 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
+            background-color: #f6f6f6; /* 配合設計稿背景色 */
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px;
-            background-color: #f0f0f0;
+            justify-content: center;
+            padding-top: 50px;
+            margin: 0;
         }
 
-        .container {
-            text-align: center;
+        /* 主容器，寬度固定為 496px (參考設計稿標註) */
+        .wrapper {
+            width: 496px;
+            position: relative;
         }
 
-        /* 根據設計稿精確製作的按鈕 */
+        /* 頂部按鈕容器 */
+        .header-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        /* 根據設計稿標註製作的按鈕 */
         .spec-button {
             height: 22px;
             border-radius: 8px;
@@ -28,59 +37,85 @@
             color: #2f2f2f;
             font-family: 'Roboto', sans-serif;
             font-size: 13px;
-            padding: 0 15px; /* 左右適度留白 */
+            padding: 0 10px;
             cursor: pointer;
-            outline: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.2s;
         }
 
-        .spec-button:hover {
-            background-color: #f5f5f5;
-        }
-
-        /* 隱藏的詳細資訊區塊 */
-        #details {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #ffffff;
-            border: 1px solid #eaeaea;
-            display: none; /* 預設隱藏 */
-            max-width: 450px;
-            font-size: 13px;
-            color: #707070;
-            text-align: left;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .image-placeholder {
+        /* 預覽圖片區域 */
+        .preview-image {
             width: 450px;
             height: 240px;
-            background-color: #ddd;
-            margin-bottom: 10px;
+            background-image: url('https://via.placeholder.com/450x240/D2B48C/ffffff?text=Default+450x240'); /* 模擬設計稿中的風景圖 */
+            background-size: cover;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        /* 詳細資訊框 */
+        #details {
+            width: 450px;
+            background-color: #f3f3f3; /* 配合設計稿底部背景色 */
+            border-top: 1px solid #cfddff; /* 模擬藍色分隔線 */
+            padding: 10px;
+            display: none; /* 點擊才顯示 */
+            box-sizing: border-box;
+        }
+
+        .info-item {
+            font-size: 13px;
+            color: #2f2f2f;
+            margin: 5px 0;
+            line-height: 1.5;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
+        }
+
+        .info-label {
+            color: #707070; /* 標籤顏色較淡 */
+            min-width: 70px;
+        }
+
+        .info-value {
+            color: #2f2f2f;
+            word-break: break-all;
+        }
+
+        /* 特殊顏色：綠色路徑文字 */
+        .path-text {
+            color: #0084ff;
+            background-color: #e8f3ff;
+            padding: 2px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="image-placeholder">
-        這裡放置圖片 (450x240)
+<div class="wrapper">
+    <div class="header-actions">
+        <button class="spec-button" onclick="toggleDetails()">查看資訊</button>
     </div>
 
-    <button class="spec-button" onclick="toggleDetails()">查看資訊</button>
+    <div class="preview-image"></div>
 
     <div id="details">
-        <p><strong>修改日期：</strong>2017/10/12</p>
-        <p><strong>格式：</strong>JPG</p>
-        <p><strong>大小：</strong>466.97 KB</p>
-        <p><strong>路徑：</strong>\\designcenter.qnap.com.tw\DesignCenter\PM_RD...</p>
+        <div class="info-item">
+            <span class="info-label">修改日期：</span>
+            <span class="info-value">2017/10/12</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">格式：</span>
+            <span class="info-value">JPG</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">大小：</span>
+            <span class="info-value">466.97 KB</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">路徑：</span>
+            <span class="info-value path-text">\\designcenter.qnap.com.tw\DesignCenter\PM_RD...</span>
+        </div>
     </div>
 </div>
 
