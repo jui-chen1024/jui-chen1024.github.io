@@ -10,35 +10,41 @@ body {
     padding: 40px;
 }
 
-/* 按鈕樣式 */
+/* 按鈕 */
 .btn {
     height: 22px;
     padding: 0 12px;
     border-radius: 8px;
     border: 1px solid #212121;
     background-color: #ffffff;
-    color: #212121;
     font-size: 13px;
     cursor: pointer;
 }
 
-/* hover 效果（加分） */
-.btn:hover {
-    background-color: #f0f0f0;
-}
-
-/* 圖片 */
-.image {
+/* 卡片 */
+.card {
     margin-top: 20px;
     width: 450px;
 }
 
-/* 詳細資訊區塊 */
+/* 圖片 */
+.image {
+    width: 100%;
+}
+
+/* 詳細資訊 */
 .detail {
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 10px;
+    padding: 15px;
     background-color: #f3f3f3;
-    display: none; /* 一開始隱藏 */
+    display: none;
+}
+
+/* 每一行 */
+.item {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 13px;
 }
 </style>
 
@@ -46,25 +52,28 @@ body {
 
 <body>
 
-<!-- 按鈕 -->
-<button class="btn" onclick="showDetail()">詳細資訊</button>
+<button class="btn" onclick="toggleDetail()">詳細資訊</button>
 
-<!-- 圖片 -->
-<div>
-    <img class="image" src="https://picsum.photos/450/240" alt="image">
-</div>
+<div class="card">
+    <img class="image" src="https://picsum.photos/450/240">
 
-<!-- 詳細資訊 -->
-<div id="detailBox" class="detail">
-    <p>📅 日期：2017/10/12</p>
-    <p>📄 檔名：example.jpg</p>
-    <p>📦 大小：456 KB</p>
-    <p>🌐 URL：https://example.com</p>
+    <div id="detailBox" class="detail">
+        <div class="item">📅 日期：2017/10/12</div>
+        <div class="item">📄 檔名：example.jpg</div>
+        <div class="item">📦 大小：456 KB</div>
+        <div class="item">🌐 URL：https://example.com</div>
+    </div>
 </div>
 
 <script>
-function showDetail() {
-    document.getElementById("detailBox").style.display = "block";
+function toggleDetail() {
+    let box = document.getElementById("detailBox");
+
+    if (box.style.display === "block") {
+        box.style.display = "none";
+    } else {
+        box.style.display = "block";
+    }
 }
 </script>
 
