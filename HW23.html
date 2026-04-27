@@ -8,28 +8,27 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f6f6f6; /* 配合設計稿背景色 */
+            background-color: #f6f6f6; /* 設計稿背景色 */
+            margin: 0;
             display: flex;
             justify-content: center;
             padding-top: 50px;
-            margin: 0;
         }
 
-        /* 主容器 */
+        /* 主容器，依據設計稿標註約 496px */
         .wrapper {
             width: 496px;
-            position: relative;
         }
 
-        /* 頂部按鈕容器 */
+        /* 頂部按鈕區域 */
         .header-actions {
             display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-            width: 450px; /* 寬度對齊圖片 */
+            justify-content: flex-end; /* 按鈕靠右 */
+            margin-bottom: 8px;
+            padding-right: 46px; /* 預留右側標註間距 */
         }
 
-        /* 根據設計稿標註製作的按鈕 */
+        /* 嚴格執行設計稿規格的按鈕 (h22/R8) */
         .spec-button {
             height: 22px;
             border-radius: 8px;
@@ -38,60 +37,62 @@
             color: #2f2f2f;
             font-family: 'Roboto', sans-serif;
             font-size: 13px;
-            padding: 0 10px;
+            padding: 0 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none; /* 如果是 a 標籤則需要 */
+            transition: 0.2s;
         }
 
-        /* 預覽圖片區域 */
+        .spec-button:hover {
+            background-color: #eeeeee;
+        }
+
+        /* 預覽圖片區域 (450x240) */
         .preview-image {
             width: 450px;
             height: 240px;
-            /* 引用你上傳的圖片檔名 */
-            background-image: url('golden-gate.png'); 
+            background-image: url('https://picsum.photos/id/249/450/240'); /* 穩定的大橋示意圖 */
             background-size: cover;
-            background-position: center; /* 讓圖片居中顯示 */
+            background-position: center;
             border: 1px solid #ddd;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
-        /* 詳細資訊框 */
+        /* 詳細資訊框 (預設隱藏) */
         #details {
             width: 450px;
-            background-color: #f3f3f3; /* 配合設計稿底部背景色 */
-            border-top: 1px solid #cfddff; /* 模擬藍色分隔線 */
-            padding: 10px;
-            display: none; /* 點擊才顯示 */
+            background-color: #f3f3f3; /* 底部背景色 */
+            border-top: 1px solid #cfddff; /* 藍色分隔線樣式 */
+            padding: 12px;
+            display: none; 
             box-sizing: border-box;
         }
 
-        .info-item {
+        .info-row {
             font-size: 13px;
-            color: #2f2f2f;
-            margin: 5px 0;
-            line-height: 1.5;
+            margin: 6px 0;
             display: flex;
         }
 
         .info-label {
-            color: #707070; /* 標籤顏色較淡 */
-            min-width: 70px;
+            color: #707070; /* 標籤淡灰色 */
+            width: 80px;
         }
 
         .info-value {
-            color: #2f2f2f;
-            word-break: break-all;
+            color: #2f2f2f; /* 內容深灰色 */
+            flex: 1;
         }
 
-        /* 特殊顏色：藍色路徑文字與背景 */
-        .path-text {
+        /* 特殊樣式：綠色背景的路徑文字 */
+        .path-highlight {
             color: #0084ff;
             background-color: #e8f3ff;
             padding: 2px 4px;
-            border-radius: 2px;
+            font-size: 12px;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -105,32 +106,32 @@
     <div class="preview-image"></div>
 
     <div id="details">
-        <div class="info-item">
+        <div class="info-row">
             <span class="info-label">修改日期：</span>
             <span class="info-value">2017/10/12</span>
         </div>
-        <div class="info-item">
+        <div class="info-row">
             <span class="info-label">格式：</span>
             <span class="info-value">JPG</span>
         </div>
-        <div class="info-item">
+        <div class="info-row">
             <span class="info-label">大小：</span>
             <span class="info-value">466.97 KB</span>
         </div>
-        <div class="info-item">
+        <div class="info-row">
             <span class="info-label">路徑：</span>
-            <span class="info-value path-text">\\designcenter.qnap.com.tw\DesignCenter\PM_RD...</span>
+            <span class="info-value path-highlight">\\designcenter.qnap.com.tw\DesignCenter\PM_RD 講放入\WEB\Stations\A_Image2PDF\v2\sample</span>
         </div>
     </div>
 </div>
 
 <script>
     function toggleDetails() {
-        var x = document.getElementById("details");
-        if (x.style.display === "none" || x.style.display === "") {
-            x.style.display = "block";
+        var detailsDiv = document.getElementById("details");
+        if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
+            detailsDiv.style.display = "block";
         } else {
-            x.style.display = "none";
+            detailsDiv.style.display = "none";
         }
     }
 </script>
