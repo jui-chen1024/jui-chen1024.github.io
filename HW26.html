@@ -9,21 +9,22 @@ body {
     margin: 0;
     padding-top: 80px;
     background: white;
-}
-
-/* 整體圖片區 */
-.container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 25px; /* 圖片跟圓形的距離 */
 }
 
-/* 左右長方形圖片 */
+/* 外層 */
+.container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px; /* ⭐控制間距 */
+}
+
+/* 左右圖片（直的長方形） */
 .big-img {
-    width: 390px;
+    width: 250px;       /* ⭐變窄 → 看起來是直的 */
     height: 300px;
-    object-fit: cover; /* 不變形 */
+    object-fit: cover;  /* ⭐不變形 */
 }
 
 /* 左圖圓角 */
@@ -31,14 +32,13 @@ body {
     border-radius: 18px;
 }
 
-/* 中間圓形 */
+/* 中間圓 */
 .circle-img {
     width: 150px;
     height: 150px;
-    object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #555;
-    box-sizing: border-box;
+    object-fit: cover;
+    border: 4px solid #999;
 }
 </style>
 </head>
@@ -46,11 +46,14 @@ body {
 <body>
 
 <div class="container">
-    <img class="big-img left-img" src="https://picsum.photos/id/1015/600/400">
+    <!-- 左圖（直的） -->
+    <img class="big-img left-img" src="https://picsum.photos/400/600">
 
-    <img class="circle-img" src="https://picsum.photos/id/1016/600/400">
+    <!-- 中間圓 -->
+    <img class="circle-img" src="https://picsum.photos/400/600">
 
-    <img class="big-img" src="https://picsum.photos/id/1015/600/400">
+    <!-- 右圖（直的） -->
+    <img class="big-img" src="https://picsum.photos/400/600">
 </div>
 
 </body>
