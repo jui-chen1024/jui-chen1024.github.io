@@ -11,19 +11,19 @@ body {
     background: white;
 }
 
-/* 整個圖片區 */
+/* 整體區塊 */
 .container {
     position: relative;
-    width: 1050px;
+    width: 900px;   /* ⭐縮小整體寬度 → 圖片靠近 */
     height: 300px;
     margin: 0 auto;
 }
 
-/* 左右大圖 */
+/* 左右圖片 */
 .big-img {
-    width: 390px;        /* 約 33% */
+    width: 300px;   /* ⭐固定寬度讓間距穩 */
     height: 300px;
-    object-fit: cover;   /* no distortion */
+    object-fit: cover;
 }
 
 /* 左圖 */
@@ -41,18 +41,19 @@ body {
     top: 0;
 }
 
-/* 中間圓圖 */
+/* 中間圓 */
 .circle-img {
     position: absolute;
-    left: 450px;         /* 壓在兩張圖中間 */
-    top: 0;              /* 跟左右圖片上緣一樣高 */
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
 
     width: 150px;
     height: 150px;
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid #555;
-    box-sizing: border-box;
+    background: white;
 }
 </style>
 </head>
@@ -61,7 +62,9 @@ body {
 
 <div class="container">
     <img class="big-img left-img" src="https://picsum.photos/id/1015/600/400">
+    
     <img class="circle-img" src="https://picsum.photos/id/1016/600/400">
+    
     <img class="big-img right-img" src="https://picsum.photos/id/1015/600/400">
 </div>
 
