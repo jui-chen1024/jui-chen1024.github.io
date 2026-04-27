@@ -1,80 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>Button Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工程師與設計師的協作作業</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            background-color: #f0f0f0;
+        }
 
-<style>
-body {
-    font-family: Roboto, sans-serif;
-    padding: 40px;
-}
+        .container {
+            text-align: center;
+        }
 
-/* 按鈕 */
-.btn {
-    height: 22px;
-    padding: 0 12px;
-    border-radius: 8px;
-    border: 1px solid #212121;
-    background-color: #ffffff;
-    font-size: 13px;
-    cursor: pointer;
-}
+        /* 根據設計稿精確製作的按鈕 */
+        .spec-button {
+            height: 22px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            border: 1px solid #2f2f2f;
+            color: #2f2f2f;
+            font-family: 'Roboto', sans-serif;
+            font-size: 13px;
+            padding: 0 15px; /* 左右適度留白 */
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
 
-/* 卡片 */
-.card {
-    margin-top: 20px;
-    width: 450px;
-}
+        .spec-button:hover {
+            background-color: #f5f5f5;
+        }
 
-/* 圖片 */
-.image {
-    width: 100%;
-}
+        /* 隱藏的詳細資訊區塊 */
+        #details {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            display: none; /* 預設隱藏 */
+            max-width: 450px;
+            font-size: 13px;
+            color: #707070;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-/* 詳細資訊 */
-.detail {
-    margin-top: 10px;
-    padding: 15px;
-    background-color: #f3f3f3;
-    display: none;
-}
-
-/* 每一行 */
-.item {
-    margin-bottom: 10px;
-    color: #555;
-    font-size: 13px;
-}
-</style>
-
+        .image-placeholder {
+            width: 450px;
+            height: 240px;
+            background-color: #ddd;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+    </style>
 </head>
-
 <body>
 
-<button class="btn" onclick="toggleDetail()">詳細資訊</button>
+<div class="container">
+    <div class="image-placeholder">
+        這裡放置圖片 (450x240)
+    </div>
 
-<div class="card">
-    <img class="image" src="https://picsum.photos/450/240">
+    <button class="spec-button" onclick="toggleDetails()">查看資訊</button>
 
-    <div id="detailBox" class="detail">
-        <div class="item">📅 日期：2017/10/12</div>
-        <div class="item">📄 檔名：example.jpg</div>
-        <div class="item">📦 大小：456 KB</div>
-        <div class="item">🌐 URL：https://example.com</div>
+    <div id="details">
+        <p><strong>修改日期：</strong>2017/10/12</p>
+        <p><strong>格式：</strong>JPG</p>
+        <p><strong>大小：</strong>466.97 KB</p>
+        <p><strong>路徑：</strong>\\designcenter.qnap.com.tw\DesignCenter\PM_RD...</p>
     </div>
 </div>
 
 <script>
-function toggleDetail() {
-    let box = document.getElementById("detailBox");
-
-    if (box.style.display === "block") {
-        box.style.display = "none";
-    } else {
-        box.style.display = "block";
+    function toggleDetails() {
+        var x = document.getElementById("details");
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
     }
-}
 </script>
 
 </body>
