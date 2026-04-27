@@ -7,94 +7,83 @@
 <style>
 body {
     margin: 0;
-    background-color: #55a9df;
-    font-family: Arial, sans-serif;
+    padding: 40px;
+    background: #5aa0d6;
+    display: flex;
+    justify-content: center;
 }
 
-/* 外層白色框 */
+/* 白色卡片 */
 .container {
-    width: 80%;
-    max-width: 900px;
-    margin: 80px auto;
+    background: #fff;
     padding: 20px;
-    background-color: white;
-    border-radius: 14px;
-    box-sizing: border-box;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
 }
 
-/* 綠色區 */
+/* 綠色區塊 */
 .header {
+    background: #a8cf45;
     height: 120px;
-    background-color: #a8d43f;
-    margin-bottom: 14px;
+    margin-bottom: 15px;
 }
 
-/* 藍色區 */
-.content {
+/* 藍色區塊 */
+.middle {
     display: flex;
     gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 15px;
 }
 
-.content div {
-    height: 130px;
-    background-color: #20b7c0;
+.middle div {
+    background: #1fb5be;
+    height: 120px;
     flex: 1;
 }
 
-/* 灰色區 */
+/* 灰色區塊 */
 .footer {
     display: flex;
     gap: 10px;
 }
 
 .footer div {
-    height: 90px;
-    background-color: #d9d9d9;
+    background: #d3d3d3;
+    height: 80px;
     flex: 1;
 }
 
-/* 小於 480px 時，改成左邊(a)那種直排 */
+/* 📱 小於480px（直排） */
 @media (max-width: 480px) {
-    .container {
-        width: 80%;
-        margin: 40px auto;
-    }
-
-    .content {
+    .middle {
         flex-direction: column;
     }
 
-    .content div {
-        height: 65px;
-    }
-
     .footer {
-        flex-wrap: wrap;
-    }
-
-    .footer div {
-        flex: 0 0 calc(50% - 5px);
-        height: 50px;
+        flex-direction: column;
     }
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
+    <!-- 綠色 -->
     <div class="header"></div>
 
-    <div class="content">
+    <!-- 藍色 -->
+    <div class="middle">
         <div></div>
         <div></div>
         <div></div>
     </div>
 
+    <!-- 灰色 -->
     <div class="footer">
-        <div></div>
         <div></div>
         <div></div>
         <div></div>
