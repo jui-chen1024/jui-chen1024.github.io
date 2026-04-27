@@ -11,19 +11,19 @@ body {
     background: white;
 }
 
-/* 整體區塊 */
+/* 外層 */
 .container {
     position: relative;
-    width: 900px;   /* ⭐縮小整體寬度 → 圖片靠近 */
-    height: 300px;
+    width: 90%;
     margin: 0 auto;
+    height: 300px;
 }
 
 /* 左右圖片 */
 .big-img {
-    width: 300px;   /* ⭐固定寬度讓間距穩 */
-    height: 300px;
-    object-fit: cover;
+    width: 33%;
+    height: 300px;              /* ⭐老師右圖有標300px */
+    object-fit: cover;          /* ⭐不變形 */
 }
 
 /* 左圖 */
@@ -48,14 +48,14 @@ body {
     transform: translateX(-50%);
     top: 0;
 
-    width: 150px;
+    width: 150px;               /* ⭐老師寫的 */
     height: 150px;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #555;
-    background: white;
+    border: 4px solid #999;     /* 灰色外框 */
 }
 </style>
+
 </head>
 
 <body>
