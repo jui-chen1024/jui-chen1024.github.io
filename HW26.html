@@ -6,59 +6,63 @@
 
 <style>
 body {
-    display: flex;
-    justify-content: center;
-    padding: 60px;
-    background-color: #fff;
+    margin: 0;
+    padding-top: 80px;
+    background: white;
 }
 
-/* 外層容器 */
+/* 整個圖片區 */
 .container {
-    position: relative; /* ⭐關鍵 */
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 80%;
-}
-
-/* 左右圖片 */
-.img-side {
-    width: 33%;
+    position: relative;
+    width: 1050px;
     height: 300px;
-    object-fit: cover;
+    margin: 0 auto;
 }
 
-/* 左圖圓角 */
-.left {
+/* 左右大圖 */
+.big-img {
+    width: 390px;        /* 約 33% */
+    height: 300px;
+    object-fit: cover;   /* no distortion */
+}
+
+/* 左圖 */
+.left-img {
+    position: absolute;
+    left: 0;
+    top: 0;
     border-radius: 18px;
 }
 
-/* 中間圓 */
-.circle {
-    position: absolute; /* ⭐關鍵 */
-    left: 50%;
-    transform: translateX(-50%);
+/* 右圖 */
+.right-img {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* 中間圓圖 */
+.circle-img {
+    position: absolute;
+    left: 450px;         /* 壓在兩張圖中間 */
+    top: 0;              /* 跟左右圖片上緣一樣高 */
 
     width: 150px;
     height: 150px;
-    border-radius: 50%;
     object-fit: cover;
-    border: 10px solid #ccc;
-
-    top: 40px; /* ⭐這個才是關鍵位置（調這個） */
+    border-radius: 50%;
+    border: 3px solid #555;
+    box-sizing: border-box;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
-    <img class="img-side left" src="https://picsum.photos/id/1015/600/400">
-
-    <img class="circle" src="https://picsum.photos/id/1016/600/400">
-
-    <img class="img-side" src="https://picsum.photos/id/1015/600/400">
+    <img class="big-img left-img" src="https://picsum.photos/id/1015/600/400">
+    <img class="circle-img" src="https://picsum.photos/id/1016/600/400">
+    <img class="big-img right-img" src="https://picsum.photos/id/1015/600/400">
 </div>
 
 </body>
