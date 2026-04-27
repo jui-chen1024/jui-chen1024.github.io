@@ -8,16 +8,17 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 60px;
+    background-color: #fff;
 }
 
-/* 外層 */
+/* 外層容器 */
 .container {
+    position: relative; /* ⭐關鍵 */
     display: flex;
-    align-items: flex-start; /* 上對齊 */
-    gap: 40px;
-    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 80%;
 }
 
 /* 左右圖片 */
@@ -34,15 +35,17 @@ body {
 
 /* 中間圓 */
 .circle {
+    position: absolute; /* ⭐關鍵 */
+    left: 50%;
+    transform: translateX(-50%);
+
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
     border: 10px solid #ccc;
 
-    position: relative;
-    transform: translateY(-75px); /* ⭐關鍵：剛好一半 */
-    z-index: 10;
+    top: 40px; /* ⭐這個才是關鍵位置（調這個） */
 }
 </style>
 
