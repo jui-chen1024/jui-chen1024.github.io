@@ -15,7 +15,7 @@
             margin: 0;
         }
 
-        /* 主容器，寬度固定為 496px (參考設計稿標註) */
+        /* 主容器 */
         .wrapper {
             width: 496px;
             position: relative;
@@ -26,6 +26,7 @@
             display: flex;
             justify-content: flex-end;
             margin-bottom: 10px;
+            width: 450px; /* 寬度對齊圖片 */
         }
 
         /* 根據設計稿標註製作的按鈕 */
@@ -42,14 +43,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none; /* 如果是 a 標籤則需要 */
         }
 
         /* 預覽圖片區域 */
         .preview-image {
             width: 450px;
             height: 240px;
-            background-image: url('https://via.placeholder.com/450x240/D2B48C/ffffff?text=Default+450x240'); /* 模擬設計稿中的風景圖 */
+            /* 引用你上傳的圖片檔名 */
+            background-image: url('golden-gate.png'); 
             background-size: cover;
+            background-position: center; /* 讓圖片居中顯示 */
             border: 1px solid #ddd;
             margin-bottom: 15px;
         }
@@ -82,11 +86,12 @@
             word-break: break-all;
         }
 
-        /* 特殊顏色：綠色路徑文字 */
+        /* 特殊顏色：藍色路徑文字與背景 */
         .path-text {
             color: #0084ff;
             background-color: #e8f3ff;
-            padding: 2px;
+            padding: 2px 4px;
+            border-radius: 2px;
         }
     </style>
 </head>
