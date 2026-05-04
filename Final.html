@@ -16,73 +16,61 @@
             --wrong: #f44336;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         html { scroll-behavior: smooth; }
-        body { background-color: var(--white); color: var(--text); line-height: 1.6; }
+        body { background-color: var(--white); color: var(--text); }
 
-        /* Navigation */
         nav {
-            background: rgba(255,255,255,0.95); padding: 15px 5%; position: fixed; 
+            background: white; padding: 15px 5%; position: fixed; 
             width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .logo { font-weight: bold; color: var(--primary-blue); font-size: 1.5rem; }
         nav ul { display: flex; list-style: none; }
         nav ul li { margin-left: 20px; }
-        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; transition: 0.3s; }
-        nav ul li a:hover { color: var(--primary-green); }
+        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; }
 
-        section { padding: 120px 8% 60px; min-height: 100vh; }
-        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 2.2rem; }
+        section { padding: 100px 8% 60px; min-height: 100vh; }
+        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; }
 
-        /* Home */
-        .intro-text { text-align: center; max-width: 850px; margin: 0 auto 35px; font-size: 1.1rem; }
-        .intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .intro-card { background: var(--light-bg); padding: 25px; border-radius: 15px; border-left: 6px solid var(--primary-green); transition: 0.3s; }
-        .intro-card:hover { transform: translateY(-8px); background: #eaf6f0; }
-
-        /* Region - 精準校準版 */
-        .map-wrapper { max-width: 1000px; margin: 0 auto; position: relative; }
+        /* 地圖區域 - 核心修正 */
+        .map-wrapper { max-width: 900px; margin: 0 auto; }
         .map-container { 
             position: relative; width: 100%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-            /* 使用 100% 100% 強制背景圖填滿容器，確保百分比座標永久固定 */
-            background-size: 100% 100%; 
+            background-size: 100% 100%; /* 強制背景與容器百分之百重合 */
             background-repeat: no-repeat;
             background-color: #e0f2f1; 
-            aspect-ratio: 2 / 1; 
-            border-radius: 15px; 
-            border: 1px solid #ccc;
-            overflow: hidden;
+            aspect-ratio: 2 / 1; /* 嚴格固定地圖比例 */
+            border-radius: 12px; 
+            border: 1px solid #ddd;
         }
         .hotspot {
-            position: absolute; width: 12px; height: 12px; background: #ff4444; border-radius: 50%; 
-            cursor: pointer; transform: translate(-50%, -50%); z-index: 5;
+            position: absolute; width: 14px; height: 14px; background: #ff4444; border-radius: 50%; 
+            cursor: pointer; transform: translate(-50%, -50%); z-index: 10;
         }
         .hotspot::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 50%; background: #ff4444; animation: pulse 2.5s infinite;
+            border-radius: 50%; background: #ff4444; animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3.5); opacity: 0; } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
         
         .info-panel { 
             margin-top: 20px; padding: 20px; background: #fffde7; border-radius: 10px; 
-            min-height: 80px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
+            min-height: 60px; text-align: center; font-weight: bold; border: 1px dashed #fbc02d;
         }
 
-        /* Quiz, Vote, Feedback 樣式保持不變 */
-        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; }
-        .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; text-align: left; }
-        .option-btn.correct { background-color: #e8f5e9; border-color: var(--correct); color: #2e7d32; }
-        .option-btn.wrong { background-color: #ffebee; border-color: var(--wrong); color: #c62828; }
+        /* 其他元件 */
+        .quiz-card, .feedback-box { max-width: 700px; margin: 0 auto; background: var(--light-bg); padding: 30px; border-radius: 15px; }
+        .option-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; background: white; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; text-align: left; }
+        .option-btn.correct { background: #e8f5e9; border-color: var(--correct); }
+        .option-btn.wrong { background: #ffebee; border-color: var(--wrong); }
         .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
-        .progress-bar { background: #eee; height: 12px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 10px; text-align: center; }
+        .progress-bar { background: #eee; height: 10px; border-radius: 5px; margin: 10px 0; overflow: hidden; }
         .progress-fill { background: var(--primary-green); height: 100%; width: 10%; transition: width 0.5s; }
-        .vote-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 22px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold;}
-        .feedback-box { max-width: 650px; margin: 0 auto; background: var(--light-bg); padding: 35px; border-radius: 18px; display: flex; flex-direction: column; }
-        .feedback-box input, .feedback-box textarea, .feedback-box select { margin: 8px 0 15px; padding: 13px; border-radius: 8px; border: 1px solid #ccc; }
-        footer { text-align: center; padding: 50px; background: #333; color: white; }
+        .btn { background: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        footer { text-align: center; padding: 40px; background: #333; color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -100,77 +88,70 @@
 
 <section id="home">
     <h2>Global Education Resources</h2>
-    <p class="intro-text">Sustainable Development Goal 4 (SDG 4) aims to ensure inclusive and equitable quality education and promote lifelong learning opportunities for all.</p>
-    <div class="intro-grid">
-        <div class="intro-card"><h3>1. Digital Infrastructure</h3><p>Electricity and internet access are the gates to modern knowledge.</p></div>
-        <div class="intro-card"><h3>2. Open Resources</h3><p>Free digital materials help break the barrier of high costs.</p></div>
-        <div class="intro-card"><h3>3. Teacher Support</h3><p>Empowering educators is the core of improving learning quality.</p></div>
-    </div>
+    <p style="text-align: center; max-width: 800px; margin: 0 auto;">SDG 4 致力於確保包容和公平的優質教育。點擊地圖紅點了解全球資源短缺現狀。</p>
 </section>
 
 <section id="region">
     <h2>20 Critical Resource Gaps</h2>
     <div class="map-wrapper">
         <div class="map-container">
-            <!-- 根據圖片重新定位的座標 -->
-            <!-- 南美洲與中美洲 -->
-            <div class="hotspot" style="top: 55%; left: 28%;" onclick="showInfo('[Haiti] Schools recovering from seismic damage.')"></div>
-            <div class="hotspot" style="top: 64%; left: 24%;" onclick="showInfo('[Guatemala] Lacks materials in native languages.')"></div>
-            <div class="hotspot" style="top: 73%; left: 34%;" onclick="showInfo('[Brazil] Remote Amazon regions lack digital tools.')"></div>
-            <div class="hotspot" style="top: 80%; left: 32%;" onclick="showInfo('[Bolivia] High-altitude school resource gaps.')"></div>
+            <!-- 南美與拉丁美洲 -->
+            <div class="hotspot" style="top: 25%; left: 35%;" onclick="showInfo('[North Atlantic] Ocean learning research zone.')"></div>
+            <div class="hotspot" style="top: 28%; left: 39%;" onclick="showInfo('[Caribbean] Educational infrastructure recovery.')"></div>
+            <div class="hotspot" style="top: 35%; left: 25%;" onclick="showInfo('[Central America] Indigenous language resources.')"></div>
+            <div class="hotspot" style="top: 33%; left: 30%;" onclick="showInfo('[Mexico South] Rural school connectivity.')"></div>
 
-            <!-- 非洲 -->
-            <div class="hotspot" style="top: 50%; left: 47%;" onclick="showInfo('[Niger] Needs more primary school infrastructure.')"></div>
-            <div class="hotspot" style="top: 56%; left: 50%;" onclick="showInfo('[Nigeria] Security affects education access.')"></div>
-            <div class="hotspot" style="top: 65%; left: 53%;" onclick="showInfo('[DR Congo] Lacks basic school furniture.')"></div>
-            <div class="hotspot" style="top: 60%; left: 58%;" onclick="showInfo('[Ethiopia] Rural digitization is a priority.')"></div>
-            <div class="hotspot" style="top: 75%; left: 55%;" onclick="showInfo('[Malawi] Extreme teacher shortages.')"></div>
-            <div class="hotspot" style="top: 54%; left: 54%;" onclick="showInfo('[Sudan] Educational instability due to conflict.')"></div>
-            <div class="hotspot" style="top: 68%; left: 49%;" onclick="showInfo('[Angola] Shortage of rural educators.')"></div>
-            <div class="hotspot" style="top: 51%; left: 43%;" onclick="showInfo('[Mali] Literacy programs need funding.')"></div>
+            <!-- 非洲 (根據 image_13 修正) -->
+            <div class="hotspot" style="top: 43%; left: 45%;" onclick="showInfo('[Sahara Border] Digital literacy for nomadic tribes.')"></div>
+            <div class="hotspot" style="top: 48%; left: 47%;" onclick="showInfo('[West Africa] Basic textbook supply shortage.')"></div>
+            <div class="hotspot" style="top: 52%; left: 52%;" onclick="showInfo('[Nigeria] Classroom safety programs.')"></div>
+            <div class="hotspot" style="top: 55%; left: 48%;" onclick="showInfo('[Gulf of Guinea] Vocational training initiatives.')"></div>
+            <div class="hotspot" style="top: 47%; left: 41%;" onclick="showInfo('[Mali Region] Female student enrollment.')"></div>
+            <div class="hotspot" style="top: 51%; left: 34%;" onclick="showInfo('[Senegal Coast] Maritime education.')"></div>
+            <div class="hotspot" style="top: 59%; left: 40%;" onclick="showInfo('[Equatorial Africa] Teacher training centers.')"></div>
+            <div class="hotspot" style="top: 61%; left: 51%;" onclick="showInfo('[Congo Basin] Solar-powered schools.')"></div>
 
             <!-- 中東與亞洲 -->
-            <div class="hotspot" style="top: 45%; left: 60%;" onclick="showInfo('[Syria] Post-war school reconstruction.')"></div>
-            <div class="hotspot" style="top: 48%; left: 64%;" onclick="showInfo('[Yemen] Limited stable school access.')"></div>
-            <div class="hotspot" style="top: 48%; left: 68%;" onclick="showInfo('[Afghanistan] Urgent need for female education support.')"></div>
-            <div class="hotspot" style="top: 55%; left: 74%;" onclick="showInfo('[Bangladesh] Climate-resilient schools needed.')"></div>
-            <div class="hotspot" style="top: 60%; left: 78%;" onclick="showInfo('[Myanmar] Education gaps in remote areas.')"></div>
-            <div class="hotspot" style="top: 65%; left: 85%;" onclick="showInfo('[Philippines] Island logistics challenges.')"></div>
+            <div class="hotspot" style="top: 53%; left: 63%;" onclick="showInfo('[Arabian Peninsula] Modern STEM labs.')"></div>
+            <div class="hotspot" style="top: 60%; left: 62%;" onclick="showInfo('[Yemen] Post-conflict school rebuilding.')"></div>
+            <div class="hotspot" style="top: 63%; left: 60%;" onclick="showInfo('[East Africa Coast] Port city literacy.')"></div>
+            <div class="hotspot" style="top: 66%; left: 57%;" onclick="showInfo('[Ethiopia Delta] Agricultural tech education.')"></div>
+            <div class="hotspot" style="top: 71%; left: 54%;" onclick="showInfo('[South Africa] Rural university access.')"></div>
 
-            <!-- 大洋洲 -->
-            <div class="hotspot" style="top: 80%; left: 82%;" onclick="showInfo('[Outback Australia] Digital distance learning needs.')"></div>
-            <div class="hotspot" style="top: 85%; left: 86%;" onclick="showInfo('[Pacific Islands] Vulnerable to rising sea levels.')"></div>
+            <!-- 大洋洲與東南亞 -->
+            <div class="hotspot" style="top: 75%; left: 49%;" onclick="showInfo('[Indonesia] Remote island learning tools.')"></div>
+            <div class="hotspot" style="top: 78%; left: 44%;" onclick="showInfo('[Central Australia] Aboriginal educational equity.')"></div>
+            <div class="hotspot" style="top: 83%; left: 48%;" onclick="showInfo('[East Australia] Sustainability education.')"></div>
         </div>
     </div>
-    <div id="info-panel" class="info-panel">📍 Click a red hotspot to explore specific regional challenges.</div>
+    <div id="info-panel" class="info-panel">📍 點擊地圖上的紅點查看該地區的具體教育挑戰。</div>
 </section>
 
 <section id="quiz">
-    <h2>SDG 4 Knowledge Challenge</h2>
-    <div class="quiz-card" id="quiz-ui">
-        <div id="q-text" style="font-size:1.3rem; margin-bottom:20px; font-weight:bold;"></div>
+    <h2>SDG 4 Quiz</h2>
+    <div class="quiz-card">
+        <h3 id="q-text"></h3>
         <div id="q-options"></div>
         <p id="quiz-fb" style="margin-top:15px; font-weight:bold;"></p>
     </div>
 </section>
 
 <section id="vote">
-    <h2>Your Voice Matters</h2>
+    <h2>Vote for Priority</h2>
     <div class="vote-grid">
-        <div class="vote-card"><p>Digital Equality</p><div class="progress-bar"><div id="v1" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v1')">Vote</button></div>
-        <div class="vote-card"><p>Teacher Training</p><div class="progress-bar"><div id="v2" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v2')">Vote</button></div>
-        <div class="vote-card"><p>School Environment</p><div class="progress-bar"><div id="v3" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v3')">Vote</button></div>
+        <div class="vote-card"><p>Digital Tools</p><div class="progress-bar"><div id="v1" class="progress-fill"></div></div><button class="btn" onclick="vote('v1')">Vote</button></div>
+        <div class="vote-card"><p>Teacher Support</p><div class="progress-bar"><div id="v2" class="progress-fill"></div></div><button class="btn" onclick="vote('v2')">Vote</button></div>
     </div>
 </section>
 
 <section id="feedback">
     <h2>Feedback</h2>
     <div class="feedback-box">
-        <input type="text" id="name" placeholder="Name">
-        <textarea id="message" rows="4" placeholder="Message"></textarea>
-        <button onclick="submitFeedback()" class="vote-btn">Submit</button>
+        <input type="text" id="fname" placeholder="Your Name" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
+        <textarea id="fmsg" placeholder="Your Feedback" rows="4" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;"></textarea>
+        <button class="btn" onclick="submitF()" style="margin-top:10px;">Submit</button>
+        <div id="f-list" style="margin-top:20px;"></div>
     </div>
-    <div id="feedback-list" style="max-width:650px; margin: 20px auto;"></div>
 </section>
 
 <footer><p>© 2026 SDG 4 Interactive Platform</p></footer>
@@ -179,49 +160,43 @@
     function showInfo(msg) { document.getElementById('info-panel').innerText = msg; }
 
     const quizData = [
-        { q: "What is the focus of SDG 4?", a: ["Quality Education", "No Poverty", "Climate Action"], c: 0 },
-        { q: "What is a barrier to digital education?", a: ["Too much sun", "Stable electricity", "New uniforms"], c: 1 },
-        { q: "Inclusive education means...", a: ["Only for boys", "Leaving no one behind", "Only for cities"], c: 1 }
+        { q: "SDG 4 的核心目標是什麼？", a: ["優質教育", "消除貧窮", "性別平等"], c: 0 },
+        { q: "數位鴻溝是指什麼？", a: ["年齡差距", "科技存取不平等", "視力問題"], c: 1 }
     ];
-
-    let currentQ = 0;
+    let curQ = 0;
     function loadQuiz() {
-        const data = quizData[currentQ];
-        document.getElementById('q-text').innerText = data.q;
-        const optBox = document.getElementById('q-options');
-        optBox.innerHTML = "";
-        data.a.forEach((opt, i) => {
+        const d = quizData[curQ];
+        document.getElementById('q-text').innerText = d.q;
+        const b = document.getElementById('q-options'); b.innerHTML = "";
+        d.a.forEach((o, i) => {
             const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
+            btn.className = 'option-btn'; btn.innerText = o;
             btn.onclick = () => {
-                if(i === data.c) {
-                    document.getElementById('quiz-fb').innerText = "Correct! ✨";
-                    currentQ = (currentQ + 1) % quizData.length;
+                if(i === d.c) {
+                    document.getElementById('quiz-fb').innerText = "正確！✨";
+                    curQ = (curQ + 1) % quizData.length;
                     setTimeout(loadQuiz, 1500);
-                } else {
-                    document.getElementById('quiz-fb').innerText = "Try again!";
-                }
+                } else { document.getElementById('quiz-fb').innerText = "再試一次！"; }
             };
-            optBox.appendChild(btn);
+            b.appendChild(btn);
         });
     }
 
     function vote(id) {
-        const bar = document.getElementById(id);
-        let w = parseInt(bar.style.width) || 10;
-        bar.style.width = Math.min(w + 10, 100) + "%";
+        const f = document.getElementById(id);
+        let w = parseInt(f.style.width) || 10;
+        f.style.width = Math.min(w + 15, 100) + "%";
     }
 
-    function submitFeedback() {
-        const name = document.getElementById('name').value;
-        const msg = document.getElementById('message').value;
-        if(!name || !msg) return;
-        const div = document.createElement('div');
-        div.style = "background:#eee; padding:10px; margin-bottom:10px; border-radius:5px;";
-        div.innerHTML = `<strong>${name}</strong>: ${msg}`;
-        document.getElementById('feedback-list').prepend(div);
-        document.getElementById('name').value = ""; document.getElementById('message').value = "";
+    function submitF() {
+        const n = document.getElementById('fname').value;
+        const m = document.getElementById('fmsg').value;
+        if(!n || !m) return;
+        const d = document.createElement('div');
+        d.style = "background:white; padding:10px; margin-top:10px; border-radius:5px; border-left:4px solid var(--primary-blue);";
+        d.innerHTML = `<strong>${n}</strong>: ${m}`;
+        document.getElementById('f-list').prepend(d);
+        document.getElementById('fname').value = ""; document.getElementById('fmsg').value = "";
     }
 
     window.onload = loadQuiz;
