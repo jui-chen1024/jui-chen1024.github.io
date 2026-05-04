@@ -108,6 +108,13 @@
             background: #eaf6f0;
         }
 
+        .region-layout {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
         .map-wrapper {
             max-width: 1000px;
             margin: 0 auto;
@@ -130,30 +137,30 @@
 
         .hotspot {
             position: absolute;
-            width: 14px;
-            height: 14px;
-            background: #ff4444;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
             cursor: pointer;
             transform: translate(-50%, -50%);
             z-index: 5;
+            border: 2px solid white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.35);
         }
 
         .hotspot:hover {
-            width: 18px;
-            height: 18px;
-            background: #ff0000;
+            width: 20px;
+            height: 20px;
         }
 
         .hotspot::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
+            top: -2px;
+            left: -2px;
             width: 100%;
             height: 100%;
+            border: 2px solid currentColor;
             border-radius: 50%;
-            background: #ff4444;
             animation: pulse 2.5s infinite;
         }
 
@@ -164,10 +171,61 @@
             }
 
             100% {
-                transform: scale(3.5);
+                transform: scale(3);
                 opacity: 0;
             }
         }
+
+        .region-list {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .region-list h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .region-list button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .region-list button:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .dot {
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .red { background: #f44336; color: #f44336; }
+        .orange { background: #ff9800; color: #ff9800; }
+        .yellow { background: #fbc02d; color: #fbc02d; }
+        .green { background: #4caf50; color: #4caf50; }
+        .blue { background: #2196f3; color: #2196f3; }
+        .purple { background: #9c27b0; color: #9c27b0; }
+        .pink { background: #e91e63; color: #e91e63; }
+        .brown { background: #795548; color: #795548; }
+        .teal { background: #009688; color: #009688; }
+        .black { background: #333; color: #333; }
 
         .info-panel {
             margin-top: 20px;
@@ -342,6 +400,10 @@
             section {
                 padding-top: 140px;
             }
+
+            .region-layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -388,32 +450,40 @@
 <section id="region">
     <h2>10 Areas Lacking Resources</h2>
 
-    <div class="map-wrapper">
-        <div class="map-container" id="map">
-<div class="hotspot" style="top: 46%; left: 45%;" onclick="showInfo('[Niger] One of the lowest literacy rates globally; female enrollment is limited.')"></div>
+    <div class="region-layout">
+        <div class="map-wrapper">
+            <div class="map-container" id="map">
+                <div class="hotspot red" style="top: 46%; left: 45%;" onclick="showRegion('Niger')"></div>
+                <div class="hotspot orange" style="top: 50%; left: 46.5%;" onclick="showRegion('Northern Nigeria')"></div>
+                <div class="hotspot yellow" style="top: 60%; left: 51%;" onclick="showRegion('DR Congo')"></div>
+                <div class="hotspot green" style="top: 54%; left: 56%;" onclick="showRegion('Ethiopia')"></div>
+                <div class="hotspot blue" style="top: 43%; left: 65%;" onclick="showRegion('Afghanistan')"></div>
+                <div class="hotspot purple" style="top: 49%; left: 69%;" onclick="showRegion('Bangladesh')"></div>
+                <div class="hotspot pink" style="top: 53%; left: 74%;" onclick="showRegion('Myanmar')"></div>
+                <div class="hotspot brown" style="top: 48%; left: 25%;" onclick="showRegion('Haiti')"></div>
+                <div class="hotspot teal" style="top: 64%; left: 32%;" onclick="showRegion('Rural Brazil')"></div>
+                <div class="hotspot black" style="top: 46%; left: 59%;" onclick="showRegion('Yemen')"></div>
+            </div>
+        </div>
 
-<div class="hotspot" style="top: 50%; left: 46.5%;" onclick="showInfo('[Northern Nigeria] Conflict prevents many children from safely entering classrooms.')"></div>
+        <div class="region-list">
+            <h3>Click a Region</h3>
 
-<div class="hotspot" style="top: 60%; left: 51%;" onclick="showInfo('[DR Congo] Rural schools lack basic furniture, textbooks, and sanitary facilities.')"></div>
-
-<div class="hotspot" style="top: 54%; left: 56%;" onclick="showInfo('[Ethiopia] Rural digitization is low, which makes remote learning difficult.')"></div>
-
-<div class="hotspot" style="top: 43%; left: 65%;" onclick="showInfo('[Afghanistan] Education access is limited, especially for girls.')"></div>
-
-<div class="hotspot" style="top: 49%; left: 69%;" onclick="showInfo('[Bangladesh] Flooding affects schools and learning spaces.')"></div>
-
-<div class="hotspot" style="top: 53%; left: 74%;" onclick="showInfo('[Myanmar] Conflict zones leave children without stable learning spaces.')"></div>
-
-<div class="hotspot" style="top: 48%; left: 25%;" onclick="showInfo('[Haiti] Disaster recovery affects school buildings and learning environments.')"></div>
-
-<div class="hotspot" style="top: 64%; left: 32%;" onclick="showInfo('[Rural Brazil] Students in remote areas may travel a long distance to school.')"></div>
-
-<div class="hotspot" style="top: 46%; left: 59%;" onclick="showInfo('[Yemen] War and famine have damaged schools and learning opportunities.')"></div>
-    
+            <button onclick="showRegion('Niger')"><span class="dot red"></span>Niger</button>
+            <button onclick="showRegion('Northern Nigeria')"><span class="dot orange"></span>Northern Nigeria</button>
+            <button onclick="showRegion('DR Congo')"><span class="dot yellow"></span>DR Congo</button>
+            <button onclick="showRegion('Ethiopia')"><span class="dot green"></span>Ethiopia</button>
+            <button onclick="showRegion('Afghanistan')"><span class="dot blue"></span>Afghanistan</button>
+            <button onclick="showRegion('Bangladesh')"><span class="dot purple"></span>Bangladesh</button>
+            <button onclick="showRegion('Myanmar')"><span class="dot pink"></span>Myanmar</button>
+            <button onclick="showRegion('Haiti')"><span class="dot brown"></span>Haiti</button>
+            <button onclick="showRegion('Rural Brazil')"><span class="dot teal"></span>Rural Brazil</button>
+            <button onclick="showRegion('Yemen')"><span class="dot black"></span>Yemen</button>
+        </div>
     </div>
 
     <div id="info-panel" class="info-panel">
-        📍 Click a red hotspot to explore specific regional challenges.
+        📍 Click a colored point or a region name to see why that area lacks educational resources.
     </div>
 </section>
 
@@ -498,8 +568,22 @@
 </footer>
 
 <script>
-    function showInfo(msg) {
-        document.getElementById('info-panel').innerText = msg;
+    const regionInfo = {
+        "Niger": "Niger lacks educational resources because of poverty, low literacy rates, limited school facilities, and low female enrollment.",
+        "Northern Nigeria": "Northern Nigeria faces conflict and safety problems, which prevent many children from attending school regularly.",
+        "DR Congo": "DR Congo has many rural schools without enough desks, textbooks, trained teachers, or clean sanitation facilities.",
+        "Ethiopia": "Ethiopia faces challenges in rural education because some areas lack electricity, internet access, and digital learning tools.",
+        "Afghanistan": "Afghanistan has limited education access, especially for girls, because of political restrictions and unstable conditions.",
+        "Bangladesh": "Bangladesh is affected by flooding and climate disasters, which can damage schools and interrupt students' learning.",
+        "Myanmar": "Myanmar has conflict zones where children often lose access to stable classrooms and safe learning environments.",
+        "Haiti": "Haiti lacks educational resources because earthquakes, storms, and poverty have damaged many school buildings.",
+        "Rural Brazil": "Rural Brazil faces education inequality because students in remote areas may travel long distances to reach school.",
+        "Yemen": "Yemen lacks educational resources because war and famine have damaged schools and reduced learning opportunities."
+    };
+
+    function showRegion(country) {
+        document.getElementById('info-panel').innerHTML =
+            "<strong>[" + country + "]</strong><br>" + regionInfo[country];
     }
 
     const quizData = [
