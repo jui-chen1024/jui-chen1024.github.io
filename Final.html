@@ -1,336 +1,287 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SDG 4 Quality Education</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 4: 優質教育 - 改變未來的力量</title>
+    <style>
+        /* 設計理念：簡潔、易讀、使用藍綠色調 */
+        :root {
+            --main-blue: #2c7da0;
+            --main-green: #468c45;
+            --light-gray: #f4f4f9;
+            --white: #ffffff;
+            --text-dark: #333;
+        }
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    html {
-      scroll-behavior: smooth;
-    }
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f7;
-      color: #222;
-      line-height: 1.6;
-    }
+        /* 導覽列 */
+        nav {
+            background-color: var(--white);
+            padding: 1rem 10%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: #0b9bb3;
-      padding: 15px 40px;
-      z-index: 1000;
-      text-align: center;
-    }
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--main-blue);
+        }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 18px;
-      font-weight: bold;
-      font-size: 16px;
-    }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
 
-    nav a:hover {
-      color: #dff7f2;
-      text-decoration: underline;
-    }
+        nav ul li {
+            margin-left: 2rem;
+        }
 
-    section {
-      min-height: 100vh;
-      padding: 100px 9% 70px;
-      background-color: #f2f1ed;
-      border-bottom: 12px solid #f4f6f7;
-      animation: fadeIn 1s ease;
-    }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
 
-    .hero {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 60px;
-    }
+        nav ul li a:hover {
+            color: var(--main-blue);
+        }
 
-    .hero-text {
-      flex: 1;
-    }
+        /* 區塊通用樣式 */
+        section {
+            padding: 100px 10% 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0; /* 初始隱藏，用於淡入動畫 */
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
 
-    .title {
-      font-size: 60px;
-      color: #0b9bb3;
-      font-weight: 900;
-      line-height: 0.95;
-      margin-bottom: 35px;
-      text-transform: uppercase;
-    }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .subtitle {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--main-blue);
+            border-left: 5px solid var(--main-green);
+            padding-left: 15px;
+        }
 
-    ul {
-      margin-left: 25px;
-      font-size: 22px;
-    }
+        /* 首頁樣式 */
+        #home {
+            background: linear-gradient(135deg, #e0f2f1 0%, #e1f5fe 100%);
+            text-align: center;
+            align-items: center;
+        }
 
-    li {
-      margin-bottom: 14px;
-    }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: var(--main-blue);
+            margin-bottom: 1rem;
+        }
 
-    .illustration {
-      flex: 1;
-      text-align: center;
-      font-size: 170px;
-      transition: 0.3s;
-    }
+        .cta-button {
+            margin-top: 2rem;
+            padding: 12px 30px;
+            background-color: var(--main-green);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
 
-    .illustration:hover {
-      transform: scale(1.08);
-    }
+        .cta-button:hover {
+            transform: scale(1.1); /* 懸停放大效果 */
+            background-color: #387037;
+        }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 25px;
-      margin-top: 40px;
-    }
+        /* 議題頁面樣式 - 卡片設計 */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
 
-    .card {
-      background-color: white;
-      padding: 25px;
-      border-radius: 18px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.12);
-      transition: 0.3s;
-    }
+        .card {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-    .card:hover {
-      transform: translateY(-10px);
-      background-color: #e7fbf7;
-    }
+        .card:hover {
+            transform: translateY(-10px); /* 懸停位移 */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: #ebf5fb;
+        }
 
-    .card h3 {
-      color: #0b9bb3;
-      margin-bottom: 12px;
-      font-size: 24px;
-    }
+        /* 解決方案樣式 */
+        .solution-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-bottom: 3px solid var(--main-green);
+        }
 
-    .card p {
-      font-size: 17px;
-    }
+        /* 資源連結樣式 */
+        .resource-link {
+            display: inline-block;
+            margin: 10px 0;
+            color: var(--main-blue);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
 
-    .two-column {
-      display: flex;
-      justify-content: space-between;
-      gap: 60px;
-      align-items: center;
-    }
+        .resource-link:hover {
+            text-decoration: underline;
+        }
 
-    .text-box {
-      flex: 1.3;
-    }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light-gray);
+            font-size: 0.9rem;
+        }
 
-    .source a {
-      display: block;
-      color: #222;
-      font-size: 22px;
-      margin: 15px 0 35px;
-      word-break: break-all;
-    }
-
-    .source strong {
-      font-size: 24px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      background-color: #0b9bb3;
-      color: white;
-      font-weight: bold;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 900px) {
-      .hero,
-      .two-column {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .title {
-        font-size: 42px;
-      }
-
-      ul {
-        text-align: left;
-        font-size: 18px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .illustration {
-        font-size: 110px;
-      }
-
-      nav a {
-        display: inline-block;
-        margin: 5px 8px;
-      }
-    }
-  </style>
+    </style>
 </head>
-
 <body>
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#layout">Page Layout</a>
-    <a href="#design">Design Concept</a>
-    <a href="#features">Features</a>
-    <a href="#ideas">Creative Ideas</a>
-    <a href="#sources">Sources</a>
-  </nav>
+    <nav>
+        <div class="logo">SDG 4 Quality Education</div>
+        <ul>
+            <li><a onclick="scrollToSection('home')">首頁</a></li>
+            <li><a onclick="scrollToSection('issues')">教育議題</a></li>
+            <li><a onclick="scrollToSection('solutions')">解決方案</a></li>
+            <li><a onclick="scrollToSection('resources')">學習資源</a></li>
+        </ul>
+    </nav>
 
-  <section id="home" class="hero">
-    <div class="illustration">👩‍🏫</div>
+    <section id="home" class="visible">
+        <div class="hero-content">
+            <h1>確保包容和公平的優質教育</h1>
+            <p>SDG 4 旨在確保人人享有包容、公平的優質教育，並提倡終身學習。</p>
+            <button class="cta-button" onclick="scrollToSection('issues')">了解現狀</button>
+        </div>
+    </section>
 
-    <div class="hero-text">
-      <h1 class="title">SDG Topic:<br>Quality<br>Education</h1>
-      <ul>
-        <li>help users quickly understand education issues</li>
-        <li>improve learning opportunities</li>
-        <li>provide clear and simple information about education</li>
-        <li>create an easy-to-use and user-friendly website</li>
-      </ul>
-    </div>
-  </section>
+    <section id="issues">
+        <h2>全球教育面臨的挑戰</h2>
+        <p>目前，全球仍有數百萬兒童無法獲得基本教育資源。</p>
+        <div class="card-container">
+            <div class="card">
+                <h3>資源不均</h3>
+                <p>偏遠地區缺乏基礎建設，師資力量薄弱，導致城鄉教育差距持續擴大。</p>
+            </div>
+            <div class="card">
+                <h3>受教權受限</h3>
+                <p>因貧窮、性別歧視或戰亂，許多學齡兒童被迫輟學，失去翻轉人生的機會。</p>
+            </div>
+            <div class="card">
+                <h3>數位落差</h3>
+                <p>缺乏網路與電腦設備，使得弱勢學生在遠距教學時代被遠遠拋在後頭。</p>
+            </div>
+        </div>
+    </section>
 
-  <section id="layout">
-    <h1 class="title">Page<br>Layout</h1>
+    <section id="solutions">
+        <h2>創新的解決之道</h2>
+        <p>透過科技與政策的結合，我們可以改變教育的未來。</p>
+        <div class="solution-item">
+            <div>
+                <h3>推動 E-Learning 數位學習</h3>
+                <p>利用網路平台提供免費教學影片與互動教材，打破地理限制。</p>
+            </div>
+        </div>
+        <div class="solution-item">
+            <div>
+                <h3>政府與組織支援</h3>
+                <p>呼籲各國政府增加教育預算，並由國際組織協助貧困地區興建學校。</p>
+            </div>
+        </div>
+        <div class="solution-item">
+            <div>
+                <h3>企業合作計畫</h3>
+                <p>鼓勵企業捐贈科技設備，並提供職業訓練機會，縮短產學落差。</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="cards">
-      <div class="card">
-        <h3>Home Page</h3>
-        <p>Introduces SDG 4 and provides a brief overview with visuals and navigation buttons.</p>
-      </div>
+    <section id="resources">
+        <h2>延伸學習資源</h2>
+        <p>點擊以下連結，了解更多關於優質教育的資訊：</p>
+        <div style="margin-top: 20px;">
+            <a href="https://www.un.org/sustainabledevelopment/education/" target="_blank" class="resource-link">● United Nations SDG 4 Website</a><br>
+            <a href="https://www.unesco.org/sdg4education2030" target="_blank" class="resource-link">● UNESCO Education 2030</a><br>
+            <a href="https://www.globalgoals.org/goals/4-quality-education/" target="_blank" class="resource-link">● Global Goals: Quality Education</a>
+        </div>
+    </section>
 
-      <div class="card">
-        <h3>Issues Page</h3>
-        <p>Shows global education problems, such as unequal resources and lack of access to education.</p>
-      </div>
+    <footer>
+        <p>© 2024 SDG 4 教育專題展示網頁 - 致力於公平的教育未來</p>
+    </footer>
 
-      <div class="card">
-        <h3>Solutions Page</h3>
-        <p>Presents possible solutions, like e-learning and support from governments or organizations.</p>
-      </div>
+    <script>
+        /* 平滑捲動功能 */
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            window.scrollTo({
+                top: element.offsetTop - 70, // 扣除導覽列高度
+                behavior: 'smooth'
+            });
+        }
 
-      <div class="card">
-        <h3>Resources Page</h3>
-        <p>Provides useful links and sources for further learning.</p>
-      </div>
-    </div>
-  </section>
+        /* 淡入動畫偵測 (Fade-in Animation) */
+        const sections = document.querySelectorAll('section');
+        
+        const observerOptions = {
+            threshold: 0.2
+        };
 
-  <section id="design" class="two-column">
-    <div class="text-box">
-      <h1 class="title">Design<br>Concept</h1>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-      <h2 class="subtitle">Visual Style</h2>
-      <ul>
-        <li>use blue and green as main color</li>
-        <li>use white and light gray as secondary colors</li>
-        <li>use simple illustrations or pictures</li>
-      </ul>
-
-      <h2 class="subtitle">Design Focus</h2>
-      <ul>
-        <li>simplicity, clarity, readability, and accessibility</li>
-        <li>engaging visuals</li>
-      </ul>
-    </div>
-
-    <div class="illustration">💡</div>
-  </section>
-
-  <section id="features">
-    <h1 class="title">Special<br>Features</h1>
-
-    <ul>
-      <li><strong>Interactive Navigation:</strong> Users can click the navigation bar to quickly move between different sections.</li>
-      <li><strong>Hover Effects:</strong> Cards or images will enlarge or change color when users move the mouse over them.</li>
-      <li><strong>Smooth Scrolling:</strong> When users click buttons, the page scrolls smoothly to the target section.</li>
-      <li><strong>Fade-in Animation:</strong> Content gradually appears when users scroll down the page.</li>
-    </ul>
-  </section>
-
-  <section id="ideas" class="two-column">
-    <div class="text-box">
-      <h1 class="title">Creative Ideas</h1>
-
-      <ul>
-        <li>Focus on <strong>user-friendly</strong> and intuitive design</li>
-        <li>Use <strong>visuals</strong> to simplify complex education issues</li>
-        <li>Provide a <strong>clear and structured</strong> learning experience</li>
-        <li>Enhance engagement through <strong>interactive elements</strong></li>
-        <li>Combine education with <strong>modern web design</strong></li>
-      </ul>
-    </div>
-
-    <div class="illustration">👥</div>
-  </section>
-
-  <section id="sources" class="source">
-    <h1 class="title">Sources of Content</h1>
-
-    <ul>
-      <li><strong>United Nations SDG Website</strong></li>
-    </ul>
-    <a href="https://www.un.org/sustainabledevelopment/education/" target="_blank">
-      https://www.un.org/sustainabledevelopment/education/
-    </a>
-
-    <ul>
-      <li><strong>UNESCO Education</strong></li>
-    </ul>
-    <a href="https://www.unesco.org/sdg4education2030" target="_blank">
-      https://www.unesco.org/sdg4education2030
-    </a>
-
-    <ul>
-      <li><strong>Global Goals Website</strong></li>
-    </ul>
-    <a href="https://www.globalgoals.org/goals/4-quality-education/" target="_blank">
-      https://www.globalgoals.org/goals/4-quality-education/
-    </a>
-  </section>
-
-  <footer>
-    SDG 4 Quality Education Website Project
-  </footer>
-
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
