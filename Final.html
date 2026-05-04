@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDG 4 永續教育互動平台 - 15題挑戰版</title>
+    <title>SDG 4: Global Education Equity</title>
     <style>
         :root {
             --primary-blue: #2c7da0;
@@ -13,11 +13,11 @@
             --text: #333;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', "Microsoft JhengHei", sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         body { background-color: var(--white); color: var(--text); line-height: 1.6; }
 
-        /* 導覽列 */
+        /* Navigation */
         nav {
             background: rgba(255,255,255,0.95); padding: 15px 5%; position: fixed; 
             width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between;
@@ -26,52 +26,59 @@
         .logo { font-weight: bold; color: var(--primary-blue); font-size: 1.5rem; }
         nav ul { display: flex; list-style: none; }
         nav ul li { margin-left: 20px; }
-        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; }
+        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; transition: 0.3s; }
+        nav ul li a:hover { color: var(--primary-green); }
 
         section { padding: 100px 8% 60px; min-height: 100vh; }
         h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 2.2rem; }
 
-        /* Region - 地圖優化 */
+        /* Home */
+        .intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .intro-card { background: var(--light-bg); padding: 25px; border-radius: 15px; border-left: 6px solid var(--primary-green); }
+
+        /* Region - 20 Precise Hotspots */
         .map-wrapper { max-width: 1000px; margin: 0 auto; position: relative; }
         .map-container { 
-            position: relative; width: 100%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+            position: relative; width: 100%; 
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
             background-size: contain; background-repeat: no-repeat; background-position: center;
-            background-color: #e0f2f1; aspect-ratio: 2 / 1; border-radius: 20px; border: 2px solid #cfd8dc;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-color: #e0f2f1; aspect-ratio: 2 / 1; border-radius: 20px; 
+            border: 2px solid #cfd8dc; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .hotspot {
-            position: absolute; width: 16px; height: 16px; background: #ff5252; border-radius: 50%; 
+            position: absolute; width: 14px; height: 14px; background: #ff4444; border-radius: 50%; 
             cursor: pointer; transform: translate(-50%, -50%); z-index: 5;
         }
+        .hotspot:hover { width: 18px; height: 18px; background: #ff0000; }
         .hotspot::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 50%; background: #ff5252; animation: pulse 2s infinite;
+            border-radius: 50%; background: #ff4444; animation: pulse 2.5s infinite;
         }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3.5); opacity: 0; } }
+        
         .info-panel { 
-            margin-top: 20px; padding: 20px; background: #fffde7; border-radius: 15px; 
-            min-height: 80px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
+            margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; 
+            min-height: 100px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
+            font-size: 1.1rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
-        /* Quiz - 15題挑戰樣式 */
-        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        /* Quiz */
+        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; }
         .quiz-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--primary-blue); }
-        .question-text { font-size: 1.3rem; margin-bottom: 25px; min-height: 60px; }
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .option-btn { 
-            padding: 15px; background: white; border: 2px solid #eee; border-radius: 10px; 
-            cursor: pointer; transition: 0.3s; font-size: 1rem; text-align: left;
+            display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; 
+            border: 2px solid #ddd; border-radius: 10px; cursor: pointer; transition: 0.3s; text-align: left;
         }
         .option-btn:hover { border-color: var(--primary-blue); background: #e3f2fd; }
-        .score-display { text-align: center; font-size: 1.5rem; color: var(--primary-green); margin-top: 20px; display: none; }
 
-        /* Vote 樣式簡化 */
+        /* Vote */
         .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
         .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 12px; text-align: center; }
-        .progress-bar { background: #eee; height: 10px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-        .progress-fill { background: var(--primary-green); height: 100%; width: 0%; transition: width 0.5s; }
+        .progress-bar { background: #eee; height: 12px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .progress-fill { background: var(--primary-green); height: 100%; width: 10%; transition: width 0.5s; }
+        .vote-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
 
-        footer { text-align: center; padding: 40px; background: #333; color: white; margin-top: 50px; }
+        footer { text-align: center; padding: 50px; background: #333; color: white; }
     </style>
 </head>
 <body>
@@ -81,160 +88,159 @@
     <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#region">Region</a></li>
-        <li><a href="#quiz">Quiz (15題)</a></li>
+        <li><a href="#quiz">Quiz</a></li>
         <li><a href="#vote">Vote</a></li>
     </ul>
 </nav>
 
-<!-- Home Section -->
 <section id="home">
-    <h2>教育不均現況</h2>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-        <div style="background:var(--light-bg); padding:20px; border-radius:10px;">
-            <h4 style="color:var(--primary-blue)">數位斷層</h4>
-            <p>低收入國家中，只有不到 20% 的家庭擁有網路連接，這使得數位學習成為一種奢侈。</p>
-        </div>
-        <div style="background:var(--light-bg); padding:20px; border-radius:10px;">
-            <h4 style="color:var(--primary-blue)">師資缺口</h4>
-            <p>撒哈拉以南非洲地區需要增加 1,500 萬名老師才能滿足基本教學需求。</p>
-        </div>
+    <h2>Global Education Resources</h2>
+    <div class="intro-grid">
+        <div class="intro-card"><h3>1. Digital Infrastructure</h3><p>High-speed internet and stable electricity are the gatekeepers of modern education. Yet, over 30% of schools globally lack these essentials.</p></div>
+        <div class="intro-card"><h3>2. Open Educational Resources (OER)</h3><p>Free digital materials can break the cycle of poverty, but many countries lack the resources to translate them into local languages.</p></div>
+        <div class="intro-card"><h3>3. Teacher Training</h3><p>Beyond textbooks, professional and fairly compensated teachers are the core resource for improving educational quality.</p></div>
     </div>
 </section>
 
-<!-- Region Section - 豐富紅點 -->
+<!-- Regional Hotspots Section -->
 <section id="region">
-    <h2>全球資源缺乏分佈</h2>
+    <h2>20 Areas Lacking Resources</h2>
     <div class="map-wrapper">
-        <div class="map-container">
-            <div class="hotspot" style="top: 40%; left: 15%;" onclick="showInfo('【北美偏鄉】即使是開發國家，原住民保留區仍面臨網路覆蓋不足問題。')"></div>
-            <div class="hotspot" style="top: 52%; left: 22%;" onclick="showInfo('【拉丁美洲】超過 5,000 萬學童缺乏基礎數學與閱讀能力的資源支持。')"></div>
-            <div class="hotspot" style="top: 58%; left: 45%;" onclick="showInfo('【西非】僅 20% 的學校有電力，學生放學後無法在燈光下閱讀。')"></div>
-            <div class="hotspot" style="top: 65%; left: 52%;" onclick="showInfo('【中非】缺乏乾淨水源，學生常因飲水病告假，影響學習連續性。')"></div>
-            <div class="hotspot" style="top: 45%; left: 62%;" onclick="showInfo('【中東】受衝突影響地區，超過 1/3 的學校建築已被完全摧毀。')"></div>
-            <div class="hotspot" style="top: 52%; left: 70%;" onclick="showInfo('【南亞】女童受教權受阻，平均每 10 位女童就有 3 位無法完成初等教育。')"></div>
-            <div class="hotspot" style="top: 60%; left: 82%;" onclick="showInfo('【東南亞群島】島嶼間資源分配極度不均，偏遠小島缺乏合格中學老師。')"></div>
-            <div class="hotspot" style="top: 40%; left: 88%;" onclick="showInfo('【東北亞邊陲】偏鄉地區師資老化，缺乏年輕活力的創新教學資源。')"></div>
+        <div class="map-container" id="map">
+            <!-- Africa (8 points) -->
+            <div class="hotspot" style="top: 52%; left: 45%;" onclick="showInfo('[Niger] One of the lowest literacy rates globally; female enrollment is extremely limited.')"></div>
+            <div class="hotspot" style="top: 58%; left: 48%;" onclick="showInfo('[Northern Nigeria] Persistent conflict prevents millions of children from safely entering classrooms.')"></div>
+            <div class="hotspot" style="top: 65%; left: 51%;" onclick="showInfo('[DR Congo] Rural schools lack basic furniture, textbooks, and sanitary facilities.')"></div>
+            <div class="hotspot" style="top: 60%; left: 55%;" onclick="showInfo('[Ethiopia] Rural digitization is below 15%, hindering remote learning initiatives.')"></div>
+            <div class="hotspot" style="top: 75%; left: 53%;" onclick="showInfo('[Malawi] Severe teacher shortages; average class sizes often exceed 70 students.')"></div>
+            <div class="hotspot" style="top: 55%; left: 52%;" onclick="showInfo('[Sudan] Educational infrastructure damage exceeds 40% due to ongoing instability.')"></div>
+            <div class="hotspot" style="top: 68%; left: 47%;" onclick="showInfo('[Angola] Inland mountainous regions suffer from a lack of qualified secondary educators.')"></div>
+            <div class="hotspot" style="top: 50%; left: 40%;" onclick="showInfo('[Mali] Extreme poverty forces children into agricultural labor, leading to high dropout rates.')"></div>
+
+            <!-- Asia/Oceania (6 points) -->
+            <div class="hotspot" style="top: 48%; left: 65%;" onclick="showInfo('[Afghanistan] Significant restrictions on female education and total resource disruption.')"></div>
+            <div class="hotspot" style="top: 52%; left: 71%;" onclick="showInfo('[Bangladesh] Frequent flooding requires \'floating schools\' which lack digital power.')"></div>
+            <div class="hotspot" style="top: 58%; left: 75%;" onclick="showInfo('[Myanmar] Conflict zones leave children without recognized curricula or stable learning spaces.')"></div>
+            <div class="hotspot" style="top: 63%; left: 81%;" onclick="showInfo('[Philippines] Archipelago geography makes textbook logistics extremely expensive and slow.')"></div>
+            <div class="hotspot" style="top: 68%; left: 78%;" onclick="showInfo('[Timor-Leste] Aging infrastructure lacks modern laboratory and computer equipment.')"></div>
+            <div class="hotspot" style="top: 55%; left: 68%;" onclick="showInfo('[Northern Pakistan] Insufficient power coverage in mountain areas prevents computer literacy.')"></div>
+
+            <!-- Latin America (4 points) -->
+            <div class="hotspot" style="top: 55%; left: 25%;" onclick="showInfo('[Haiti] Slow post-disaster reconstruction; many schools still operate under trees or in tents.')"></div>
+            <div class="hotspot" style="top: 62%; left: 22%;" onclick="showInfo('[Guatemala] Indigenous regions lack educational resources provided in native languages.')"></div>
+            <div class="hotspot" style="top: 72%; left: 28%;" onclick="showInfo('[Rural Brazil] Students in the Amazon may travel 3 hours by boat just to reach a school.')"></div>
+            <div class="hotspot" style="top: 80%; left: 30%;" onclick="showInfo('[Bolivia] High-altitude schools lack basic heating during harsh winter months.')"></div>
+
+            <!-- Middle East (2 points) -->
+            <div class="hotspot" style="top: 42%; left: 58%;" onclick="showInfo('[Syria] Years of conflict created a \'lost generation\' in desperate need of trauma-informed resources.')"></div>
+            <div class="hotspot" style="top: 45%; left: 62%;" onclick="showInfo('[Yemen] Famine and war have caused schools to be repurposed as shelters or military sites.')"></div>
         </div>
     </div>
-    <div id="info-panel" class="info-panel">📍 點擊紅點查看該地區教育痛點</div>
+    <div id="info-panel" class="info-panel">📍 Click a red hotspot to explore specific regional challenges.</div>
 </section>
 
-<!-- Quiz Section - 15題挑戰 -->
+<!-- Quiz Section -->
 <section id="quiz">
-    <h2>SDG 4 知識挑戰賽 (15題)</h2>
+    <h2>SDG 4 Knowledge Challenge (15 Questions)</h2>
     <div class="quiz-card" id="quiz-ui">
         <div class="quiz-header">
-            <span id="q-progress">第 1 / 15 題</span>
-            <span id="q-score">目前分數: 0</span>
+            <span id="q-progress">Loading...</span>
+            <span id="q-score">Score: 0</span>
         </div>
-        <p class="question-text" id="q-text">問題載入中...</p>
-        <div class="options-grid" id="q-options"></div>
-        <div id="quiz-fb" style="margin-top:20px; font-weight:bold; text-align:center; height: 30px;"></div>
+        <h3 id="q-text" style="margin-bottom:20px;"></h3>
+        <div id="q-options"></div>
+        <p id="quiz-fb" style="margin-top:20px; font-weight:bold; text-align:center;"></p>
     </div>
-    <div id="final-score" class="score-display">
-        <h3>挑戰結束！</h3>
-        <p>最終得分：<span id="res-score"></span> / 15</p>
-        <button onclick="resetQuiz()" style="margin-top:20px; padding:10px 20px; cursor:pointer;">重新挑戰</button>
+    <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
+        <h3>Challenge Complete!</h3>
+        <p style="font-size: 2rem; color: var(--primary-green); margin: 20px 0;" id="final-score-val"></p>
+        <button onclick="location.reload()" class="vote-btn">Retry Quiz</button>
     </div>
 </section>
 
 <!-- Vote Section -->
 <section id="vote">
-    <h2>你認為最該優先投入哪項資源？</h2>
+    <h2>Your Voice Matters</h2>
     <div class="vote-grid">
-        <div class="vote-card"><p>校園電力設備</p><div class="progress-bar"><div id="v1" class="progress-fill" style="width: 10%;"></div></div><button onclick="vote('v1')">投票</button></div>
-        <div class="vote-card"><p>數位學習平板</p><div class="progress-bar"><div id="v2" class="progress-fill" style="width: 15%;"></div></div><button onclick="vote('v2')">投票</button></div>
-        <div class="vote-card"><p>教師專業培訓</p><div class="progress-bar"><div id="v3" class="progress-fill" style="width: 25%;"></div></div><button onclick="vote('v3')">投票</button></div>
+        <div class="vote-card"><p>Digital Equality</p><div class="progress-bar"><div id="v1" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v1')">Vote</button></div>
+        <div class="vote-card"><p>Teacher Training</p><div class="progress-bar"><div id="v2" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v2')">Vote</button></div>
+        <div class="vote-card"><p>School Environment</p><div class="progress-bar"><div id="v3" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v3')">Vote</button></div>
     </div>
 </section>
 
 <footer>
-    <p>© 2026 SDG 4 互動平台 | 關注教育公平，翻轉孩子未來</p>
+    <p>© 2026 SDG 4 Interactive Platform | Empowering the Future through Education</p>
 </footer>
 
 <script>
-    // Region Info
     function showInfo(msg) {
         document.getElementById('info-panel').innerText = msg;
     }
 
-    // Quiz 15題庫
     const quizData = [
-        { q: "SDG 4 的核心目標是什麼？", a: ["普及精英教育", "確保公平高品質教育", "降低考試難度", "增加暑假長度"], c: 1 },
-        { q: "目前全球約有多少孩童與青少年處於失學狀態？", a: ["1千萬", "5千萬", "1.5億", "2.6億以上"], c: 3 },
-        { q: "在最貧窮國家，只有多少比例的學校擁有電力？", a: ["不到 40%", "約 60%", "約 80%", "接近 100%"], c: 0 },
-        { q: "哪種因素是導致女童失學的主要原因之一？", a: ["不喜歡讀書", "貧窮與性別偏見", "學校太漂亮", "課本太輕"], c: 1 },
-        { q: "SDG 4 期望在幾年達成普及教育目標？", a: ["2025", "2030", "2040", "2050"], c: 1 },
-        { q: "「數位落差」是指什麼之間的不平等？", a: ["身高", "存摺金額", "獲取科技資訊的能力", "體育成績"], c: 2 },
-        { q: "下列何者不屬於教育基礎設施？", a: ["乾淨水資源", "穩定的電力", "高級跑車", "安全的校舍"], c: 2 },
-        { q: "全球師資缺口最大的地區是？", a: ["北歐", "撒哈拉以南非洲", "北美", "東亞"], c: 1 },
-        { q: "優質教育應該提倡什麼樣的學習？", a: ["只有兒童學習", "只有工作學習", "終身學習", "考試完就停止學習"], c: 2 },
-        { q: "教育對貧窮的影響是？", a: ["沒有影響", "增加貧窮", "打破貧窮循環", "讓貧窮更有趣"], c: 2 },
-        { q: "開放式教育資源 (OER) 的好處是？", a: ["很貴", "免費且可合法改編", "只能在圖書館看", "沒有用處"], c: 1 },
-        { q: "包容性教育是指？", a: ["只教聰明的學生", "排斥身心障礙者", "接納所有特質的學習者", "限制學生人數"], c: 2 },
-        { q: "在疫情期間，什麼工具對教育最重要？", a: ["遊戲機", "數位遠距設備", "畫紙", "足球"], c: 1 },
-        { q: "政府應將多少比例的預算投入教育？", a: ["0%", "1%", "建議 15-20%", "90%"], c: 2 },
-        { q: "你參與這個網頁的目的是為了了解？", a: ["遊戲攻略", "SDG 4 與教育公平", "今日氣象", "烹飪技巧"], c: 1 }
+        { q: "What is the core focus of UN Sustainable Development Goal (SDG) 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
+        { q: "Approximately what percentage of primary schools globally lack electricity?", a: ["10%", "25%", "50%", "70%"], c: 1 },
+        { q: "Who does the concept of 'Lifelong Learning' include?", a: ["Children aged 6-12", "Teens only", "Adults 20-40", "Everyone regardless of age"], c: 3 },
+        { q: "In Sub-Saharan Africa, how many students are often assigned to one qualified teacher?", a: ["20 students", "40 students", "More than 60 students", "10 students"], c: 2 },
+        { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "High-end headphones", "Photocopiers"], c: 1 },
+        { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
+        { q: "SDG 4 aims to eliminate disparities between which groups?", a: ["Urban and Rural", "Rich and Poor", "Male and Female", "All of the above"], c: 3 },
+        { q: "What defines 'Open Educational Resources' (OER)?", a: ["Expensive private materials", "Copyright-locked books", "Free and openly accessible digital media", "Old newspapers"], c: 2 },
+        { q: "In low-income countries, out-of-school rates for girls are usually?", a: ["Lower than boys", "Higher than boys", "Exactly the same", "Non-existent"], c: 1 },
+        { q: "What is the primary goal of 'Inclusive Education'?", a: ["Teaching only the brightest", "Ensuring all students, including those with disabilities, have access", "High tuition costs", "Boys-only schools"], c: 1 },
+        { q: "The key to improving educational quality is?", a: ["Heavier backpacks", "Qualified and stable teachers", "More frequent exams", "Uniformity"], c: 1 },
+        { q: "The 2030 Agenda for education aims for?", a: ["Universal PhD degrees", "Universal smartphone ownership", "Free, equitable, and quality primary/secondary education for all", "Eliminating all homework"], c: 2 },
+        { q: "How does the 'Digital Divide' affect students?", a: ["It makes them gain weight", "It limits access to information and opportunities", "It increases sleep time", "No impact"], c: 1 },
+        { q: "Clean water in schools helps education by?", a: ["Raising tuition fees", "Reducing absenteeism due to illness", "Making students run faster", "Decorating the campus"], c: 1 },
+        { q: "To help rural education, the most direct way is?", a: ["Ignoring the issue", "Advocating for fair resource policy and funding", "Adding more homework", "Closing the schools"], c: 1 }
     ];
 
-    let currentIdx = 0;
+    let currentQ = 0;
     let score = 0;
 
-    function loadQuestion() {
-        if(currentIdx >= quizData.length) {
-            showResult();
+    function loadQuiz() {
+        if(currentQ >= quizData.length) {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('final-score-val').innerText = `${score} / 15`;
             return;
         }
-        const data = quizData[currentIdx];
-        document.getElementById('q-progress').innerText = `第 ${currentIdx + 1} / 15 題`;
+        const data = quizData[currentQ];
+        document.getElementById('q-progress').innerText = `Question: ${currentQ + 1} / 15`;
         document.getElementById('q-text').innerText = data.q;
-        const optGrid = document.getElementById('q-options');
-        optGrid.innerHTML = "";
-        data.a.forEach((ans, i) => {
+        const optBox = document.getElementById('q-options');
+        optBox.innerHTML = "";
+        data.a.forEach((opt, i) => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
-            btn.innerText = ans;
+            btn.innerText = opt;
             btn.onclick = () => checkAns(i);
-            optGrid.appendChild(btn);
+            optBox.appendChild(btn);
         });
         document.getElementById('quiz-fb').innerText = "";
     }
 
-    function checkAns(idx) {
+    function checkAns(i) {
         const fb = document.getElementById('quiz-fb');
-        if(idx === quizData[currentIdx].c) {
+        if(i === quizData[currentQ].c) {
             score++;
-            fb.innerText = "正確！✨"; fb.style.color = "green";
-            document.getElementById('q-score').innerText = `目前分數: ${score}`;
+            fb.innerText = "Correct! ✨"; fb.style.color = "green";
         } else {
-            fb.innerText = "答錯了...加油！❌"; fb.style.color = "red";
+            fb.innerText = "Wrong. Correct answer: " + quizData[currentQ].a[quizData[currentQ].c];
+            fb.style.color = "red";
         }
-        currentIdx++;
-        setTimeout(loadQuestion, 1200);
-    }
-
-    function showResult() {
-        document.getElementById('quiz-ui').style.display = "none";
-        const final = document.getElementById('final-score');
-        final.style.display = "block";
-        document.getElementById('res-score').innerText = score;
-    }
-
-    function resetQuiz() {
-        currentIdx = 0; score = 0;
-        document.getElementById('q-score').innerText = `目前分數: 0`;
-        document.getElementById('quiz-ui').style.display = "block";
-        document.getElementById('final-score').style.display = "none";
-        loadQuestion();
+        currentQ++;
+        setTimeout(loadQuiz, 1500);
     }
 
     function vote(id) {
-        const bar = document.getElementById(id);
-        let w = parseInt(bar.style.width);
-        if(w < 100) bar.style.width = (w + 10) + "%";
+        const bar = document.querySelector(`#${id}`);
+        let currentW = parseInt(bar.style.width) || 10;
+        if(currentW < 100) bar.style.width = (currentW + 10) + "%";
+        alert("Thank you for your vote!");
     }
 
-    window.onload = loadQuestion;
+    window.onload = loadQuiz;
 </script>
 
 </body>
