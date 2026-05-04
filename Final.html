@@ -3,386 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDG 4 永續教育平台 - 翻轉未來的力量</title>
+    <title>SDG 4 互動學習平台</title>
     <style>
-        /* --- 全域變數與重置 --- */
         :root {
             --primary-blue: #2c7da0;
             --primary-green: #468c45;
-            --accent-blue: #00b4d8;
             --light-gray: #f8f9fa;
-            --dark-text: #2d3436;
             --white: #ffffff;
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --dark-text: #333;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: var(--white); color: var(--dark-text); scroll-behavior: smooth; }
 
-        body {
-            background-color: var(--white);
-            color: var(--dark-text);
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
-
-        /* --- 導覽列 (Interactive Navigation) --- */
         nav {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 8%;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            background: white; padding: 15px 8%; position: fixed; width: 100%; top: 0;
+            z-index: 1000; display: flex; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 20px; cursor: pointer; font-weight: bold; }
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            letter-spacing: 1px;
-        }
+        section { padding: 100px 10%; min-height: 100vh; border-bottom: 1px solid #eee; }
+        h2 { color: var(--primary-blue); margin-bottom: 30px; text-align: center; font-size: 2rem; }
 
-        nav ul {
-            display: flex;
-            list-style: none;
+        /* --- Quiz 樣式 --- */
+        .quiz-container { background: var(--light-gray); padding: 30px; border-radius: 15px; max-width: 600px; margin: 0 auto; }
+        .quiz-option { 
+            background: white; border: 2px solid #ddd; padding: 15px; margin: 10px 0; 
+            border-radius: 8px; cursor: pointer; transition: 0.3s; 
         }
+        .quiz-option:hover { border-color: var(--primary-blue); background: #eefaff; }
 
-        nav ul li {
-            margin-left: 30px;
+        /* --- Region 樣式 --- */
+        .region-map { 
+            background: #e1f5fe; height: 300px; border-radius: 15px; 
+            display: flex; justify-content: center; align-items: center; position: relative;
         }
+        .hotspot {
+            width: 20px; height: 20px; background: red; border-radius: 50%; 
+            position: absolute; cursor: pointer; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
 
-        nav ul li a {
-            text-decoration: none;
-            color: var(--dark-text);
-            font-weight: 500;
-            font-size: 1rem;
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-        }
+        /* --- Vote 樣式 --- */
+        .vote-box { display: flex; justify-content: space-around; margin-top: 20px; }
+        .vote-item { text-align: center; flex: 1; margin: 0 10px; }
+        .bar-container { background: #eee; height: 200px; width: 40px; margin: 0 auto 10px; position: relative; border-radius: 5px; }
+        .bar { background: var(--primary-green); width: 100%; position: absolute; bottom: 0; transition: height 0.5s; border-radius: 5px; }
+        .vote-btn { padding: 10px; background: var(--primary-blue); color: white; border: none; border-radius: 5px; cursor: pointer; }
 
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary-green);
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover {
-            color: var(--primary-blue);
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        /* --- 區塊通用樣式 --- */
-        section {
-            padding: 120px 12% 80px;
-            min-height: 100vh;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-header {
-            margin-bottom: 50px;
-            text-align: center;
-        }
-
-        .section-header h2 {
-            font-size: 2.8rem;
-            color: var(--primary-blue);
-            margin-bottom: 15px;
-        }
-
-        .section-header .underline {
-            width: 60px;
-            height: 4px;
-            background: var(--primary-green);
-            margin: 0 auto;
-        }
-
-        /* --- 首頁 (Home) --- */
-        #home {
-            background: radial-gradient(circle at top right, #e0f2f1, #ffffff);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            line-height: 1.2;
-            margin-bottom: 25px;
-            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-desc {
-            font-size: 1.2rem;
-            max-width: 700px;
-            color: #666;
-            margin-bottom: 40px;
-        }
-
-        .btn-main {
-            padding: 15px 40px;
-            background-color: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(44, 125, 160, 0.3);
-        }
-
-        .btn-main:hover {
-            transform: translateY(-3px);
-            background-color: var(--primary-green);
-            box-shadow: 0 6px 20px rgba(70, 140, 69, 0.4);
-        }
-
-        /* --- 議題頁 (Issues) --- */
-        .issue-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .issue-card {
-            background: var(--light-gray);
-            padding: 40px 30px;
-            border-radius: 20px;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-
-        .issue-card:hover {
-            transform: scale(1.03); /* Hover Effects */
-            background: var(--white);
-            border-color: var(--accent-blue);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-        }
-
-        .issue-card h3 {
-            color: var(--primary-green);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        /* --- 解決方案 (Solutions) --- */
-        .sol-box {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .sol-content {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .sol-item {
-            margin-bottom: 35px;
-            padding-left: 20px;
-            border-left: 3px solid var(--primary-blue);
-        }
-
-        .sol-item h4 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            color: var(--primary-blue);
-        }
-
-        /* --- 資源頁 (Resources) --- */
-        .resource-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .res-item {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #eee;
-            transition: var(--transition);
-        }
-
-        .res-item:hover {
-            background-color: #f0f7ff;
-            transform: translateX(10px);
-        }
-
-        .res-item a {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        footer {
-            background: var(--dark-text);
-            color: #bdc3c7;
-            text-align: center;
-            padding: 40px 0;
-            font-size: 0.9rem;
-        }
-
-        /* 平滑捲動 */
-        html {
-            scroll-behavior: smooth;
-        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">EDU FUTURE</div>
-        <ul>
-            <li><a onclick="scrollToSection('home')">首頁</a></li>
-            <li><a onclick="scrollToSection('issues')">教育現況</a></li>
-            <li><a onclick="scrollToSection('solutions')">解決方案</a></li>
-            <li><a onclick="scrollToSection('resources')">參考資源</a></li>
-        </ul>
-    </nav>
+<nav>
+    <div style="color: var(--primary-blue); font-weight: bold;">SDG 4 INTERACTIVE</div>
+    <ul>
+        <li onclick="location.href='#quiz'">測驗 (Quiz)</li>
+        <li onclick="location.href='#region'">地圖 (Region)</li>
+        <li onclick="location.href='#vote'">投票 (Vote)</li>
+    </ul>
+</nav>
 
-    <!-- Page 1: Home -->
-    <section id="home" class="visible">
-        <h1 class="hero-title">SDG 4 <br> 優質教育</h1>
-        <p class="hero-desc">教育不應是特權，而是每個人的基本權利。我們致力於消除資源鴻溝，讓知識的光芒照向地球的每一個角落。</p>
-        <button class="btn-main" onclick="scrollToSection('issues')">開始探索</button>
-    </section>
+<!-- Quiz Section -->
+<section id="quiz">
+    <h2>知識小測驗</h2>
+    <div class="quiz-container">
+        <p id="question">Q: 下列哪一項不是 SDG 4 的核心目標？</p>
+        <div class="quiz-option" onclick="checkAnswer(false)">普及高等教育</div>
+        <div class="quiz-option" onclick="checkAnswer(true)">僅限城市居民受教</div>
+        <div class="quiz-option" onclick="checkAnswer(false)">提升師資品質</div>
+        <p id="feedback" style="margin-top: 15px; font-weight: bold;"></p>
+    </div>
+</section>
 
-    <!-- Page 2: Issues -->
-    <section id="issues">
-        <div class="section-header">
-            <h2>面臨的挑戰</h2>
-            <div class="underline"></div>
+<!-- Region Section -->
+<section id="region">
+    <h2>全球資源缺乏區域</h2>
+    <p style="text-align: center; margin-bottom: 20px;">點擊紅色閃爍點查看當地教育現況</p>
+    <div class="region-map">
+        <div class="hotspot" style="top: 40%; left: 20%;" onclick="showRegion('撒哈拉以南非洲：超過 30% 的學齡兒童失學。')"></div>
+        <div class="hotspot" style="top: 50%; left: 60%;" onclick="showRegion('南亞地區：師資培訓嚴重不足。')"></div>
+        <div style="font-weight: bold; color: #555;">[互動地圖示意區碼]</div>
+    </div>
+    <p id="region-info" style="text-align: center; margin-top: 20px; color: var(--primary-blue); font-weight: bold;"></p>
+</section>
+
+<!-- Vote Section -->
+<section id="vote">
+    <h2>你認為哪種解決方法最有效？</h2>
+    <div class="vote-box">
+        <div class="vote-item">
+            <div class="bar-container"><div id="bar1" class="bar" style="height: 30%;"></div></div>
+            <p>數位設備</p>
+            <button class="vote-btn" onclick="addVote('bar1')">投票</button>
         </div>
-        <div class="issue-grid">
-            <div class="issue-card">
-                <h3>地理性的資源匱乏</h3>
-                <p>偏鄉地區因交通不便，導致教學軟硬體更新緩慢。許多學生仍在使用十年前的教科書，且缺乏現代化的實驗設備。</p>
-            </div>
-            <div class="issue-card">
-                <h3>數位落差 (Digital Divide)</h3>
-                <p>在全球數位化的浪潮下，缺乏穩定電力與網路的學童被迫掉隊，無法享有 E-Learning 所帶來的便利與即時資訊。</p>
-            </div>
-            <div class="issue-card">
-                <h3>教育品質的不平等</h3>
-                <p>師資流動率高是偏鄉教育的痛點。缺乏專業培訓與激勵機制，使得學生的長期發展受到限制。</p>
-            </div>
+        <div class="vote-item">
+            <div class="bar-container"><div id="bar2" class="bar" style="height: 50%;"></div></div>
+            <p>增加師資</p>
+            <button class="vote-btn" onclick="addVote('bar2')">投票</button>
         </div>
-    </section>
-
-    <!-- Page 3: Solutions -->
-    <section id="solutions">
-        <div class="section-header">
-            <h2>我們的願景與方案</h2>
-            <div class="underline"></div>
+        <div class="vote-item">
+            <div class="bar-container"><div id="bar3" class="bar" style="height: 20%;"></div></div>
+            <p>免費教科書</p>
+            <button class="vote-btn" onclick="addVote('bar3')">投票</button>
         </div>
-        <div class="sol-box">
-            <div class="sol-content">
-                <div class="sol-item">
-                    <h4>普及化數位學習平台</h4>
-                    <p>開發低頻寬需求的學習 App，並與電信業者合作，為貧困家庭提供教育專用數據流量。</p>
-                </div>
-                <div class="sol-item">
-                    <h4>行動教室與師資認證</h4>
-                    <p>建立循環式的行動教學車，並透過線上認證系統提升當地教師的專業素養，確保教學品質。</p>
-                </div>
-                <div class="sol-item">
-                    <h4>國際資源媒合</h4>
-                    <p>建立全球性的「一對一」資源媒合系統，將城市閒置的教學設備精準配送至有需要的學校。</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Page 4: Resources -->
-    <section id="resources">
-        <div class="section-header">
-            <h2>延伸學習資源</h2>
-            <div class="underline"></div>
-        </div>
-        <div class="resource-list">
-            <div class="res-item">
-                <span>聯合國 SDG 4 官方網站</span>
-                <a href="https://www.un.org/sustainabledevelopment/education/" target="_blank">前往連結 →</a>
-            </div>
-            <div class="res-item">
-                <span>UNESCO 教育 2030 指導綱領</span>
-                <a href="https://www.unesco.org/sdg4education2030" target="_blank">前往連結 →</a>
-            </div>
-            <div class="res-item">
-                <span>The Global Goals - 優質教育專章</span>
-                <a href="https://www.globalgoals.org/goals/4-quality-education/" target="_blank">前往連結 →</a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2026 SDG 4 專題推廣網頁 | 致力於打造更公平的學習環境</p>
-    </footer>
-
-    <script>
-        /* --- 互動導覽：平滑捲動 --- */
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            const headerOffset = 70;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
+<script>
+    // Quiz Logic
+    function checkAnswer(isWrong) {
+        const f = document.getElementById('feedback');
+        if(isWrong) {
+            f.innerText = "正確！SDG 4 追求的是「公平」與「包容」，不能僅限於部分人群。";
+            f.style.color = "green";
+        } else {
+            f.innerText = "再試一次，這也是 SDG 4 的重要部分。";
+            f.style.color = "red";
         }
+    }
 
-        /* --- 淡入動畫 (Fade-in Animation) --- */
-        const observerOptions = {
-            threshold: 0.15
-        };
+    // Region Logic
+    function showRegion(info) {
+        document.getElementById('region-info').innerText = info;
+    }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+    // Vote Logic
+    function addVote(id) {
+        const bar = document.getElementById(id);
+        let currentHeight = parseInt(bar.style.height);
+        if(currentHeight < 100) {
+            bar.style.height = (currentHeight + 5) + "%";
+        }
+    }
+</script>
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-    </script>
 </body>
 </html>
