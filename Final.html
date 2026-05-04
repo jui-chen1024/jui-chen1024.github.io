@@ -13,11 +13,10 @@
             --text: #333;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         html { scroll-behavior: smooth; }
         body { background-color: var(--white); color: var(--text); line-height: 1.6; }
 
-        /* Navigation */
         nav {
             background: rgba(255,255,255,0.95); padding: 15px 5%; position: fixed; 
             width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between;
@@ -26,59 +25,45 @@
         .logo { font-weight: bold; color: var(--primary-blue); font-size: 1.5rem; }
         nav ul { display: flex; list-style: none; }
         nav ul li { margin-left: 20px; }
-        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; transition: 0.3s; }
-        nav ul li a:hover { color: var(--primary-green); }
+        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; }
 
         section { padding: 100px 8% 60px; min-height: 100vh; }
         h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 2.2rem; }
 
-        /* Home */
-        .intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .intro-card { background: var(--light-bg); padding: 25px; border-radius: 15px; border-left: 6px solid var(--primary-green); }
-
-        /* Region - 20 Precise Hotspots */
+        /* Map Section - Fixed Alignment */
         .map-wrapper { max-width: 1000px; margin: 0 auto; position: relative; }
         .map-container { 
             position: relative; width: 100%; 
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-            background-size: contain; background-repeat: no-repeat; background-position: center;
-            background-color: #e0f2f1; aspect-ratio: 2 / 1; border-radius: 20px; 
-            border: 2px solid #cfd8dc; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b3/World-map-2004-cia-factbook-large-1.7mb.jpg'); /* Detailed Map for better alignment */
+            background-size: 100% 100%;
+            aspect-ratio: 2 / 1; 
+            border-radius: 12px; 
+            border: 2px solid #ccc;
+            overflow: hidden;
         }
-        .hotspot {
-            position: absolute; width: 14px; height: 14px; background: #ff4444; border-radius: 50%; 
-            cursor: pointer; transform: translate(-50%, -50%); z-index: 5;
-        }
-        .hotspot:hover { width: 18px; height: 18px; background: #ff0000; }
-        .hotspot::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 50%; background: #ff4444; animation: pulse 2.5s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3.5); opacity: 0; } }
         
+        .hotspot {
+            position: absolute; width: 12px; height: 12px; background: #ff4444; border-radius: 50%; 
+            cursor: pointer; transform: translate(-50%, -50%); z-index: 5;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .hotspot::after {
+            content: ''; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%;
+            border-radius: 50%; background: rgba(255, 68, 68, 0.4); animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(0.3); opacity: 1; } 100% { transform: scale(1); opacity: 0; } }
+
         .info-panel { 
-            margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; 
-            min-height: 100px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
-            font-size: 1.1rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            margin-top: 20px; padding: 20px; background: #fffde7; border-radius: 10px; 
+            min-height: 80px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d;
         }
 
-        /* Quiz */
-        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; }
-        .quiz-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--primary-blue); }
-        .option-btn { 
-            display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; 
-            border: 2px solid #ddd; border-radius: 10px; cursor: pointer; transition: 0.3s; text-align: left;
-        }
-        .option-btn:hover { border-color: var(--primary-blue); background: #e3f2fd; }
+        /* Quiz & Others */
+        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 30px; border-radius: 20px; }
+        .option-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; }
+        .option-btn:hover { background: #e3f2fd; }
 
-        /* Vote */
-        .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 12px; text-align: center; }
-        .progress-bar { background: #eee; height: 12px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-        .progress-fill { background: var(--primary-green); height: 100%; width: 10%; transition: width 0.5s; }
-        .vote-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-
-        footer { text-align: center; padding: 50px; background: #333; color: white; }
+        footer { text-align: center; padding: 40px; background: #333; color: white; }
     </style>
 </head>
 <body>
@@ -95,81 +80,75 @@
 
 <section id="home">
     <h2>Global Education Resources</h2>
-    <div class="intro-grid">
-        <div class="intro-card"><h3>1. Digital Infrastructure</h3><p>High-speed internet and stable electricity are the gatekeepers of modern education. Yet, over 30% of schools globally lack these essentials.</p></div>
-        <div class="intro-card"><h3>2. Open Educational Resources (OER)</h3><p>Free digital materials can break the cycle of poverty, but many countries lack the resources to translate them into local languages.</p></div>
-        <div class="intro-card"><h3>3. Teacher Training</h3><p>Beyond textbooks, professional and fairly compensated teachers are the core resource for improving educational quality.</p></div>
-    </div>
-</section>
-
-<!-- Regional Hotspots Section -->
-<section id="region">
-    <h2>20 Areas Lacking Resources</h2>
-    <div class="map-wrapper">
-        <div class="map-container" id="map">
-            <!-- Africa (8 points) -->
-            <div class="hotspot" style="top: 52%; left: 45%;" onclick="showInfo('[Niger] One of the lowest literacy rates globally; female enrollment is extremely limited.')"></div>
-            <div class="hotspot" style="top: 58%; left: 48%;" onclick="showInfo('[Northern Nigeria] Persistent conflict prevents millions of children from safely entering classrooms.')"></div>
-            <div class="hotspot" style="top: 65%; left: 51%;" onclick="showInfo('[DR Congo] Rural schools lack basic furniture, textbooks, and sanitary facilities.')"></div>
-            <div class="hotspot" style="top: 60%; left: 55%;" onclick="showInfo('[Ethiopia] Rural digitization is below 15%, hindering remote learning initiatives.')"></div>
-            <div class="hotspot" style="top: 75%; left: 53%;" onclick="showInfo('[Malawi] Severe teacher shortages; average class sizes often exceed 70 students.')"></div>
-            <div class="hotspot" style="top: 55%; left: 52%;" onclick="showInfo('[Sudan] Educational infrastructure damage exceeds 40% due to ongoing instability.')"></div>
-            <div class="hotspot" style="top: 68%; left: 47%;" onclick="showInfo('[Angola] Inland mountainous regions suffer from a lack of qualified secondary educators.')"></div>
-            <div class="hotspot" style="top: 50%; left: 40%;" onclick="showInfo('[Mali] Extreme poverty forces children into agricultural labor, leading to high dropout rates.')"></div>
-
-            <!-- Asia/Oceania (6 points) -->
-            <div class="hotspot" style="top: 48%; left: 65%;" onclick="showInfo('[Afghanistan] Significant restrictions on female education and total resource disruption.')"></div>
-            <div class="hotspot" style="top: 52%; left: 71%;" onclick="showInfo('[Bangladesh] Frequent flooding requires \'floating schools\' which lack digital power.')"></div>
-            <div class="hotspot" style="top: 58%; left: 75%;" onclick="showInfo('[Myanmar] Conflict zones leave children without recognized curricula or stable learning spaces.')"></div>
-            <div class="hotspot" style="top: 63%; left: 81%;" onclick="showInfo('[Philippines] Archipelago geography makes textbook logistics extremely expensive and slow.')"></div>
-            <div class="hotspot" style="top: 68%; left: 78%;" onclick="showInfo('[Timor-Leste] Aging infrastructure lacks modern laboratory and computer equipment.')"></div>
-            <div class="hotspot" style="top: 55%; left: 68%;" onclick="showInfo('[Northern Pakistan] Insufficient power coverage in mountain areas prevents computer literacy.')"></div>
-
-            <!-- Latin America (4 points) -->
-            <div class="hotspot" style="top: 55%; left: 25%;" onclick="showInfo('[Haiti] Slow post-disaster reconstruction; many schools still operate under trees or in tents.')"></div>
-            <div class="hotspot" style="top: 62%; left: 22%;" onclick="showInfo('[Guatemala] Indigenous regions lack educational resources provided in native languages.')"></div>
-            <div class="hotspot" style="top: 72%; left: 28%;" onclick="showInfo('[Rural Brazil] Students in the Amazon may travel 3 hours by boat just to reach a school.')"></div>
-            <div class="hotspot" style="top: 80%; left: 30%;" onclick="showInfo('[Bolivia] High-altitude schools lack basic heating during harsh winter months.')"></div>
-
-            <!-- Middle East (2 points) -->
-            <div class="hotspot" style="top: 42%; left: 58%;" onclick="showInfo('[Syria] Years of conflict created a \'lost generation\' in desperate need of trauma-informed resources.')"></div>
-            <div class="hotspot" style="top: 45%; left: 62%;" onclick="showInfo('[Yemen] Famine and war have caused schools to be repurposed as shelters or military sites.')"></div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <div style="background: var(--light-bg); padding: 20px; border-radius: 10px; border-left: 5px solid var(--primary-green);">
+            <h3>Connectivity</h3>
+            <p>Access to electricity and internet remains the biggest barrier to digital learning in rural areas.</p>
+        </div>
+        <div style="background: var(--light-bg); padding: 20px; border-radius: 10px; border-left: 5px solid var(--primary-green);">
+            <h3>Materials</h3>
+            <p>Open Educational Resources (OER) are vital for providing high-quality textbooks to low-income regions.</p>
+        </div>
+        <div style="background: var(--light-bg); padding: 20px; border-radius: 10px; border-left: 5px solid var(--primary-green);">
+            <h3>Teachers</h3>
+            <p>Qualified teachers are the most important resource for sustainable student success.</p>
         </div>
     </div>
-    <div id="info-panel" class="info-panel">📍 Click a red hotspot to explore specific regional challenges.</div>
 </section>
 
-<!-- Quiz Section -->
+<section id="region">
+    <h2>20 Critical Resource Gaps</h2>
+    <div class="map-wrapper">
+        <div class="map-container">
+            <!-- NORTH AMERICA -->
+            <div class="hotspot" style="top: 30%; left: 15%;" onclick="showInfo('[Canada/North] Indigenous communities face severe high-speed internet shortages.')"></div>
+            
+            <!-- LATIN AMERICA -->
+            <div class="hotspot" style="top: 45%; left: 23%;" onclick="showInfo('[Haiti] Ongoing recovery from natural disasters has left school infrastructure in ruins.')"></div>
+            <div class="hotspot" style="top: 55%; left: 26%;" onclick="showInfo('[Guatemala] Lack of bilingual education resources for indigenous Mayan populations.')"></div>
+            <div class="hotspot" style="top: 65%; left: 33%;" onclick="showInfo('[Amazon Basin] Remote river communities lack access to secondary schools.')"></div>
+            <div class="hotspot" style="top: 78%; left: 31%;" onclick="showInfo('[Bolivia] Rural schools lack heating and basic supplies for high-altitude learning.')"></div>
+
+            <!-- AFRICA -->
+            <div class="hotspot" style="top: 42%; left: 46%;" onclick="showInfo('[Mali] High dropout rates as children are often needed for seasonal farming.')"></div>
+            <div class="hotspot" style="top: 50%; left: 47%;" onclick="showInfo('[Niger] Lowest literacy rate in the world; severe shortage of female teachers.')"></div>
+            <div class="hotspot" style="top: 55%; left: 52%;" onclick="showInfo('[Sudan] Conflict has damaged or closed over 40% of the country\'s schools.')"></div>
+            <div class="hotspot" style="top: 62%; left: 51%;" onclick="showInfo('[DR Congo] Extremely high cost of textbooks relative to average household income.')"></div>
+            <div class="hotspot" style="top: 75%; left: 55%;" onclick="showInfo('[Malawi] One of the highest student-to-teacher ratios (70:1) globally.')"></div>
+            <div class="hotspot" style="top: 58%; left: 56%;" onclick="showInfo('[Ethiopia] Severe digital gap in rural areas hinders mobile learning programs.')"></div>
+
+            <!-- MIDDLE EAST / CENTRAL ASIA -->
+            <div class="hotspot" style="top: 42%; left: 57%;" onclick="showInfo('[Syria] A decade of war has left millions of children out of school.')"></div>
+            <div class="hotspot" style="top: 48%; left: 60%;" onclick="showInfo('[Yemen] Poverty and war have turned schools into shelters or military targets.')"></div>
+            <div class="hotspot" style="top: 40%; left: 66%;" onclick="showInfo('[Afghanistan] Girls are currently banned from secondary and higher education.')"></div>
+
+            <!-- ASIA / OCEANIA -->
+            <div class="hotspot" style="top: 50%; left: 71%;" onclick="showInfo('[Pakistan] Mountainous regions lack stable electricity for computer labs.')"></div>
+            <div class="hotspot" style="top: 55%; left: 74%;" onclick="showInfo('[Bangladesh] Climate change leads to school flooding; mobile boat schools need power.')"></div>
+            <div class="hotspot" style="top: 62%; left: 82%;" onclick="showInfo('[Philippines] High logistics costs prevent textbooks from reaching remote islands.')"></div>
+            <div class="hotspot" style="top: 68%; left: 78%;" onclick="showInfo('[East Timor] Lack of technical and vocational training facilities for youth.')"></div>
+            <div class="hotspot" style="top: 58%; left: 86%;" onclick="showInfo('[Papua New Guinea] High linguistic diversity makes creating local-language materials difficult.')"></div>
+            <div class="hotspot" style="top: 80%; left: 85%;" onclick="showInfo('[Australia/Outback] Remote Aboriginal communities face significant educational funding gaps.')"></div>
+        </div>
+    </div>
+    <div id="info-panel" class="info-panel">📍 Click the red dots to see specific regional education gaps.</div>
+</section>
+
 <section id="quiz">
-    <h2>SDG 4 Knowledge Challenge (15 Questions)</h2>
+    <h2>SDG 4 Challenge (15 Questions)</h2>
     <div class="quiz-card" id="quiz-ui">
-        <div class="quiz-header">
-            <span id="q-progress">Loading...</span>
+        <div style="display:flex; justify-content: space-between; margin-bottom: 10px;">
+            <span id="q-progress">Question 1/15</span>
             <span id="q-score">Score: 0</span>
         </div>
-        <h3 id="q-text" style="margin-bottom:20px;"></h3>
+        <h3 id="q-text"></h3>
         <div id="q-options"></div>
-        <p id="quiz-fb" style="margin-top:20px; font-weight:bold; text-align:center;"></p>
-    </div>
-    <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
-        <h3>Challenge Complete!</h3>
-        <p style="font-size: 2rem; color: var(--primary-green); margin: 20px 0;" id="final-score-val"></p>
-        <button onclick="location.reload()" class="vote-btn">Retry Quiz</button>
-    </div>
-</section>
-
-<!-- Vote Section -->
-<section id="vote">
-    <h2>Your Voice Matters</h2>
-    <div class="vote-grid">
-        <div class="vote-card"><p>Digital Equality</p><div class="progress-bar"><div id="v1" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v1')">Vote</button></div>
-        <div class="vote-card"><p>Teacher Training</p><div class="progress-bar"><div id="v2" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v2')">Vote</button></div>
-        <div class="vote-card"><p>School Environment</p><div class="progress-bar"><div id="v3" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v3')">Vote</button></div>
+        <p id="quiz-fb" style="margin-top:15px; font-weight:bold; text-align:center;"></p>
     </div>
 </section>
 
 <footer>
-    <p>© 2026 SDG 4 Interactive Platform | Empowering the Future through Education</p>
+    <p>© 2026 SDG 4 Interactive Project | Education for All</p>
 </footer>
 
 <script>
@@ -178,70 +157,45 @@
     }
 
     const quizData = [
-        { q: "What is the core focus of UN Sustainable Development Goal (SDG) 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
-        { q: "Approximately what percentage of primary schools globally lack electricity?", a: ["10%", "25%", "50%", "70%"], c: 1 },
-        { q: "Who does the concept of 'Lifelong Learning' include?", a: ["Children aged 6-12", "Teens only", "Adults 20-40", "Everyone regardless of age"], c: 3 },
-        { q: "In Sub-Saharan Africa, how many students are often assigned to one qualified teacher?", a: ["20 students", "40 students", "More than 60 students", "10 students"], c: 2 },
-        { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "High-end headphones", "Photocopiers"], c: 1 },
-        { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
-        { q: "SDG 4 aims to eliminate disparities between which groups?", a: ["Urban and Rural", "Rich and Poor", "Male and Female", "All of the above"], c: 3 },
-        { q: "What defines 'Open Educational Resources' (OER)?", a: ["Expensive private materials", "Copyright-locked books", "Free and openly accessible digital media", "Old newspapers"], c: 2 },
-        { q: "In low-income countries, out-of-school rates for girls are usually?", a: ["Lower than boys", "Higher than boys", "Exactly the same", "Non-existent"], c: 1 },
-        { q: "What is the primary goal of 'Inclusive Education'?", a: ["Teaching only the brightest", "Ensuring all students, including those with disabilities, have access", "High tuition costs", "Boys-only schools"], c: 1 },
-        { q: "The key to improving educational quality is?", a: ["Heavier backpacks", "Qualified and stable teachers", "More frequent exams", "Uniformity"], c: 1 },
-        { q: "The 2030 Agenda for education aims for?", a: ["Universal PhD degrees", "Universal smartphone ownership", "Free, equitable, and quality primary/secondary education for all", "Eliminating all homework"], c: 2 },
-        { q: "How does the 'Digital Divide' affect students?", a: ["It makes them gain weight", "It limits access to information and opportunities", "It increases sleep time", "No impact"], c: 1 },
-        { q: "Clean water in schools helps education by?", a: ["Raising tuition fees", "Reducing absenteeism due to illness", "Making students run faster", "Decorating the campus"], c: 1 },
-        { q: "To help rural education, the most direct way is?", a: ["Ignoring the issue", "Advocating for fair resource policy and funding", "Adding more homework", "Closing the schools"], c: 1 }
+        { q: "What is SDG 4?", a: ["Gender Equality", "Quality Education", "No Poverty", "Climate Action"], c: 1 },
+        { q: "What is the primary barrier in rural areas?", a: ["Too many books", "Connectivity", "Short holidays", "New uniforms"], c: 1 },
+        { q: "Lifelong learning applies to whom?", a: ["Kids only", "Adults only", "Everyone", "Teachers only"], c: 2 },
+        { q: "Which region has the highest teacher shortage?", a: ["Europe", "Sub-Saharan Africa", "North America", "East Asia"], c: 1 },
+        { q: "What does OER stand for?", a: ["Open Educational Resources", "Online Education Room", "Official Exam Record"], c: 0 },
+        { q: "Digital divide refers to inequality in...", a: ["Height", "Internet Access", "Food", "Sports"], c: 1 },
+        { q: "Goal 4 aims for free education for...", a: ["College", "Primary & Secondary", "Preschool only"], c: 1 },
+        { q: "Inclusive education means...", a: ["Only for boys", "Only for rich", "Leaving no one behind", "Only for gifted"], c: 2 },
+        { q: "Literacy rates are lowest for which group?", a: ["Urban men", "Rural women", "City kids"], c: 1 },
+        { q: "How many children are out of school globally?", a: ["2 million", "260 million", "50 million"], c: 1 },
+        { q: "SDG 4 target year is...", a: ["2025", "2030", "2045", "2050"], c: 1 },
+        { q: "Vocational training helps with...", a: ["Gaming", "Job skills", "Sleeping", "Watching TV"], c: 1 },
+        { q: "Basic school infrastructure includes...", a: ["Pools", "Safe water & power", "Video games"], c: 1 },
+        { q: "Sustainable education means it is...", a: ["Short term", "Long term & resilient", "Very easy"], c: 1 },
+        { q: "A qualified teacher needs...", a: ["A car", "Proper training", "A loud voice"], c: 1 }
     ];
 
-    let currentQ = 0;
-    let score = 0;
-
+    let currentQ = 0; let score = 0;
     function loadQuiz() {
         if(currentQ >= quizData.length) {
-            document.getElementById('quiz-ui').style.display = 'none';
-            document.getElementById('quiz-result').style.display = 'block';
-            document.getElementById('final-score-val').innerText = `${score} / 15`;
+            document.getElementById('quiz-ui').innerHTML = `<h3>Finish! Final Score: ${score}/15</h3><button onclick="location.reload()" style="padding:10px; margin-top:10px; cursor:pointer;">Retry</button>`;
             return;
         }
         const data = quizData[currentQ];
-        document.getElementById('q-progress').innerText = `Question: ${currentQ + 1} / 15`;
+        document.getElementById('q-progress').innerText = `Question ${currentQ+1}/15`;
         document.getElementById('q-text').innerText = data.q;
-        const optBox = document.getElementById('q-options');
-        optBox.innerHTML = "";
+        const optBox = document.getElementById('q-options'); optBox.innerHTML = "";
         data.a.forEach((opt, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkAns(i);
+            const btn = document.createElement('button'); btn.className = 'option-btn'; btn.innerText = opt;
+            btn.onclick = () => {
+                if(i === data.c) { score++; document.getElementById('quiz-fb').innerText = "Correct! ✨"; }
+                else { document.getElementById('quiz-fb').innerText = "Wrong! ❌"; }
+                currentQ++; setTimeout(loadQuiz, 1000);
+            };
             optBox.appendChild(btn);
         });
-        document.getElementById('quiz-fb').innerText = "";
+        document.getElementById('q-score').innerText = `Score: ${score}`;
     }
-
-    function checkAns(i) {
-        const fb = document.getElementById('quiz-fb');
-        if(i === quizData[currentQ].c) {
-            score++;
-            fb.innerText = "Correct! ✨"; fb.style.color = "green";
-        } else {
-            fb.innerText = "Wrong. Correct answer: " + quizData[currentQ].a[quizData[currentQ].c];
-            fb.style.color = "red";
-        }
-        currentQ++;
-        setTimeout(loadQuiz, 1500);
-    }
-
-    function vote(id) {
-        const bar = document.querySelector(`#${id}`);
-        let currentW = parseInt(bar.style.width) || 10;
-        if(currentW < 100) bar.style.width = (currentW + 10) + "%";
-        alert("Thank you for your vote!");
-    }
-
     window.onload = loadQuiz;
 </script>
-
 </body>
 </html>
