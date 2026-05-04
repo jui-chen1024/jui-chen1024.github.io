@@ -18,7 +18,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         html { scroll-behavior: smooth; }
-        body { background-color: var(--white); color: var(--text); }
+        body { background-color: var(--white); color: var(--text); line-height: 1.6; }
 
         nav {
             background: white; padding: 15px 5%; position: fixed; 
@@ -30,20 +30,21 @@
         nav ul li { margin-left: 20px; }
         nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; }
 
-        section { padding: 100px 8% 60px; min-height: 100vh; }
-        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; }
+        section { padding: 120px 8% 60px; min-height: 100vh; }
+        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 2rem; }
 
-        /* 地圖區域 - 核心修正 */
-        .map-wrapper { max-width: 900px; margin: 0 auto; }
+        /* 地圖修正關鍵：使用 object-fit 確保圖片填滿，並以此比例計算座標 */
+        .map-wrapper { max-width: 1000px; margin: 0 auto; }
         .map-container { 
             position: relative; width: 100%; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-            background-size: 100% 100%; /* 強制背景與容器百分之百重合 */
+            background-size: 100% 100%; 
             background-repeat: no-repeat;
             background-color: #e0f2f1; 
-            aspect-ratio: 2 / 1; /* 嚴格固定地圖比例 */
-            border-radius: 12px; 
-            border: 1px solid #ddd;
+            aspect-ratio: 1.8 / 1; /* 修正比例使其更接近視覺圖案 */
+            border-radius: 15px; 
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         .hotspot {
             position: absolute; width: 14px; height: 14px; background: #ff4444; border-radius: 50%; 
@@ -53,24 +54,18 @@
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             border-radius: 50%; background: #ff4444; animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3.5); opacity: 0; } }
         
         .info-panel { 
-            margin-top: 20px; padding: 20px; background: #fffde7; border-radius: 10px; 
-            min-height: 60px; text-align: center; font-weight: bold; border: 1px dashed #fbc02d;
+            margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 12px; 
+            min-height: 80px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
         }
 
-        /* 其他元件 */
+        /* 其他區塊樣式 */
         .quiz-card, .feedback-box { max-width: 700px; margin: 0 auto; background: var(--light-bg); padding: 30px; border-radius: 15px; }
-        .option-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; background: white; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; text-align: left; }
-        .option-btn.correct { background: #e8f5e9; border-color: var(--correct); }
-        .option-btn.wrong { background: #ffebee; border-color: var(--wrong); }
-        .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 10px; text-align: center; }
-        .progress-bar { background: #eee; height: 10px; border-radius: 5px; margin: 10px 0; overflow: hidden; }
-        .progress-fill { background: var(--primary-green); height: 100%; width: 10%; transition: width 0.5s; }
-        .btn { background: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        footer { text-align: center; padding: 40px; background: #333; color: white; margin-top: 50px; }
+        .option-btn { display: block; width: 100%; padding: 12px; margin: 10px 0; background: white; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; }
+        .btn { background: var(--primary-blue); color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        footer { text-align: center; padding: 40px; background: #333; color: white; }
     </style>
 </head>
 <body>
@@ -87,44 +82,45 @@
 </nav>
 
 <section id="home">
-    <h2>Global Education Resources</h2>
-    <p style="text-align: center; max-width: 800px; margin: 0 auto;">SDG 4 致力於確保包容和公平的優質教育。點擊地圖紅點了解全球資源短缺現狀。</p>
+    <h2>20 Critical Resource Gaps</h2>
+    <p style="text-align:center; max-width: 800px; margin: 0 auto;">點擊紅點查看該地區在 SDG 4 優質教育目標下面臨的挑戰。</p>
 </section>
 
 <section id="region">
-    <h2>20 Critical Resource Gaps</h2>
     <div class="map-wrapper">
         <div class="map-container">
-            <!-- 南美與拉丁美洲 -->
-            <div class="hotspot" style="top: 25%; left: 35%;" onclick="showInfo('[North Atlantic] Ocean learning research zone.')"></div>
-            <div class="hotspot" style="top: 28%; left: 39%;" onclick="showInfo('[Caribbean] Educational infrastructure recovery.')"></div>
-            <div class="hotspot" style="top: 35%; left: 25%;" onclick="showInfo('[Central America] Indigenous language resources.')"></div>
-            <div class="hotspot" style="top: 33%; left: 30%;" onclick="showInfo('[Mexico South] Rural school connectivity.')"></div>
+            <!-- 根據 image_14.png 視覺對位修正的 20 個紅點座標 -->
+            
+            <!-- 美洲 (Left side) -->
+            <div class="hotspot" style="top: 30%; left: 24%;" onclick="showInfo('[Haiti] 災後重建基礎設施，數位資源極度匱乏。')"></div>
+            <div class="hotspot" style="top: 38%; left: 20%;" onclick="showInfo('[Guatemala] 偏鄉地區缺乏原住民語言教材。')"></div>
+            <div class="hotspot" style="top: 55%; left: 30%;" onclick="showInfo('[Amazon Brazil] 網路覆蓋率極低，遠距教學困難。')"></div>
+            <div class="hotspot" style="top: 65%; left: 28%;" onclick="showInfo('[Bolivia] 高海拔學校缺乏基礎取暖設施與數位設備。')"></div>
 
-            <!-- 非洲 (根據 image_13 修正) -->
-            <div class="hotspot" style="top: 43%; left: 45%;" onclick="showInfo('[Sahara Border] Digital literacy for nomadic tribes.')"></div>
-            <div class="hotspot" style="top: 48%; left: 47%;" onclick="showInfo('[West Africa] Basic textbook supply shortage.')"></div>
-            <div class="hotspot" style="top: 52%; left: 52%;" onclick="showInfo('[Nigeria] Classroom safety programs.')"></div>
-            <div class="hotspot" style="top: 55%; left: 48%;" onclick="showInfo('[Gulf of Guinea] Vocational training initiatives.')"></div>
-            <div class="hotspot" style="top: 47%; left: 41%;" onclick="showInfo('[Mali Region] Female student enrollment.')"></div>
-            <div class="hotspot" style="top: 51%; left: 34%;" onclick="showInfo('[Senegal Coast] Maritime education.')"></div>
-            <div class="hotspot" style="top: 59%; left: 40%;" onclick="showInfo('[Equatorial Africa] Teacher training centers.')"></div>
-            <div class="hotspot" style="top: 61%; left: 51%;" onclick="showInfo('[Congo Basin] Solar-powered schools.')"></div>
+            <!-- 非洲 (Middle) -->
+            <div class="hotspot" style="top: 45%; left: 46%;" onclick="showInfo('[Niger] 全球識字率最低的地區之一。')"></div>
+            <div class="hotspot" style="top: 50%; left: 49%;" onclick="showInfo('[Nigeria] 北部衝突影響兒童受教權。')"></div>
+            <div class="hotspot" style="top: 58%; left: 52%;" onclick="showInfo('[DR Congo] 偏鄉學校缺乏基本課桌椅與課本。')"></div>
+            <div class="hotspot" style="top: 52%; left: 56%;" onclick="showInfo('[Ethiopia] 數位落差使農村兒童難以取得學習資源。')"></div>
+            <div class="hotspot" style="top: 70%; left: 54%;" onclick="showInfo('[Malawi] 教師嚴重短缺導致大班制問題嚴重。')"></div>
+            <div class="hotspot" style="top: 49%; left: 53%;" onclick="showInfo('[Sudan] 持續的不穩定局勢損害教育體系。')"></div>
+            <div class="hotspot" style="top: 62%; left: 48%;" onclick="showInfo('[Angola] 內陸地區合格中學教師比例偏低。')"></div>
+            <div class="hotspot" style="top: 46%; left: 42%;" onclick="showInfo('[Mali] 貧窮與童工問題導致高輟學率。')"></div>
 
-            <!-- 中東與亞洲 -->
-            <div class="hotspot" style="top: 53%; left: 63%;" onclick="showInfo('[Arabian Peninsula] Modern STEM labs.')"></div>
-            <div class="hotspot" style="top: 60%; left: 62%;" onclick="showInfo('[Yemen] Post-conflict school rebuilding.')"></div>
-            <div class="hotspot" style="top: 63%; left: 60%;" onclick="showInfo('[East Africa Coast] Port city literacy.')"></div>
-            <div class="hotspot" style="top: 66%; left: 57%;" onclick="showInfo('[Ethiopia Delta] Agricultural tech education.')"></div>
-            <div class="hotspot" style="top: 71%; left: 54%;" onclick="showInfo('[South Africa] Rural university access.')"></div>
+            <!-- 中東與亞洲 (Right) -->
+            <div class="hotspot" style="top: 40%; left: 60%;" onclick="showInfo('[Syria] 戰後急需重建遭破壞的校園。')"></div>
+            <div class="hotspot" style="top: 43%; left: 63%;" onclick="showInfo('[Yemen] 長期衝突導致教育系統停擺。')"></div>
+            <div class="hotspot" style="top: 42%; left: 68%;" onclick="showInfo('[Afghanistan] 女性受教權利受到嚴格限制。')"></div>
+            <div class="hotspot" style="top: 48%; left: 74%;" onclick="showInfo('[Bangladesh] 氣候災難頻繁摧毀沿海學校。')"></div>
+            <div class="hotspot" style="top: 55%; left: 78%;" onclick="showInfo('[Myanmar] 偏遠山區缺乏穩定的學習環境。')"></div>
+            <div class="hotspot" style="top: 62%; left: 84%;" onclick="showInfo('[Philippines] 島嶼地理環境增加資源分配難度。')"></div>
 
-            <!-- 大洋洲與東南亞 -->
-            <div class="hotspot" style="top: 75%; left: 49%;" onclick="showInfo('[Indonesia] Remote island learning tools.')"></div>
-            <div class="hotspot" style="top: 78%; left: 44%;" onclick="showInfo('[Central Australia] Aboriginal educational equity.')"></div>
-            <div class="hotspot" style="top: 83%; left: 48%;" onclick="showInfo('[East Australia] Sustainability education.')"></div>
+            <!-- 大洋洲 -->
+            <div class="hotspot" style="top: 75%; left: 80%;" onclick="showInfo('[Northern Australia] 偏遠地區數位教育資源不足。')"></div>
+            <div class="hotspot" style="top: 82%; left: 83%;" onclick="showInfo('[Solomon Islands] 海平面上升威脅校舍安全。')"></div>
         </div>
     </div>
-    <div id="info-panel" class="info-panel">📍 點擊地圖上的紅點查看該地區的具體教育挑戰。</div>
+    <div id="info-panel" class="info-panel">📍 點擊地圖上的紅點探索各地的資源缺口。</div>
 </section>
 
 <section id="quiz">
@@ -137,31 +133,31 @@
 </section>
 
 <section id="vote">
-    <h2>Vote for Priority</h2>
-    <div class="vote-grid">
-        <div class="vote-card"><p>Digital Tools</p><div class="progress-bar"><div id="v1" class="progress-fill"></div></div><button class="btn" onclick="vote('v1')">Vote</button></div>
-        <div class="vote-card"><p>Teacher Support</p><div class="progress-bar"><div id="v2" class="progress-fill"></div></div><button class="btn" onclick="vote('v2')">Vote</button></div>
+    <h2>優先關注領域投票</h2>
+    <div class="quiz-card" style="text-align: center;">
+        <p>你認為哪項資源最應優先投入？</p>
+        <button class="btn" onclick="alert('感謝投票：數位設備')">數位設備</button>
+        <button class="btn" onclick="alert('感謝投票：師資培訓')">師資培訓</button>
     </div>
 </section>
 
 <section id="feedback">
-    <h2>Feedback</h2>
+    <h2>意見回饋</h2>
     <div class="feedback-box">
-        <input type="text" id="fname" placeholder="Your Name" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
-        <textarea id="fmsg" placeholder="Your Feedback" rows="4" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;"></textarea>
-        <button class="btn" onclick="submitF()" style="margin-top:10px;">Submit</button>
+        <textarea id="fmsg" placeholder="輸入您的建議..." rows="4" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;"></textarea>
+        <button class="btn" onclick="submitF()" style="margin-top:10px;">送出回饋</button>
         <div id="f-list" style="margin-top:20px;"></div>
     </div>
 </section>
 
-<footer><p>© 2026 SDG 4 Interactive Platform</p></footer>
+<footer><p>© 2026 SDG 4 互動學習平台</p></footer>
 
 <script>
     function showInfo(msg) { document.getElementById('info-panel').innerText = msg; }
 
     const quizData = [
-        { q: "SDG 4 的核心目標是什麼？", a: ["優質教育", "消除貧窮", "性別平等"], c: 0 },
-        { q: "數位鴻溝是指什麼？", a: ["年齡差距", "科技存取不平等", "視力問題"], c: 1 }
+        { q: "SDG 4 的核心目標是？", a: ["優質教育", "消除貧窮", "氣候行動"], c: 0 },
+        { q: "下列何者是提升偏鄉教育的關鍵？", a: ["昂貴的制服", "穩定的電力與網路", "更多的測驗"], c: 1 }
     ];
     let curQ = 0;
     function loadQuiz() {
@@ -182,21 +178,14 @@
         });
     }
 
-    function vote(id) {
-        const f = document.getElementById(id);
-        let w = parseInt(f.style.width) || 10;
-        f.style.width = Math.min(w + 15, 100) + "%";
-    }
-
     function submitF() {
-        const n = document.getElementById('fname').value;
         const m = document.getElementById('fmsg').value;
-        if(!n || !m) return;
+        if(!m) return;
         const d = document.createElement('div');
-        d.style = "background:white; padding:10px; margin-top:10px; border-radius:5px; border-left:4px solid var(--primary-blue);";
-        d.innerHTML = `<strong>${n}</strong>: ${m}`;
+        d.style = "background:white; padding:10px; margin-top:10px; border-radius:5px; border-left:4px solid #2c7da0;";
+        d.innerText = m;
         document.getElementById('f-list').prepend(d);
-        document.getElementById('fname').value = ""; document.getElementById('fmsg').value = "";
+        document.getElementById('fmsg').value = "";
     }
 
     window.onload = loadQuiz;
