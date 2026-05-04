@@ -21,9 +21,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--white);
@@ -54,9 +52,7 @@
             list-style: none;
         }
 
-        nav ul li {
-            margin-left: 20px;
-        }
+        nav ul li { margin-left: 20px; }
 
         nav ul li a {
             text-decoration: none;
@@ -66,9 +62,7 @@
             transition: 0.3s;
         }
 
-        nav ul li a:hover {
-            color: var(--primary-green);
-        }
+        nav ul li a:hover { color: var(--primary-green); }
 
         section {
             padding: 100px 8% 60px;
@@ -108,7 +102,6 @@
             background: #eaf6f0;
         }
 
-        /* ===== 地圖 ===== */
         .region-layout {
             display: grid;
             grid-template-columns: 3fr 1fr;
@@ -129,7 +122,6 @@
         .map-img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
             display: block;
         }
 
@@ -143,6 +135,11 @@
             cursor: pointer;
             z-index: 10;
             box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        }
+
+        .hotspot:hover {
+            width: 22px;
+            height: 22px;
         }
 
         .red { background:#f44336; }
@@ -177,6 +174,11 @@
             border-radius: 8px;
             cursor: pointer;
             text-align: left;
+            font-weight: bold;
+        }
+
+        .region-list button:hover {
+            background: #e3f2fd;
         }
 
         .dot {
@@ -189,10 +191,16 @@
 
         .info-panel {
             margin-top: 20px;
-            padding: 20px;
+            padding: 25px;
             background: #fffde7;
-            border-radius: 10px;
+            border-radius: 15px;
+            min-height: 100px;
             text-align: center;
+            font-weight: bold;
+            border: 2px dashed #fbc02d;
+            color: #5d4037;
+            font-size: 1.1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
         .quiz-card {
@@ -270,9 +278,7 @@
             margin-top: 10px;
         }
 
-        .vote-btn:hover {
-            background: var(--primary-green);
-        }
+        .vote-btn:hover { background: var(--primary-green); }
 
         .feedback-box {
             max-width: 650px;
@@ -351,9 +357,7 @@
                 margin: 5px 10px;
             }
 
-            section {
-                padding-top: 140px;
-            }
+            section { padding-top: 140px; }
 
             .region-layout {
                 grid-template-columns: 1fr;
@@ -408,7 +412,17 @@
         <div class="map-wrapper">
             <div class="map-container" id="map">
 
-                <img class="map-img" src="https://raw.githubusercontent.com/datasets/geo-countries/master/img/world-map.png" alt="World Map">
+                <svg class="map-img" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="1000" height="500" fill="#e0f2f1"/>
+
+                    <path d="M115 120 C170 70,270 80,310 135 C350 185,305 235,245 225 C180 215,95 195,115 120Z" fill="#bdbdbd"/>
+                    <path d="M300 245 C355 280,365 360,330 435 C295 390,270 330,285 280Z" fill="#bdbdbd"/>
+                    <path d="M465 115 C520 90,575 110,585 150 C545 170,500 160,465 115Z" fill="#bdbdbd"/>
+                    <path d="M500 185 C565 180,615 230,595 325 C575 390,500 370,480 300 C460 250,470 210,500 185Z" fill="#bdbdbd"/>
+                    <path d="M580 125 C705 75,860 110,915 180 C860 235,725 245,620 200 C580 180,560 150,580 125Z" fill="#bdbdbd"/>
+                    <path d="M780 330 C840 310,900 330,915 370 C860 395,800 380,780 330Z" fill="#bdbdbd"/>
+                    <path d="M110 455 C280 430,450 430,620 450 C760 465,880 455,950 440" fill="none" stroke="#bdbdbd" stroke-width="18" opacity="0.7"/>
+                </svg>
 
                 <div class="hotspot red" style="top: 46%; left: 45%;" onclick="showRegion('Niger')"></div>
                 <div class="hotspot orange" style="top: 50%; left: 46.5%;" onclick="showRegion('Northern Nigeria')"></div>
@@ -595,7 +609,6 @@
         }
 
         currentQ++;
-
         setTimeout(loadQuiz, 1500);
     }
 
