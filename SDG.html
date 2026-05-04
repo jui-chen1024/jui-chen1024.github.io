@@ -1,92 +1,682 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SDG 4: Global Education Equity</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 4: Global Education Equity</title>
 
-<style>
-:root {
-    --primary-blue: #2c7da0;
-    --primary-green: #468c45;
-    --light-bg: #f4f7f6;
-    --white: #ffffff;
-    --text: #333;
-}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-body {
-    margin: 0;
-    font-family: sans-serif;
-}
+    <style>
+        :root {
+            --primary-blue: #2c7da0;
+            --primary-green: #468c45;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --text: #333;
+        }
 
-.map-container {
-    position: relative;
-    width: 100%;
-    max-width: 1000px;
-    margin: 100px auto;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    aspect-ratio: 2/1;
-    background-color: #e0f2f1;
-    border-radius: 20px;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-.hotspot {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background: red;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-}
-</style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.95);
+            padding: 15px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-weight: bold;
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-green);
+        }
+
+        section {
+            padding: 100px 8% 60px;
+            min-height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+        }
+
+        .intro-text {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 35px;
+            font-size: 1.2rem;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .intro-card {
+            background: var(--light-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid var(--primary-green);
+            transition: 0.3s;
+        }
+
+        .intro-card:hover {
+            transform: translateY(-8px);
+            background: #eaf6f0;
+        }
+
+        #edu-map {
+            height: 520px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 20px;
+            border: 2px solid #cfd8dc;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .info-panel {
+            max-width: 1000px;
+            margin: 20px auto 0;
+            padding: 25px;
+            background: #fffde7;
+            border-radius: 15px;
+            min-height: 100px;
+            text-align: center;
+            font-weight: bold;
+            border: 2px dashed #fbc02d;
+            color: #5d4037;
+            font-size: 1.1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .quiz-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--light-bg);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary-blue);
+            background: #e3f2fd;
+        }
+
+        .vote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .vote-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .progress-bar {
+            background: #eee;
+            height: 12px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--primary-green);
+            height: 100%;
+            width: 10%;
+            transition: width 0.5s;
+        }
+
+        .vote-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .vote-btn:hover {
+            background: var(--primary-green);
+        }
+
+        .feedback-box {
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--light-bg);
+            padding: 35px;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .feedback-box label {
+            font-weight: bold;
+            margin-top: 10px;
+            color: var(--primary-blue);
+        }
+
+        .feedback-box input,
+        .feedback-box textarea,
+        .feedback-box select {
+            margin: 8px 0 15px;
+            padding: 13px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .feedback-box input:focus,
+        .feedback-box textarea:focus,
+        .feedback-box select:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+        }
+
+        #feedback-msg {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .feedback-list {
+            max-width: 650px;
+            margin: 30px auto 0;
+        }
+
+        .feedback-item {
+            background: white;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary-green);
+            border-radius: 10px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            background: #333;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul {
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            section {
+                padding-top: 140px;
+            }
+
+            #edu-map {
+                height: 420px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<h2 style="text-align:center;">20 Areas Lacking Resources</h2>
+<nav>
+    <div class="logo">EDU Action</div>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#region">Region</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#vote">Vote</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+    </ul>
+</nav>
 
-<div class="map-container">
+<section id="home">
+    <h2>Global Education Resources</h2>
 
-<!-- 非洲 -->
-<div class="hotspot" style="top:49%; left:49%;" onclick="showInfo('Niger')"></div>
-<div class="hotspot" style="top:51%; left:47%;" onclick="showInfo('Northern Nigeria')"></div>
-<div class="hotspot" style="top:67%; left:52%;" onclick="showInfo('DR Congo')"></div>
-<div class="hotspot" style="top:58%; left:56%;" onclick="showInfo('Ethiopia')"></div>
-<div class="hotspot" style="top:74%; left:54%;" onclick="showInfo('Malawi')"></div>
-<div class="hotspot" style="top:45%; left:54%;" onclick="showInfo('Sudan')"></div>
-<div class="hotspot" style="top:72%; left:49%;" onclick="showInfo('Angola')"></div>
-<div class="hotspot" style="top:48%; left:45%;" onclick="showInfo('Mali')"></div>
+    <p class="intro-text">
+        This website introduces SDG 4: Quality Education. It helps users understand global education issues,
+        explore areas lacking resources, learn possible solutions, and interact through quizzes, voting, and feedback.
+    </p>
 
-<!-- 亞洲 -->
-<div class="hotspot" style="top:43%; left:63%;" onclick="showInfo('Afghanistan')"></div>
-<div class="hotspot" style="top:52%; left:69%;" onclick="showInfo('Bangladesh')"></div>
-<div class="hotspot" style="top:56%; left:72%;" onclick="showInfo('Myanmar')"></div>
-<div class="hotspot" style="top:61%; left:79%;" onclick="showInfo('Philippines')"></div>
-<div class="hotspot" style="top:72%; left:77%;" onclick="showInfo('Timor-Leste')"></div>
-<div class="hotspot" style="top:47%; left:66%;" onclick="showInfo('Northern Pakistan')"></div>
+    <div class="intro-grid">
+        <div class="intro-card">
+            <h3>1. Digital Infrastructure</h3>
+            <p>High-speed internet and stable electricity are important resources for modern education.</p>
+        </div>
 
-<!-- 美洲 -->
-<div class="hotspot" style="top:54%; left:27%;" onclick="showInfo('Haiti')"></div>
-<div class="hotspot" style="top:55%; left:22%;" onclick="showInfo('Guatemala')"></div>
-<div class="hotspot" style="top:72%; left:34%;" onclick="showInfo('Brazil')"></div>
-<div class="hotspot" style="top:78%; left:31%;" onclick="showInfo('Bolivia')"></div>
+        <div class="intro-card">
+            <h3>2. Open Educational Resources</h3>
+            <p>Free digital materials can help students learn without being limited by money or location.</p>
+        </div>
 
-<!-- 中東 -->
-<div class="hotspot" style="top:40%; left:55%;" onclick="showInfo('Syria')"></div>
-<div class="hotspot" style="top:49%; left:58%;" onclick="showInfo('Yemen')"></div>
+        <div class="intro-card">
+            <h3>3. Teacher Training</h3>
+            <p>Professional and fairly supported teachers are essential for improving education quality.</p>
+        </div>
+    </div>
+</section>
 
-</div>
+<section id="region">
+    <h2>20 Areas Lacking Resources</h2>
 
-<p id="info" style="text-align:center; font-weight:bold;"></p>
+    <div id="edu-map"></div>
+
+    <div id="info-panel" class="info-panel">
+        📍 Click a red marker to explore specific regional challenges.
+    </div>
+</section>
+
+<section id="quiz">
+    <h2>SDG 4 Knowledge Challenge</h2>
+
+    <div class="quiz-card" id="quiz-ui">
+        <div class="quiz-header">
+            <span id="q-progress">Loading...</span>
+            <span id="q-score">Score: 0</span>
+        </div>
+
+        <h3 id="q-text" style="margin-bottom:20px;"></h3>
+        <div id="q-options"></div>
+        <p id="quiz-fb" style="margin-top:20px; font-weight:bold; text-align:center;"></p>
+    </div>
+
+    <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
+        <h3>Challenge Complete!</h3>
+        <p style="font-size: 2rem; color: var(--primary-green); margin: 20px 0;" id="final-score-val"></p>
+        <button onclick="restartQuiz()" class="vote-btn">Retry Quiz</button>
+    </div>
+</section>
+
+<section id="vote">
+    <h2>Your Voice Matters</h2>
+
+    <div class="vote-grid">
+        <div class="vote-card">
+            <p>Digital Equality</p>
+            <div class="progress-bar"><div id="v1" class="progress-fill"></div></div>
+            <button class="vote-btn" onclick="vote('v1')">Vote</button>
+        </div>
+
+        <div class="vote-card">
+            <p>Teacher Training</p>
+            <div class="progress-bar"><div id="v2" class="progress-fill"></div></div>
+            <button class="vote-btn" onclick="vote('v2')">Vote</button>
+        </div>
+
+        <div class="vote-card">
+            <p>School Environment</p>
+            <div class="progress-bar"><div id="v3" class="progress-fill"></div></div>
+            <button class="vote-btn" onclick="vote('v3')">Vote</button>
+        </div>
+    </div>
+</section>
+
+<section id="feedback">
+    <h2>Give Us Your Feedback</h2>
+
+    <div class="feedback-box">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Your Name">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Your Email">
+
+        <label for="rating">Rating</label>
+        <select id="rating">
+            <option value="">Choose a rating</option>
+            <option value="5">★★★★★ Excellent</option>
+            <option value="4">★★★★ Good</option>
+            <option value="3">★★★ Normal</option>
+            <option value="2">★★ Needs Improvement</option>
+            <option value="1">★ Poor</option>
+        </select>
+
+        <label for="message">Feedback</label>
+        <textarea id="message" rows="5" placeholder="Your feedback..."></textarea>
+
+        <button onclick="submitFeedback()" class="vote-btn">Submit Feedback</button>
+
+        <p id="feedback-msg"></p>
+    </div>
+
+    <div class="feedback-list" id="feedback-list"></div>
+</section>
+
+<footer>
+    <p>© 2026 SDG 4 Interactive Platform | Empowering the Future through Education</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-function showInfo(msg) {
-    document.getElementById("info").innerText = msg;
-}
+    const eduMap = L.map('edu-map').setView([15, 20], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(eduMap);
+
+    const redIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    const locations = [
+        {
+            name: "Niger",
+            coords: [17.6078, 8.0817],
+            info: "[Niger] One of the lowest literacy rates globally; female enrollment is limited."
+        },
+        {
+            name: "Northern Nigeria",
+            coords: [12.0022, 8.5920],
+            info: "[Northern Nigeria] Conflict prevents many children from safely entering classrooms."
+        },
+        {
+            name: "DR Congo",
+            coords: [-4.0383, 21.7587],
+            info: "[DR Congo] Rural schools lack basic furniture, textbooks, and sanitary facilities."
+        },
+        {
+            name: "Ethiopia",
+            coords: [9.1450, 40.4897],
+            info: "[Ethiopia] Rural digitization is low, which makes remote learning difficult."
+        },
+        {
+            name: "Malawi",
+            coords: [-13.2543, 34.3015],
+            info: "[Malawi] Teacher shortages cause very large class sizes."
+        },
+        {
+            name: "Sudan",
+            coords: [12.8628, 30.2176],
+            info: "[Sudan] Ongoing instability damages educational infrastructure."
+        },
+        {
+            name: "Angola",
+            coords: [-11.2027, 17.8739],
+            info: "[Angola] Some inland regions lack qualified secondary educators."
+        },
+        {
+            name: "Mali",
+            coords: [17.5707, -3.9962],
+            info: "[Mali] Poverty causes high dropout rates because some children need to work."
+        },
+        {
+            name: "Afghanistan",
+            coords: [33.9391, 67.7100],
+            info: "[Afghanistan] Education access is limited, especially for girls."
+        },
+        {
+            name: "Bangladesh",
+            coords: [23.6850, 90.3563],
+            info: "[Bangladesh] Flooding affects schools and learning spaces."
+        },
+        {
+            name: "Myanmar",
+            coords: [21.9162, 95.9560],
+            info: "[Myanmar] Conflict zones leave children without stable learning spaces."
+        },
+        {
+            name: "Philippines",
+            coords: [12.8797, 121.7740],
+            info: "[Philippines] Island geography makes education resources harder to deliver."
+        },
+        {
+            name: "Timor-Leste",
+            coords: [-8.8742, 125.7275],
+            info: "[Timor-Leste] Some schools lack modern laboratory and computer equipment."
+        },
+        {
+            name: "Northern Pakistan",
+            coords: [35.9208, 74.3089],
+            info: "[Northern Pakistan] Mountain areas may lack enough power and digital resources."
+        },
+        {
+            name: "Haiti",
+            coords: [18.9712, -72.2852],
+            info: "[Haiti] Disaster recovery affects school buildings and learning environments."
+        },
+        {
+            name: "Guatemala",
+            coords: [15.7835, -90.2308],
+            info: "[Guatemala] Indigenous regions may lack learning materials in native languages."
+        },
+        {
+            name: "Rural Brazil",
+            coords: [-10.3333, -53.2000],
+            info: "[Rural Brazil] Students in remote areas may travel a long distance to school."
+        },
+        {
+            name: "Bolivia",
+            coords: [-16.2902, -63.5887],
+            info: "[Bolivia] High-altitude schools may lack heating and basic facilities."
+        },
+        {
+            name: "Syria",
+            coords: [34.8021, 38.9968],
+            info: "[Syria] Conflict has disrupted education for many children."
+        },
+        {
+            name: "Yemen",
+            coords: [15.5527, 48.5164],
+            info: "[Yemen] War and famine have damaged schools and learning opportunities."
+        }
+    ];
+
+    locations.forEach(place => {
+        L.marker(place.coords, { icon: redIcon })
+            .addTo(eduMap)
+            .bindPopup(`<strong>${place.name}</strong><br>${place.info}`)
+            .on('click', function () {
+                document.getElementById('info-panel').innerText = place.info;
+            });
+    });
+
+    const quizData = [
+        { q: "What is the core focus of UN Sustainable Development Goal 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
+        { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "Headphones", "Photocopiers"], c: 1 },
+        { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
+        { q: "What defines Open Educational Resources?", a: ["Expensive private materials", "Copyright-locked books", "Free and openly accessible learning materials", "Old newspapers"], c: 2 },
+        { q: "What is the goal of Inclusive Education?", a: ["Teaching only the brightest students", "Helping all students access education", "Increasing tuition", "Creating boys-only schools"], c: 1 }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function loadQuiz() {
+        if (currentQ >= quizData.length) {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('final-score-val').innerText = score + " / " + quizData.length;
+            return;
+        }
+
+        const data = quizData[currentQ];
+        document.getElementById('q-progress').innerText = "Question: " + (currentQ + 1) + " / " + quizData.length;
+        document.getElementById('q-score').innerText = "Score: " + score;
+        document.getElementById('q-text').innerText = data.q;
+
+        const optBox = document.getElementById('q-options');
+        optBox.innerHTML = "";
+
+        data.a.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAns(i);
+            optBox.appendChild(btn);
+        });
+
+        document.getElementById('quiz-fb').innerText = "";
+    }
+
+    function checkAns(i) {
+        const fb = document.getElementById('quiz-fb');
+
+        if (i === quizData[currentQ].c) {
+            score++;
+            fb.innerText = "Correct! ✨";
+            fb.style.color = "green";
+        } else {
+            fb.innerText = "Wrong. Correct answer: " + quizData[currentQ].a[quizData[currentQ].c];
+            fb.style.color = "red";
+        }
+
+        currentQ++;
+        setTimeout(loadQuiz, 1500);
+    }
+
+    function restartQuiz() {
+        currentQ = 0;
+        score = 0;
+        document.getElementById('quiz-ui').style.display = 'block';
+        document.getElementById('quiz-result').style.display = 'none';
+        loadQuiz();
+    }
+
+    function vote(id) {
+        const bar = document.getElementById(id);
+        let currentW = parseInt(bar.style.width) || 10;
+
+        if (currentW < 100) {
+            bar.style.width = (currentW + 10) + "%";
+        }
+
+        alert("Thank you for your vote!");
+    }
+
+    function submitFeedback() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const rating = document.getElementById("rating").value;
+        const message = document.getElementById("message").value.trim();
+        const msgBox = document.getElementById("feedback-msg");
+        const feedbackList = document.getElementById("feedback-list");
+
+        if (name === "" || email === "" || rating === "" || message === "") {
+            msgBox.innerText = "Please fill in all fields!";
+            msgBox.style.color = "red";
+            return;
+        }
+
+        msgBox.innerText = "Thank you for your feedback! 💚";
+        msgBox.style.color = "green";
+
+        const item = document.createElement("div");
+        item.className = "feedback-item";
+
+        const title = document.createElement("h3");
+        title.textContent = name;
+
+        const rate = document.createElement("p");
+        rate.innerHTML = "<strong>Rating:</strong> " + "★".repeat(Number(rating));
+
+        const text = document.createElement("p");
+        text.textContent = message;
+
+        item.appendChild(title);
+        item.appendChild(rate);
+        item.appendChild(text);
+
+        feedbackList.prepend(item);
+
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("rating").value = "";
+        document.getElementById("message").value = "";
+    }
+
+    window.onload = loadQuiz;
 </script>
 
 </body>
