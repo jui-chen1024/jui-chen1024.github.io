@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDG 4 Quality Education</title>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #222;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #1199ad;
+      padding: 15px 0;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 25px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      color: #dfffe8;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 100px 80px 60px;
+      box-sizing: border-box;
+    }
+
+    .home {
+      background-color: #eeeeea;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+    }
+
+    .text-box {
+      max-width: 600px;
+    }
+
+    h1 {
+      color: #1199ad;
+      font-size: 70px;
+      line-height: 0.95;
+      margin-bottom: 30px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      color: #1199ad;
+      font-size: 55px;
+      margin-bottom: 25px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    p, li {
+      font-size: 22px;
+      line-height: 1.6;
+    }
+
+    .illustration {
+      font-size: 150px;
+      text-align: center;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      background-color: #e6f8f5;
+    }
+
+    .card h3 {
+      color: #1199ad;
+      font-size: 28px;
+      margin-top: 0;
+    }
+
+    .resources a {
+      color: #1199ad;
+      font-size: 22px;
+      word-break: break-all;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.8s;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      background-color: #1199ad;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+      nav a {
+        margin: 0 8px;
+        font-size: 14px;
+      }
+
+      .home {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 45px;
+      }
+
+      h2 {
+        font-size: 40px;
+      }
+
+      section {
+        padding: 90px 30px 50px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#issues">Issues</a>
+    <a href="#solutions">Solutions</a>
+    <a href="#resources">Resources</a>
+  </nav>
+
+  <section id="home" class="home fade-in">
+    <div class="illustration">👩‍🏫📚</div>
+
+    <div class="text-box">
+      <h1>SDG Topic:<br>Quality<br>Education</h1>
+      <ul>
+        <li>help users quickly understand education issues</li>
+        <li>improve learning opportunities</li>
+        <li>provide clear and simple information about education</li>
+        <li>create an easy-to-use and user-friendly website</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="issues" class="fade-in">
+    <h2>Issues Page</h2>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Unequal Resources</h3>
+        <p>Many students do not have enough books, teachers, classrooms, or learning tools.</p>
+      </div>
+
+      <div class="card">
+        <h3>Lack of Access</h3>
+        <p>Some children cannot go to school because of poverty, distance, or social problems.</p>
+      </div>
+
+      <div class="card">
+        <h3>Digital Gap</h3>
+        <p>Not every student has internet access or digital devices for online learning.</p>
+      </div>
+
+      <div class="card">
+        <h3>Learning Quality</h3>
+        <p>Some students attend school but still do not receive quality education.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="solutions" class="fade-in">
+    <h2>Solutions Page</h2>
+
+    <div class="cards">
+      <div class="card">
+        <h3>E-learning</h3>
+        <p>Online learning platforms can help students learn anytime and anywhere.</p>
+      </div>
+
+      <div class="card">
+        <h3>Government Support</h3>
+        <p>Governments can provide funding, better schools, and more teacher training.</p>
+      </div>
+
+      <div class="card">
+        <h3>Community Help</h3>
+        <p>Organizations and volunteers can support students with resources and tutoring.</p>
+      </div>
+
+      <div class="card">
+        <h3>Inclusive Education</h3>
+        <p>Education should be available for all students, including girls, poor children, and disabled students.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="resources" class="resources fade-in">
+    <h2>Resources Page</h2>
+
+    <ul>
+      <li>
+        <strong>United Nations SDG Website</strong><br>
+        <a href="https://www.un.org/sustainabledevelopment/education/" target="_blank">
+          https://www.un.org/sustainabledevelopment/education/
+        </a>
+      </li>
+
+      <br>
+
+      <li>
+        <strong>UNESCO Education</strong><br>
+        <a href="https://www.unesco.org/sdg4education2030" target="_blank">
+          https://www.unesco.org/sdg4education2030
+        </a>
+      </li>
+
+      <br>
+
+      <li>
+        <strong>Global Goals Website</strong><br>
+        <a href="https://www.globalgoals.org/goals/4-quality-education/" target="_blank">
+          https://www.globalgoals.org/goals/4-quality-education/
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    SDG 4: Quality Education | Website Design Project
+  </footer>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    function showElements() {
+      fadeElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (elementTop < windowHeight - 100) {
+          element.classList.add('show');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', showElements);
+    window.addEventListener('load', showElements);
+  </script>
+
+</body>
+</html>
