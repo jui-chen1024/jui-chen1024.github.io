@@ -3,35 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDG 4: 優質教育 - 改變未來的力量</title>
+    <title>SDG 4 永續教育平台 - 翻轉未來的力量</title>
     <style>
-        /* 設計理念：簡潔、易讀、使用藍綠色調 */
+        /* --- 全域變數與重置 --- */
         :root {
-            --main-blue: #2c7da0;
-            --main-green: #468c45;
-            --light-gray: #f4f4f9;
+            --primary-blue: #2c7da0;
+            --primary-green: #468c45;
+            --accent-blue: #00b4d8;
+            --light-gray: #f8f9fa;
+            --dark-text: #2d3436;
             --white: #ffffff;
-            --text-dark: #333;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
         }
 
         body {
             background-color: var(--white);
-            color: var(--text-dark);
-            line-height: 1.6;
+            color: var(--dark-text);
+            line-height: 1.8;
             overflow-x: hidden;
         }
 
-        /* 導覽列 */
+        /* --- 導覽列 (Interactive Navigation) --- */
         nav {
-            background-color: var(--white);
-            padding: 1rem 10%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 8%;
             position: fixed;
             width: 100%;
             top: 0;
@@ -39,13 +42,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
 
-        nav .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--main-blue);
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            letter-spacing: 1px;
         }
 
         nav ul {
@@ -54,31 +58,45 @@
         }
 
         nav ul li {
-            margin-left: 2rem;
+            margin-left: 30px;
         }
 
         nav ul li a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: var(--dark-text);
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 1rem;
+            transition: var(--transition);
             cursor: pointer;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-green);
+            transition: var(--transition);
         }
 
         nav ul li a:hover {
-            color: var(--main-blue);
+            color: var(--primary-blue);
         }
 
-        /* 區塊通用樣式 */
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* --- 區塊通用樣式 --- */
         section {
-            padding: 100px 10% 60px;
+            padding: 120px 12% 80px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            opacity: 0; /* 初始隱藏，用於淡入動畫 */
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
         section.visible {
@@ -86,189 +104,272 @@
             transform: translateY(0);
         }
 
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--main-blue);
-            border-left: 5px solid var(--main-green);
-            padding-left: 15px;
-        }
-
-        /* 首頁樣式 */
-        #home {
-            background: linear-gradient(135deg, #e0f2f1 0%, #e1f5fe 100%);
+        .section-header {
+            margin-bottom: 50px;
             text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .section-header .underline {
+            width: 60px;
+            height: 4px;
+            background: var(--primary-green);
+            margin: 0 auto;
+        }
+
+        /* --- 首頁 (Home) --- */
+        #home {
+            background: radial-gradient(circle at top right, #e0f2f1, #ffffff);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            color: var(--main-blue);
-            margin-bottom: 1rem;
+        .hero-title {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .cta-button {
-            margin-top: 2rem;
-            padding: 12px 30px;
-            background-color: var(--main-green);
+        .hero-desc {
+            font-size: 1.2rem;
+            max-width: 700px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .btn-main {
+            padding: 15px 40px;
+            background-color: var(--primary-blue);
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: transform 0.3s, background-color 0.3s;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(44, 125, 160, 0.3);
         }
 
-        .cta-button:hover {
-            transform: scale(1.1); /* 懸停放大效果 */
-            background-color: #387037;
+        .btn-main:hover {
+            transform: translateY(-3px);
+            background-color: var(--primary-green);
+            box-shadow: 0 6px 20px rgba(70, 140, 69, 0.4);
         }
 
-        /* 議題頁面樣式 - 卡片設計 */
-        .card-container {
+        /* --- 議題頁 (Issues) --- */
+        .issue-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
-        .card {
+        .issue-card {
             background: var(--light-gray);
-            padding: 2rem;
-            border-radius: 15px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 40px 30px;
+            border-radius: 20px;
+            transition: var(--transition);
+            border: 1px solid transparent;
         }
 
-        .card:hover {
-            transform: translateY(-10px); /* 懸停位移 */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background-color: #ebf5fb;
+        .issue-card:hover {
+            transform: scale(1.03); /* Hover Effects */
+            background: var(--white);
+            border-color: var(--accent-blue);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
         }
 
-        /* 解決方案樣式 */
-        .solution-item {
+        .issue-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* --- 解決方案 (Solutions) --- */
+        .sol-box {
             display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
             align-items: center;
-            margin-bottom: 2rem;
+        }
+
+        .sol-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .sol-item {
+            margin-bottom: 35px;
+            padding-left: 20px;
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .sol-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--primary-blue);
+        }
+
+        /* --- 資源頁 (Resources) --- */
+        .resource-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .res-item {
             background: #fff;
-            padding: 1.5rem;
+            padding: 20px;
+            margin-bottom: 15px;
             border-radius: 10px;
-            border-bottom: 3px solid var(--main-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+            transition: var(--transition);
         }
 
-        /* 資源連結樣式 */
-        .resource-link {
-            display: inline-block;
-            margin: 10px 0;
-            color: var(--main-blue);
+        .res-item:hover {
+            background-color: #f0f7ff;
+            transform: translateX(10px);
+        }
+
+        .res-item a {
+            color: var(--primary-blue);
             text-decoration: none;
-            font-size: 1.2rem;
-        }
-
-        .resource-link:hover {
-            text-decoration: underline;
+            font-weight: 600;
         }
 
         footer {
+            background: var(--dark-text);
+            color: #bdc3c7;
             text-align: center;
-            padding: 2rem;
-            background: var(--light-gray);
+            padding: 40px 0;
             font-size: 0.9rem;
         }
 
+        /* 平滑捲動 */
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">SDG 4 Quality Education</div>
+        <div class="logo">EDU FUTURE</div>
         <ul>
             <li><a onclick="scrollToSection('home')">首頁</a></li>
-            <li><a onclick="scrollToSection('issues')">教育議題</a></li>
+            <li><a onclick="scrollToSection('issues')">教育現況</a></li>
             <li><a onclick="scrollToSection('solutions')">解決方案</a></li>
-            <li><a onclick="scrollToSection('resources')">學習資源</a></li>
+            <li><a onclick="scrollToSection('resources')">參考資源</a></li>
         </ul>
     </nav>
 
+    <!-- Page 1: Home -->
     <section id="home" class="visible">
-        <div class="hero-content">
-            <h1>確保包容和公平的優質教育</h1>
-            <p>SDG 4 旨在確保人人享有包容、公平的優質教育，並提倡終身學習。</p>
-            <button class="cta-button" onclick="scrollToSection('issues')">了解現狀</button>
-        </div>
+        <h1 class="hero-title">SDG 4 <br> 優質教育</h1>
+        <p class="hero-desc">教育不應是特權，而是每個人的基本權利。我們致力於消除資源鴻溝，讓知識的光芒照向地球的每一個角落。</p>
+        <button class="btn-main" onclick="scrollToSection('issues')">開始探索</button>
     </section>
 
+    <!-- Page 2: Issues -->
     <section id="issues">
-        <h2>全球教育面臨的挑戰</h2>
-        <p>目前，全球仍有數百萬兒童無法獲得基本教育資源。</p>
-        <div class="card-container">
-            <div class="card">
-                <h3>資源不均</h3>
-                <p>偏遠地區缺乏基礎建設，師資力量薄弱，導致城鄉教育差距持續擴大。</p>
+        <div class="section-header">
+            <h2>面臨的挑戰</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="issue-grid">
+            <div class="issue-card">
+                <h3>地理性的資源匱乏</h3>
+                <p>偏鄉地區因交通不便，導致教學軟硬體更新緩慢。許多學生仍在使用十年前的教科書，且缺乏現代化的實驗設備。</p>
             </div>
-            <div class="card">
-                <h3>受教權受限</h3>
-                <p>因貧窮、性別歧視或戰亂，許多學齡兒童被迫輟學，失去翻轉人生的機會。</p>
+            <div class="issue-card">
+                <h3>數位落差 (Digital Divide)</h3>
+                <p>在全球數位化的浪潮下，缺乏穩定電力與網路的學童被迫掉隊，無法享有 E-Learning 所帶來的便利與即時資訊。</p>
             </div>
-            <div class="card">
-                <h3>數位落差</h3>
-                <p>缺乏網路與電腦設備，使得弱勢學生在遠距教學時代被遠遠拋在後頭。</p>
+            <div class="issue-card">
+                <h3>教育品質的不平等</h3>
+                <p>師資流動率高是偏鄉教育的痛點。缺乏專業培訓與激勵機制，使得學生的長期發展受到限制。</p>
             </div>
         </div>
     </section>
 
+    <!-- Page 3: Solutions -->
     <section id="solutions">
-        <h2>創新的解決之道</h2>
-        <p>透過科技與政策的結合，我們可以改變教育的未來。</p>
-        <div class="solution-item">
-            <div>
-                <h3>推動 E-Learning 數位學習</h3>
-                <p>利用網路平台提供免費教學影片與互動教材，打破地理限制。</p>
-            </div>
+        <div class="section-header">
+            <h2>我們的願景與方案</h2>
+            <div class="underline"></div>
         </div>
-        <div class="solution-item">
-            <div>
-                <h3>政府與組織支援</h3>
-                <p>呼籲各國政府增加教育預算，並由國際組織協助貧困地區興建學校。</p>
-            </div>
-        </div>
-        <div class="solution-item">
-            <div>
-                <h3>企業合作計畫</h3>
-                <p>鼓勵企業捐贈科技設備，並提供職業訓練機會，縮短產學落差。</p>
+        <div class="sol-box">
+            <div class="sol-content">
+                <div class="sol-item">
+                    <h4>普及化數位學習平台</h4>
+                    <p>開發低頻寬需求的學習 App，並與電信業者合作，為貧困家庭提供教育專用數據流量。</p>
+                </div>
+                <div class="sol-item">
+                    <h4>行動教室與師資認證</h4>
+                    <p>建立循環式的行動教學車，並透過線上認證系統提升當地教師的專業素養，確保教學品質。</p>
+                </div>
+                <div class="sol-item">
+                    <h4>國際資源媒合</h4>
+                    <p>建立全球性的「一對一」資源媒合系統，將城市閒置的教學設備精準配送至有需要的學校。</p>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Page 4: Resources -->
     <section id="resources">
-        <h2>延伸學習資源</h2>
-        <p>點擊以下連結，了解更多關於優質教育的資訊：</p>
-        <div style="margin-top: 20px;">
-            <a href="https://www.un.org/sustainabledevelopment/education/" target="_blank" class="resource-link">● United Nations SDG 4 Website</a><br>
-            <a href="https://www.unesco.org/sdg4education2030" target="_blank" class="resource-link">● UNESCO Education 2030</a><br>
-            <a href="https://www.globalgoals.org/goals/4-quality-education/" target="_blank" class="resource-link">● Global Goals: Quality Education</a>
+        <div class="section-header">
+            <h2>延伸學習資源</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="resource-list">
+            <div class="res-item">
+                <span>聯合國 SDG 4 官方網站</span>
+                <a href="https://www.un.org/sustainabledevelopment/education/" target="_blank">前往連結 →</a>
+            </div>
+            <div class="res-item">
+                <span>UNESCO 教育 2030 指導綱領</span>
+                <a href="https://www.unesco.org/sdg4education2030" target="_blank">前往連結 →</a>
+            </div>
+            <div class="res-item">
+                <span>The Global Goals - 優質教育專章</span>
+                <a href="https://www.globalgoals.org/goals/4-quality-education/" target="_blank">前往連結 →</a>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2024 SDG 4 教育專題展示網頁 - 致力於公平的教育未來</p>
+        <p>© 2026 SDG 4 專題推廣網頁 | 致力於打造更公平的學習環境</p>
     </footer>
 
     <script>
-        /* 平滑捲動功能 */
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
+        /* --- 互動導覽：平滑捲動 --- */
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            const headerOffset = 70;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
             window.scrollTo({
-                top: element.offsetTop - 70, // 扣除導覽列高度
-                behavior: 'smooth'
+                top: offsetPosition,
+                behavior: "smooth"
             });
         }
 
-        /* 淡入動畫偵測 (Fade-in Animation) */
-        const sections = document.querySelectorAll('section');
-        
+        /* --- 淡入動畫 (Fade-in Animation) --- */
         const observerOptions = {
-            threshold: 0.2
+            threshold: 0.15
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -279,7 +380,7 @@
             });
         }, observerOptions);
 
-        sections.forEach(section => {
+        document.querySelectorAll('section').forEach(section => {
             observer.observe(section);
         });
     </script>
