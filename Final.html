@@ -3,140 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDG 4 互動學習平台</title>
+    <title>SDG 4 永續教育互動平台</title>
     <style>
         :root {
             --primary-blue: #2c7da0;
             --primary-green: #468c45;
-            --light-gray: #f8f9fa;
+            --light-bg: #f4f7f6;
             --white: #ffffff;
-            --dark-text: #333;
+            --text: #333;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { background: var(--white); color: var(--dark-text); scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', "Microsoft JhengHei", sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--white); color: var(--text); line-height: 1.6; }
 
+        /* 導覽列 */
         nav {
-            background: white; padding: 15px 8%; position: fixed; width: 100%; top: 0;
-            z-index: 1000; display: flex; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.95); padding: 15px 5%; position: fixed; 
+            width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .logo { font-weight: bold; color: var(--primary-blue); font-size: 1.5rem; }
         nav ul { display: flex; list-style: none; }
-        nav ul li { margin-left: 20px; cursor: pointer; font-weight: bold; }
+        nav ul li { margin-left: 20px; }
+        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; transition: 0.3s; cursor: pointer; }
+        nav ul li a:hover { color: var(--primary-green); }
 
-        section { padding: 100px 10%; min-height: 100vh; border-bottom: 1px solid #eee; }
-        h2 { color: var(--primary-blue); margin-bottom: 30px; text-align: center; font-size: 2rem; }
+        section { padding: 100px 10% 60px; min-height: 100vh; }
+        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 40px; font-size: 2.2rem; }
 
-        /* --- Quiz 樣式 --- */
-        .quiz-container { background: var(--light-gray); padding: 30px; border-radius: 15px; max-width: 600px; margin: 0 auto; }
-        .quiz-option { 
-            background: white; border: 2px solid #ddd; padding: 15px; margin: 10px 0; 
-            border-radius: 8px; cursor: pointer; transition: 0.3s; 
+        /* Home - 教育資源現況 */
+        .intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
+        .intro-card { background: var(--light-bg); padding: 25px; border-radius: 12px; border-top: 5px solid var(--primary-green); }
+
+        /* Region - 互動地圖 */
+        .map-container { 
+            position: relative; background: #e0f2f1; height: 400px; border-radius: 20px; 
+            overflow: hidden; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center;
         }
-        .quiz-option:hover { border-color: var(--primary-blue); background: #eefaff; }
-
-        /* --- Region 樣式 --- */
-        .region-map { 
-            background: #e1f5fe; height: 300px; border-radius: 15px; 
-            display: flex; justify-content: center; align-items: center; position: relative;
-        }
+        .map-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
         .hotspot {
-            width: 20px; height: 20px; background: red; border-radius: 50%; 
-            position: absolute; cursor: pointer; animation: pulse 2s infinite;
+            position: absolute; width: 25px; height: 25px; background: rgba(255, 0, 0, 0.6); 
+            border-radius: 50%; cursor: pointer; animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.7); } 70% { box-shadow: 0 0 0 15px rgba(255,0,0,0); } 100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); } }
+        .info-panel { 
+            margin-top: 20px; padding: 20px; background: #fffde7; border-radius: 10px; 
+            min-height: 80px; text-align: center; font-weight: bold; border: 1px dashed #fbc02d;
+        }
 
-        /* --- Vote 樣式 --- */
-        .vote-box { display: flex; justify-content: space-around; margin-top: 20px; }
-        .vote-item { text-align: center; flex: 1; margin: 0 10px; }
-        .bar-container { background: #eee; height: 200px; width: 40px; margin: 0 auto 10px; position: relative; border-radius: 5px; }
-        .bar { background: var(--primary-green); width: 100%; position: absolute; bottom: 0; transition: height 0.5s; border-radius: 5px; }
-        .vote-btn { padding: 10px; background: var(--primary-blue); color: white; border: none; border-radius: 5px; cursor: pointer; }
+        /* Quiz - 多題測驗 */
+        .quiz-box { max-width: 700px; margin: 0 auto; background: var(--light-bg); padding: 30px; border-radius: 15px; }
+        .question { font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; color: var(--primary-blue); }
+        .options button { 
+            display: block; width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; 
+            border-radius: 8px; background: white; cursor: pointer; transition: 0.3s; text-align: left;
+        }
+        .options button:hover { background: #e3f2fd; border-color: var(--primary-blue); }
 
+        /* Vote - 多項投票 */
+        .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .progress-bar { background: #eee; height: 15px; border-radius: 10px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: var(--primary-green); height: 100%; width: 0%; transition: width 0.5s; }
+        .vote-btn { background: var(--primary-blue); color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; }
+
+        /* Feedback */
+        .fb-form { max-width: 600px; margin: 0 auto; }
+        .fb-form input, .fb-form textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        .fb-form button { width: 100%; padding: 15px; background: var(--primary-green); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1rem; }
+
+        footer { text-align: center; padding: 40px; background: #333; color: white; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div style="color: var(--primary-blue); font-weight: bold;">SDG 4 INTERACTIVE</div>
+    <div class="logo">EDU Action</div>
     <ul>
-        <li onclick="location.href='#quiz'">測驗 (Quiz)</li>
-        <li onclick="location.href='#region'">地圖 (Region)</li>
-        <li onclick="location.href='#vote'">投票 (Vote)</li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#region">Region</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#vote">Vote</a></li>
+        <li><a href="#feedback">Feedback</a></li>
     </ul>
 </nav>
 
-<!-- Quiz Section -->
-<section id="quiz">
-    <h2>知識小測驗</h2>
-    <div class="quiz-container">
-        <p id="question">Q: 下列哪一項不是 SDG 4 的核心目標？</p>
-        <div class="quiz-option" onclick="checkAnswer(false)">普及高等教育</div>
-        <div class="quiz-option" onclick="checkAnswer(true)">僅限城市居民受教</div>
-        <div class="quiz-option" onclick="checkAnswer(false)">提升師資品質</div>
-        <p id="feedback" style="margin-top: 15px; font-weight: bold;"></p>
+<!-- Home Section -->
+<section id="home">
+    <h2>教育資源現狀介紹</h2>
+    <p style="text-align:center; max-width: 800px; margin: 0 auto 30px;">根據 SDG 4 理念，優質教育包含以下關鍵資源，但全球分配極度不均：</p>
+    <div class="intro-grid">
+        <div class="intro-card">
+            <h3>基礎設施資源</h3>
+            <p>包含穩定的電力、乾淨的飲水、衛生設備以及安全的教室建築。</p>
+        </div>
+        <div class="intro-card">
+            <h3>數位學習資源</h3>
+            <p>網路覆蓋率、電腦設備、平板電腦以及適合遠距教學的數位課程內容。</p>
+        </div>
+        <div class="intro-card">
+            <h3>師資專業資源</h3>
+            <p>合格的教師比例、持續性的在職培訓以及合理的師生比例。</p>
+        </div>
+        <div class="intro-card">
+            <h3>學習教材資源</h3>
+            <p>符合當地語言的教科書、開放式教育資源（OER）以及圖書館設施。</p>
+        </div>
     </div>
 </section>
 
 <!-- Region Section -->
-<section id="region">
-    <h2>全球資源缺乏區域</h2>
-    <p style="text-align: center; margin-bottom: 20px;">點擊紅色閃爍點查看當地教育現況</p>
-    <div class="region-map">
-        <div class="hotspot" style="top: 40%; left: 20%;" onclick="showRegion('撒哈拉以南非洲：超過 30% 的學齡兒童失學。')"></div>
-        <div class="hotspot" style="top: 50%; left: 60%;" onclick="showRegion('南亞地區：師資培訓嚴重不足。')"></div>
-        <div style="font-weight: bold; color: #555;">[互動地圖示意區碼]</div>
+<section id="region" style="background: #fdfdfd;">
+    <h2>全球資源缺乏地圖</h2>
+    <div class="map-container">
+        <!-- 這裡可以使用一張世界地圖圖片作為背景 -->
+        <div style="font-size: 5rem; color: #ccc; opacity: 0.3; font-weight: bold;">WORLD MAP</div>
+        <div class="hotspot" style="top: 45%; left: 25%;" onclick="showInfo('撒哈拉以南非洲：僅有不到 40% 的學校擁有電力。')"></div>
+        <div class="hotspot" style="top: 55%; left: 65%;" onclick="showInfo('中南亞：女性失學率較男性高出 15%，急需包容性資源。')"></div>
+        <div class="hotspot" style="top: 40%; left: 15%;" onclick="showInfo('拉丁美洲：城鄉數位落差高達 60%，偏鄉缺乏網路連接。')"></div>
     </div>
-    <p id="region-info" style="text-align: center; margin-top: 20px; color: var(--primary-blue); font-weight: bold;"></p>
+    <div id="info-panel" class="info-panel">點擊地圖上的紅點查看該地區現況</div>
+</section>
+
+<!-- Resources Section -->
+<section id="resources">
+    <h2>有用資源連結</h2>
+    <div class="intro-grid">
+        <div class="intro-card" style="text-align:center;">
+            <h4>UN SDG 4</h4>
+            <a href="https://www.un.org/sustainabledevelopment/education/" target="_blank">官方網站</a>
+        </div>
+        <div class="intro-card" style="text-align:center;">
+            <h4>UNESCO</h4>
+            <a href="https://www.unesco.org/sdg4education2030" target="_blank">教育指導</a>
+        </div>
+        <div class="intro-card" style="text-align:center;">
+            <h4>Khan Academy</h4>
+            <a href="https://www.khanacademy.org/" target="_blank">免費學習平台</a>
+        </div>
+    </div>
+</section>
+
+<!-- Quiz Section -->
+<section id="quiz" style="background: #f9f9f9;">
+    <h2>知識小挑戰 (多題版)</h2>
+    <div id="quiz-container" class="quiz-box">
+        <div id="q-content">
+            <p class="question" id="q-text">載入中...</p>
+            <div class="options" id="q-options"></div>
+        </div>
+        <p id="quiz-feedback" style="margin-top:20px; font-weight:bold; text-align:center;"></p>
+    </div>
 </section>
 
 <!-- Vote Section -->
 <section id="vote">
-    <h2>你認為哪種解決方法最有效？</h2>
-    <div class="vote-box">
-        <div class="vote-item">
-            <div class="bar-container"><div id="bar1" class="bar" style="height: 30%;"></div></div>
-            <p>數位設備</p>
-            <button class="vote-btn" onclick="addVote('bar1')">投票</button>
+    <h2>優先解決哪項問題？(投票)</h2>
+    <div class="vote-grid">
+        <div class="vote-card">
+            <p>基礎電力與網路</p>
+            <div class="progress-bar"><div id="v1" class="progress-fill" style="width: 20%;"></div></div>
+            <button class="vote-btn" onclick="vote('v1')">投票</button>
         </div>
-        <div class="vote-item">
-            <div class="bar-container"><div id="bar2" class="bar" style="height: 50%;"></div></div>
-            <p>增加師資</p>
-            <button class="vote-btn" onclick="addVote('bar2')">投票</button>
+        <div class="vote-card">
+            <p>師資培訓與薪資</p>
+            <div class="progress-bar"><div id="v2" class="progress-fill" style="width: 45%;"></div></div>
+            <button class="vote-btn" onclick="vote('v2')">投票</button>
         </div>
-        <div class="vote-item">
-            <div class="bar-container"><div id="bar3" class="bar" style="height: 20%;"></div></div>
-            <p>免費教科書</p>
-            <button class="vote-btn" onclick="addVote('bar3')">投票</button>
+        <div class="vote-card">
+            <p>免費教科書補助</p>
+            <div class="progress-bar"><div id="v3" class="progress-fill" style="width: 15%;"></div></div>
+            <button class="vote-btn" onclick="vote('v3')">投票</button>
+        </div>
+        <div class="vote-card">
+            <p>女性受教權保障</p>
+            <div class="progress-bar"><div id="v4" class="progress-fill" style="width: 30%;"></div></div>
+            <button class="vote-btn" onclick="vote('v4')">投票</button>
         </div>
     </div>
 </section>
 
+<!-- Feedback Section -->
+<section id="feedback" style="background: #f0f4f8;">
+    <h2>給我們的回饋</h2>
+    <div class="fb-form">
+        <input type="text" placeholder="您的姓名">
+        <input type="email" placeholder="您的電子郵件">
+        <textarea rows="5" placeholder="對於推廣教育資源公平，您有什麼建議？"></textarea>
+        <button onclick="alert('感謝您的回饋！')">提交想法</button>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 SDG 4 永續教育推廣專案 | 翻轉世界，從教育開始</p>
+</footer>
+
 <script>
-    // Quiz Logic
-    function checkAnswer(isWrong) {
-        const f = document.getElementById('feedback');
-        if(isWrong) {
-            f.innerText = "正確！SDG 4 追求的是「公平」與「包容」，不能僅限於部分人群。";
-            f.style.color = "green";
+    // 互動地圖資訊
+    function showInfo(msg) {
+        document.getElementById('info-panel').innerText = msg;
+    }
+
+    // 多題測驗系統
+    const quizData = [
+        { q: "全球目前約有多少比例的學校缺乏基礎洗手設施？", a: ["10%", "25%", "43%"], correct: 2 },
+        { q: "SDG 4 的目標年份是哪一年？", a: ["2025", "2030", "2045"], correct: 1 },
+        { q: "哪種資源最能直接縮短城鄉差距？", a: ["數位學習資源", "更重的課本", "增加考試次數"], correct: 0 }
+    ];
+    let currentQ = 0;
+
+    function loadQuiz() {
+        const q = quizData[currentQ];
+        document.getElementById('q-text').innerText = `第 ${currentQ+1} 題：${q.q}`;
+        const optDiv = document.getElementById('q-options');
+        optDiv.innerHTML = "";
+        q.a.forEach((ans, idx) => {
+            const btn = document.createElement('button');
+            btn.innerText = ans;
+            btn.onclick = () => checkQuiz(idx);
+            optDiv.appendChild(btn);
+        });
+    }
+
+    function checkQuiz(idx) {
+        const feedback = document.getElementById('quiz-feedback');
+        if(idx === quizData[currentQ].correct) {
+            feedback.innerText = "答對了！✨";
+            feedback.style.color = "green";
+            setTimeout(() => {
+                currentQ = (currentQ + 1) % quizData.length;
+                feedback.innerText = "";
+                loadQuiz();
+            }, 1500);
         } else {
-            f.innerText = "再試一次，這也是 SDG 4 的重要部分。";
-            f.style.color = "red";
+            feedback.innerText = "答錯囉，再想想看！❌";
+            feedback.style.color = "red";
         }
     }
 
-    // Region Logic
-    function showRegion(info) {
-        document.getElementById('region-info').innerText = info;
-    }
-
-    // Vote Logic
-    function addVote(id) {
+    // 投票系統
+    function vote(id) {
         const bar = document.getElementById(id);
-        let currentHeight = parseInt(bar.style.height);
-        if(currentHeight < 100) {
-            bar.style.height = (currentHeight + 5) + "%";
+        let width = parseInt(bar.style.width);
+        if(width < 100) {
+            bar.style.width = (width + 5) + "%";
+            alert("感謝投票！");
         }
     }
+
+    // 初始化載入
+    window.onload = loadQuiz;
 </script>
 
 </body>
