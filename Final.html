@@ -115,131 +115,145 @@
             align-items: start;
         }
 
-        .map-wrapper {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
+  /* ===== 地圖 ===== */
 
-        .map-container {
-            position: relative;
-            width: 100%;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: #e0f2f1;
-            aspect-ratio: 2 / 1;
-            border-radius: 20px;
-            border: 2px solid #cfd8dc;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+.region-layout {
 
-        .hotspot {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            border: 2px solid white;
-            box-shadow: 0 0 8px rgba(0,0,0,0.35);
-        }
+    display: grid;
 
-        .hotspot:hover {
-            width: 20px;
-            height: 20px;
-        }
+    grid-template-columns: 3fr 1fr;
 
-        .hotspot::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            width: 100%;
-            height: 100%;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            animation: pulse 2.5s infinite;
-        }
+    gap: 25px;
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
+}
 
-            100% {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
+.map-container {
 
-        .region-list {
-            background: var(--light-bg);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
+    position: relative;
 
-        .region-list h3 {
-            color: var(--primary-blue);
-            margin-bottom: 15px;
-            text-align: center;
-        }
+    width: 100%;
 
-        .region-list button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+    aspect-ratio: 2 / 1;
 
-        .region-list button:hover {
-            background: #e3f2fd;
-            transform: translateX(5px);
-        }
+    background: #e0f2f1;
 
-        .dot {
-            display: inline-block;
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
+    border-radius: 20px;
 
-        .red { background: #f44336; color: #f44336; }
-        .orange { background: #ff9800; color: #ff9800; }
-        .yellow { background: #fbc02d; color: #fbc02d; }
-        .green { background: #4caf50; color: #4caf50; }
-        .blue { background: #2196f3; color: #2196f3; }
-        .purple { background: #9c27b0; color: #9c27b0; }
-        .pink { background: #e91e63; color: #e91e63; }
-        .brown { background: #795548; color: #795548; }
-        .teal { background: #009688; color: #009688; }
-        .black { background: #333; color: #333; }
+    overflow: hidden;
 
-        .info-panel {
-            margin-top: 20px;
-            padding: 25px;
-            background: #fffde7;
-            border-radius: 15px;
-            min-height: 100px;
-            text-align: center;
-            font-weight: bold;
-            border: 2px dashed #fbc02d;
-            color: #5d4037;
-            font-size: 1.1rem;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-        }
+}
+
+.map-img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+}
+
+/* 點 */
+
+.hotspot {
+
+    position: absolute;
+
+    width: 16px;
+
+    height: 16px;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border: 2px solid white;
+
+    cursor: pointer;
+
+}
+
+.red{background:#f44336;}
+
+.orange{background:#ff9800;}
+
+.yellow{background:#fbc02d;}
+
+.green{background:#4caf50;}
+
+.blue{background:#2196f3;}
+
+.purple{background:#9c27b0;}
+
+.pink{background:#e91e63;}
+
+.brown{background:#795548;}
+
+.teal{background:#009688;}
+
+.black{background:#333;}
+
+/* 右側 */
+
+.region-list {
+
+    background: var(--light-bg);
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+}
+
+.region-list button {
+
+    width: 100%;
+
+    padding: 10px;
+
+    margin: 5px 0;
+
+    border: none;
+
+    background: white;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+}
+
+.dot {
+
+    display: inline-block;
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    margin-right: 8px;
+
+}
+
+/* 資訊框 */
+
+.info-panel {
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background: #fffde7;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+}
 
         .quiz-card {
             max-width: 800px;
