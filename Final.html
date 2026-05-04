@@ -108,146 +108,92 @@
             background: #eaf6f0;
         }
 
-
-  /* ===== 地圖 ===== */
-
-.region-layout {
-
-    display: grid;
-
-    grid-template-columns: 3fr 1fr;
-
-    gap: 25px;
-
-}
-
-.map-container {
-
-    position: relative;
-
-    width: 100%;
-
-    aspect-ratio: 2 / 1;
-
-    background: #e0f2f1;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-}
-
-.map-img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: contain;
-
-}
-
-/* 點 */
-
-.hotspot {
-
-    position: absolute;
-
-    width: 16px;
-
-    height: 16px;
-
-    border-radius: 50%;
-
-    transform: translate(-50%, -50%);
-
-    border: 2px solid white;
-
-    cursor: pointer;
-
-}
-
-.red{background:#f44336;}
-
-.orange{background:#ff9800;}
-
-.yellow{background:#fbc02d;}
-
-.green{background:#4caf50;}
-
-.blue{background:#2196f3;}
-
-.purple{background:#9c27b0;}
-
-.pink{background:#e91e63;}
-
-.brown{background:#795548;}
-
-.teal{background:#009688;}
-
-.black{background:#333;}
-
-/* 右側 */
-
-.region-list {
-
-    background: var(--light-bg);
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-}
-
-.region-list button {
-
-    width: 100%;
-
-    padding: 10px;
-
-    margin: 5px 0;
-
-    border: none;
-
-    background: white;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    text-align: left;
-
-}
-
-.dot {
-
-    display: inline-block;
-
-    width: 12px;
-
-    height: 12px;
-
-    border-radius: 50%;
-
-    margin-right: 8px;
-
-}
-
-/* 資訊框 */
-
-.info-panel {
-
-    margin-top: 20px;
-
-    padding: 20px;
-
-    background: #fffde7;
-
-    border-radius: 10px;
-
-    text-align: center;
-
-}
+        /* ===== 地圖 ===== */
+        .region-layout {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 25px;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            background: #e0f2f1;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #cfd8dc;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .map-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .hotspot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid white;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        }
+
+        .red { background:#f44336; }
+        .orange { background:#ff9800; }
+        .yellow { background:#fbc02d; }
+        .green { background:#4caf50; }
+        .blue { background:#2196f3; }
+        .purple { background:#9c27b0; }
+        .pink { background:#e91e63; }
+        .brown { background:#795548; }
+        .teal { background:#009688; }
+        .black { background:#333; }
+
+        .region-list {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .region-list h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .region-list button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .info-panel {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fffde7;
+            border-radius: 10px;
+            text-align: center;
+        }
 
         .quiz-card {
             max-width: 800px;
@@ -460,25 +406,22 @@
 
     <div class="region-layout">
         <div class="map-wrapper">
-    <div class="map-container" id="map">
+            <div class="map-container" id="map">
 
-    <!-- ⭐ 地圖圖片（這行一定要有） -->
-    <img class="map-img"
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/2000px-World_map_-_low_resolution.svg.png">
+                <img class="map-img" src="https://raw.githubusercontent.com/datasets/geo-countries/master/img/world-map.png" alt="World Map">
 
-    <!-- 點 -->
-    <div class="hotspot red" style="top: 46%; left: 45%;" onclick="showRegion('Niger')"></div>
-    <div class="hotspot orange" style="top: 50%; left: 46.5%;" onclick="showRegion('Northern Nigeria')"></div>
-    <div class="hotspot yellow" style="top: 60%; left: 51%;" onclick="showRegion('DR Congo')"></div>
-    <div class="hotspot green" style="top: 54%; left: 56%;" onclick="showRegion('Ethiopia')"></div>
-    <div class="hotspot blue" style="top: 43%; left: 65%;" onclick="showRegion('Afghanistan')"></div>
-    <div class="hotspot purple" style="top: 49%; left: 69%;" onclick="showRegion('Bangladesh')"></div>
-    <div class="hotspot pink" style="top: 53%; left: 74%;" onclick="showRegion('Myanmar')"></div>
-    <div class="hotspot brown" style="top: 48%; left: 25%;" onclick="showRegion('Haiti')"></div>
-    <div class="hotspot teal" style="top: 64%; left: 32%;" onclick="showRegion('Rural Brazil')"></div>
-    <div class="hotspot black" style="top: 46%; left: 59%;" onclick="showRegion('Yemen')"></div>
+                <div class="hotspot red" style="top: 46%; left: 45%;" onclick="showRegion('Niger')"></div>
+                <div class="hotspot orange" style="top: 50%; left: 46.5%;" onclick="showRegion('Northern Nigeria')"></div>
+                <div class="hotspot yellow" style="top: 60%; left: 51%;" onclick="showRegion('DR Congo')"></div>
+                <div class="hotspot green" style="top: 54%; left: 56%;" onclick="showRegion('Ethiopia')"></div>
+                <div class="hotspot blue" style="top: 43%; left: 65%;" onclick="showRegion('Afghanistan')"></div>
+                <div class="hotspot purple" style="top: 49%; left: 69%;" onclick="showRegion('Bangladesh')"></div>
+                <div class="hotspot pink" style="top: 53%; left: 74%;" onclick="showRegion('Myanmar')"></div>
+                <div class="hotspot brown" style="top: 48%; left: 25%;" onclick="showRegion('Haiti')"></div>
+                <div class="hotspot teal" style="top: 64%; left: 32%;" onclick="showRegion('Rural Brazil')"></div>
+                <div class="hotspot black" style="top: 46%; left: 59%;" onclick="showRegion('Yemen')"></div>
 
-    </div>
+            </div>
         </div>
 
         <div class="region-list">
