@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDG 4 永續教育互動平台</title>
+    <title>SDG 4 永續教育互動平台 - 15題挑戰版</title>
     <style>
         :root {
             --primary-blue: #2c7da0;
@@ -28,74 +28,50 @@
         nav ul li { margin-left: 20px; }
         nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; }
 
-        section { padding: 100px 10% 60px; min-height: 100vh; }
-        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 40px; font-size: 2.2rem; }
+        section { padding: 100px 8% 60px; min-height: 100vh; }
+        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 2.2rem; }
 
-        /* Home - 教育資源現況 */
-        .intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .intro-card { background: var(--light-bg); padding: 25px; border-radius: 12px; border-top: 5px solid var(--primary-green); }
-
-        /* Region - 互動地圖修正版 */
-        .map-wrapper {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
+        /* Region - 地圖優化 */
+        .map-wrapper { max-width: 1000px; margin: 0 auto; position: relative; }
         .map-container { 
-            position: relative; 
-            width: 100%;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: #e0f2f1;
-            aspect-ratio: 2 / 1; /* 維持地圖比例 */
-            border-radius: 20px; 
-            border: 2px solid #cfd8dc;
+            position: relative; width: 100%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+            background-size: contain; background-repeat: no-repeat; background-position: center;
+            background-color: #e0f2f1; aspect-ratio: 2 / 1; border-radius: 20px; border: 2px solid #cfd8dc;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        /* 紅點樣式與動畫 */
         .hotspot {
-            position: absolute; 
-            width: 18px; 
-            height: 18px; 
-            background: #ff5252; 
-            border-radius: 50%; 
-            cursor: pointer; 
-            transform: translate(-50%, -50%);
-            z-index: 5;
+            position: absolute; width: 16px; height: 16px; background: #ff5252; border-radius: 50%; 
+            cursor: pointer; transform: translate(-50%, -50%); z-index: 5;
         }
         .hotspot::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            background: #ff5252;
-            animation: pulse 2s infinite;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%; background: #ff5252; animation: pulse 2s infinite;
         }
-        @keyframes pulse { 
-            0% { transform: scale(1); opacity: 0.8; } 
-            100% { transform: scale(3); opacity: 0; } 
-        }
-
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
         .info-panel { 
-            margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; 
-            min-height: 100px; text-align: center; font-size: 1.1rem;
-            font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
-            transition: all 0.3s;
+            margin-top: 20px; padding: 20px; background: #fffde7; border-radius: 15px; 
+            min-height: 80px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
         }
 
-        /* 其他區塊樣式簡化 (維持先前邏輯) */
-        .quiz-box { max-width: 700px; margin: 0 auto; background: var(--light-bg); padding: 30px; border-radius: 15px; }
-        .options button { display: block; width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; }
+        /* Quiz - 15題挑戰樣式 */
+        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .quiz-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--primary-blue); }
+        .question-text { font-size: 1.3rem; margin-bottom: 25px; min-height: 60px; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .option-btn { 
+            padding: 15px; background: white; border: 2px solid #eee; border-radius: 10px; 
+            cursor: pointer; transition: 0.3s; font-size: 1rem; text-align: left;
+        }
+        .option-btn:hover { border-color: var(--primary-blue); background: #e3f2fd; }
+        .score-display { text-align: center; font-size: 1.5rem; color: var(--primary-green); margin-top: 20px; display: none; }
+
+        /* Vote 樣式簡化 */
         .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
         .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 12px; text-align: center; }
-        .progress-bar { background: #eee; height: 12px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .progress-bar { background: #eee; height: 10px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
         .progress-fill { background: var(--primary-green); height: 100%; width: 0%; transition: width 0.5s; }
 
-        footer { text-align: center; padding: 40px; background: #333; color: white; }
+        footer { text-align: center; padding: 40px; background: #333; color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -105,106 +81,160 @@
     <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#region">Region</a></li>
-        <li><a href="#resources">Resources</a></li>
-        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#quiz">Quiz (15題)</a></li>
         <li><a href="#vote">Vote</a></li>
     </ul>
 </nav>
 
+<!-- Home Section -->
 <section id="home">
-    <h2>教育資源現況</h2>
-    <div class="intro-grid">
-        <div class="intro-card"><h3>基礎設施</h3><p>全球仍有 1/4 的小學缺乏電力供應。</p></div>
-        <div class="intro-card"><h3>師資品質</h3><p>開發中國家平均每 60 名學生才擁有一位合格老師。</p></div>
-        <div class="intro-card"><h3>數位落差</h3><p>約有 3.6 億學童因為缺乏網路而無法參與線上學習。</p></div>
-    </div>
-</section>
-
-<!-- Region Section - 增加紅點數量 -->
-<section id="region">
-    <h2>全球資源缺乏地圖</h2>
-    <p style="text-align:center; margin-bottom: 20px;">點擊紅點查看該地區的具體挑戰</p>
-    <div class="map-wrapper">
-        <div class="map-container">
-            <!-- 北美/拉美交界 -->
-            <div class="hotspot" style="top: 45%; left: 18%;" onclick="showInfo('【拉丁美洲】城鄉數位落差高達 60%，偏鄉缺乏網路連接，導致疫情期間學習完全中斷。')"></div>
-            <!-- 非洲中部 -->
-            <div class="hotspot" style="top: 55%; left: 48%;" onclick="showInfo('【中非地區】僅有不到 25% 的學校擁有基本的洗手設施與乾淨飲水，影響學童健康。')"></div>
-            <!-- 非洲東部 -->
-            <div class="hotspot" style="top: 62%; left: 54%;" onclick="showInfo('【撒哈拉以南非洲】因戰亂與貧窮，女性失學率是男性的兩倍以上。')"></div>
-            <!-- 中東/西亞 -->
-            <div class="hotspot" style="top: 42%; left: 58%;" onclick="showInfo('【西亞地區】衝突導致大量學校被毀，數百萬孩童被迫在臨時帳篷中克難學習。')"></div>
-            <!-- 南亞 (印度週邊) -->
-            <div class="hotspot" style="top: 48%; left: 72%;" onclick="showInfo('【南亞地區】師資培訓嚴重不足，許多老師一人需負責教導三個不同年級的班級。')"></div>
-            <!-- 東南亞島嶼 -->
-            <div class="hotspot" style="top: 65%; left: 85%;" onclick="showInfo('【東南亞偏鄉】地理破碎導致教科書運送困難，偏遠島嶼的學童甚至沒有課本可用。')"></div>
+    <h2>教育不均現況</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div style="background:var(--light-bg); padding:20px; border-radius:10px;">
+            <h4 style="color:var(--primary-blue)">數位斷層</h4>
+            <p>低收入國家中，只有不到 20% 的家庭擁有網路連接，這使得數位學習成為一種奢侈。</p>
+        </div>
+        <div style="background:var(--light-bg); padding:20px; border-radius:10px;">
+            <h4 style="color:var(--primary-blue)">師資缺口</h4>
+            <p>撒哈拉以南非洲地區需要增加 1,500 萬名老師才能滿足基本教學需求。</p>
         </div>
     </div>
-    <div id="info-panel" class="info-panel">📍 點擊地圖上的紅點查看詳細數據</div>
 </section>
 
+<!-- Region Section - 豐富紅點 -->
+<section id="region">
+    <h2>全球資源缺乏分佈</h2>
+    <div class="map-wrapper">
+        <div class="map-container">
+            <div class="hotspot" style="top: 40%; left: 15%;" onclick="showInfo('【北美偏鄉】即使是開發國家，原住民保留區仍面臨網路覆蓋不足問題。')"></div>
+            <div class="hotspot" style="top: 52%; left: 22%;" onclick="showInfo('【拉丁美洲】超過 5,000 萬學童缺乏基礎數學與閱讀能力的資源支持。')"></div>
+            <div class="hotspot" style="top: 58%; left: 45%;" onclick="showInfo('【西非】僅 20% 的學校有電力，學生放學後無法在燈光下閱讀。')"></div>
+            <div class="hotspot" style="top: 65%; left: 52%;" onclick="showInfo('【中非】缺乏乾淨水源，學生常因飲水病告假，影響學習連續性。')"></div>
+            <div class="hotspot" style="top: 45%; left: 62%;" onclick="showInfo('【中東】受衝突影響地區，超過 1/3 的學校建築已被完全摧毀。')"></div>
+            <div class="hotspot" style="top: 52%; left: 70%;" onclick="showInfo('【南亞】女童受教權受阻，平均每 10 位女童就有 3 位無法完成初等教育。')"></div>
+            <div class="hotspot" style="top: 60%; left: 82%;" onclick="showInfo('【東南亞群島】島嶼間資源分配極度不均，偏遠小島缺乏合格中學老師。')"></div>
+            <div class="hotspot" style="top: 40%; left: 88%;" onclick="showInfo('【東北亞邊陲】偏鄉地區師資老化，缺乏年輕活力的創新教學資源。')"></div>
+        </div>
+    </div>
+    <div id="info-panel" class="info-panel">📍 點擊紅點查看該地區教育痛點</div>
+</section>
+
+<!-- Quiz Section - 15題挑戰 -->
 <section id="quiz">
-    <h2>知識小挑戰</h2>
-    <div id="quiz-container" class="quiz-box">
-        <p class="question" id="q-text">載入中...</p>
-        <div class="options" id="q-options"></div>
-        <p id="quiz-feedback" style="margin-top:20px; font-weight:bold; text-align:center;"></p>
+    <h2>SDG 4 知識挑戰賽 (15題)</h2>
+    <div class="quiz-card" id="quiz-ui">
+        <div class="quiz-header">
+            <span id="q-progress">第 1 / 15 題</span>
+            <span id="q-score">目前分數: 0</span>
+        </div>
+        <p class="question-text" id="q-text">問題載入中...</p>
+        <div class="options-grid" id="q-options"></div>
+        <div id="quiz-fb" style="margin-top:20px; font-weight:bold; text-align:center; height: 30px;"></div>
+    </div>
+    <div id="final-score" class="score-display">
+        <h3>挑戰結束！</h3>
+        <p>最終得分：<span id="res-score"></span> / 15</p>
+        <button onclick="resetQuiz()" style="margin-top:20px; padding:10px 20px; cursor:pointer;">重新挑戰</button>
     </div>
 </section>
 
+<!-- Vote Section -->
 <section id="vote">
-    <h2>你認為哪項最迫切？</h2>
+    <h2>你認為最該優先投入哪項資源？</h2>
     <div class="vote-grid">
-        <div class="vote-card"><p>改善學校電力</p><div class="progress-bar"><div id="v1" class="progress-fill" style="width: 20%;"></div></div><button onclick="vote('v1')">投票</button></div>
-        <div class="vote-card"><p>提供免費平板</p><div class="progress-bar"><div id="v2" class="progress-fill" style="width: 35%;"></div></div><button onclick="vote('v2')">投票</button></div>
-        <div class="vote-card"><p>培訓在地老師</p><div class="progress-bar"><div id="v3" class="progress-fill" style="width: 45%;"></div></div><button onclick="vote('v3')">投票</button></div>
+        <div class="vote-card"><p>校園電力設備</p><div class="progress-bar"><div id="v1" class="progress-fill" style="width: 10%;"></div></div><button onclick="vote('v1')">投票</button></div>
+        <div class="vote-card"><p>數位學習平板</p><div class="progress-bar"><div id="v2" class="progress-fill" style="width: 15%;"></div></div><button onclick="vote('v2')">投票</button></div>
+        <div class="vote-card"><p>教師專業培訓</p><div class="progress-bar"><div id="v3" class="progress-fill" style="width: 25%;"></div></div><button onclick="vote('v3')">投票</button></div>
     </div>
 </section>
 
 <footer>
-    <p>© 2026 SDG 4 專案 | 讓每個人都擁有公平受教的機會</p>
+    <p>© 2026 SDG 4 互動平台 | 關注教育公平，翻轉孩子未來</p>
 </footer>
 
 <script>
+    // Region Info
     function showInfo(msg) {
-        const panel = document.getElementById('info-panel');
-        panel.style.transform = "scale(1.02)";
-        panel.innerText = msg;
-        setTimeout(() => panel.style.transform = "scale(1)", 200);
+        document.getElementById('info-panel').innerText = msg;
     }
 
+    // Quiz 15題庫
     const quizData = [
-        { q: "全球有多少比例的小學完全沒有電力？", a: ["5%", "25%", "50%"], correct: 1 },
-        { q: "哪個地區的女性受教權受到最大挑戰？", a: ["北歐", "西亞與非洲", "北美"], correct: 1 }
+        { q: "SDG 4 的核心目標是什麼？", a: ["普及精英教育", "確保公平高品質教育", "降低考試難度", "增加暑假長度"], c: 1 },
+        { q: "目前全球約有多少孩童與青少年處於失學狀態？", a: ["1千萬", "5千萬", "1.5億", "2.6億以上"], c: 3 },
+        { q: "在最貧窮國家，只有多少比例的學校擁有電力？", a: ["不到 40%", "約 60%", "約 80%", "接近 100%"], c: 0 },
+        { q: "哪種因素是導致女童失學的主要原因之一？", a: ["不喜歡讀書", "貧窮與性別偏見", "學校太漂亮", "課本太輕"], c: 1 },
+        { q: "SDG 4 期望在幾年達成普及教育目標？", a: ["2025", "2030", "2040", "2050"], c: 1 },
+        { q: "「數位落差」是指什麼之間的不平等？", a: ["身高", "存摺金額", "獲取科技資訊的能力", "體育成績"], c: 2 },
+        { q: "下列何者不屬於教育基礎設施？", a: ["乾淨水資源", "穩定的電力", "高級跑車", "安全的校舍"], c: 2 },
+        { q: "全球師資缺口最大的地區是？", a: ["北歐", "撒哈拉以南非洲", "北美", "東亞"], c: 1 },
+        { q: "優質教育應該提倡什麼樣的學習？", a: ["只有兒童學習", "只有工作學習", "終身學習", "考試完就停止學習"], c: 2 },
+        { q: "教育對貧窮的影響是？", a: ["沒有影響", "增加貧窮", "打破貧窮循環", "讓貧窮更有趣"], c: 2 },
+        { q: "開放式教育資源 (OER) 的好處是？", a: ["很貴", "免費且可合法改編", "只能在圖書館看", "沒有用處"], c: 1 },
+        { q: "包容性教育是指？", a: ["只教聰明的學生", "排斥身心障礙者", "接納所有特質的學習者", "限制學生人數"], c: 2 },
+        { q: "在疫情期間，什麼工具對教育最重要？", a: ["遊戲機", "數位遠距設備", "畫紙", "足球"], c: 1 },
+        { q: "政府應將多少比例的預算投入教育？", a: ["0%", "1%", "建議 15-20%", "90%"], c: 2 },
+        { q: "你參與這個網頁的目的是為了了解？", a: ["遊戲攻略", "SDG 4 與教育公平", "今日氣象", "烹飪技巧"], c: 1 }
     ];
-    let currentQ = 0;
 
-    function loadQuiz() {
-        const q = quizData[currentQ];
-        document.getElementById('q-text').innerText = q.q;
-        const optDiv = document.getElementById('q-options');
-        optDiv.innerHTML = "";
-        q.a.forEach((ans, idx) => {
+    let currentIdx = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        if(currentIdx >= quizData.length) {
+            showResult();
+            return;
+        }
+        const data = quizData[currentIdx];
+        document.getElementById('q-progress').innerText = `第 ${currentIdx + 1} / 15 題`;
+        document.getElementById('q-text').innerText = data.q;
+        const optGrid = document.getElementById('q-options');
+        optGrid.innerHTML = "";
+        data.a.forEach((ans, i) => {
             const btn = document.createElement('button');
+            btn.className = 'option-btn';
             btn.innerText = ans;
-            btn.onclick = () => {
-                const fb = document.getElementById('quiz-feedback');
-                if(idx === q.correct) {
-                    fb.innerText = "正確！👏"; fb.style.color = "green";
-                    setTimeout(() => { currentQ = (currentQ+1)%quizData.length; fb.innerText=""; loadQuiz(); }, 1000);
-                } else { fb.innerText = "再試試看！❌"; fb.style.color = "red"; }
-            };
-            optDiv.appendChild(btn);
+            btn.onclick = () => checkAns(i);
+            optGrid.appendChild(btn);
         });
+        document.getElementById('quiz-fb').innerText = "";
+    }
+
+    function checkAns(idx) {
+        const fb = document.getElementById('quiz-fb');
+        if(idx === quizData[currentIdx].c) {
+            score++;
+            fb.innerText = "正確！✨"; fb.style.color = "green";
+            document.getElementById('q-score').innerText = `目前分數: ${score}`;
+        } else {
+            fb.innerText = "答錯了...加油！❌"; fb.style.color = "red";
+        }
+        currentIdx++;
+        setTimeout(loadQuestion, 1200);
+    }
+
+    function showResult() {
+        document.getElementById('quiz-ui').style.display = "none";
+        const final = document.getElementById('final-score');
+        final.style.display = "block";
+        document.getElementById('res-score').innerText = score;
+    }
+
+    function resetQuiz() {
+        currentIdx = 0; score = 0;
+        document.getElementById('q-score').innerText = `目前分數: 0`;
+        document.getElementById('quiz-ui').style.display = "block";
+        document.getElementById('final-score').style.display = "none";
+        loadQuestion();
     }
 
     function vote(id) {
         const bar = document.getElementById(id);
         let w = parseInt(bar.style.width);
-        if(w < 100) { bar.style.width = (w + 10) + "%"; }
+        if(w < 100) bar.style.width = (w + 10) + "%";
     }
 
-    window.onload = loadQuiz;
+    window.onload = loadQuestion;
 </script>
 
 </body>
