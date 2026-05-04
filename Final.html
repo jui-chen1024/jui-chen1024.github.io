@@ -1,322 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SDG 4: Global Education Equity</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 4: Global Education Equity</title>
+    <style>
+        :root {
+            --primary-blue: #2c7da0;
+            --primary-green: #468c45;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --text: #333;
+            --correct: #4caf50;
+            --wrong: #f44336;
+        }
 
-<style>
-:root {
-    --primary-blue: #2c7da0;
-    --primary-green: #468c45;
-    --light-bg: #f4f7f6;
-    --white: #ffffff;
-    --text: #333;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--white); color: var(--text); line-height: 1.6; }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+        /* Navigation */
+        nav {
+            background: rgba(255,255,255,0.95); padding: 15px 5%; position: fixed; 
+            width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo { font-weight: bold; color: var(--primary-blue); font-size: 1.5rem; }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 20px; }
+        nav ul li a { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; transition: 0.3s; }
+        nav ul li a:hover { color: var(--primary-green); }
 
-html { scroll-behavior: smooth; }
+        section { padding: 100px 8% 60px; min-height: 100vh; }
+        h2 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 2.2rem; }
 
-body {
-    background: white;
-    color: var(--text);
-}
+        /* Map Section */
+        .map-wrapper { max-width: 1000px; margin: 0 auto; position: relative; }
+        .map-container { 
+            position: relative; width: 100%; 
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+            background-size: contain; background-repeat: no-repeat; background-position: center;
+            background-color: #e0f2f1; aspect-ratio: 2 / 1; border-radius: 20px; 
+            border: 2px solid #cfd8dc; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .hotspot {
+            position: absolute; width: 14px; height: 14px; background: #ff4444; border-radius: 50%; 
+            cursor: pointer; transform: translate(-50%, -50%); z-index: 5;
+        }
+        .hotspot::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%; background: #ff4444; animation: pulse 2.5s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3.5); opacity: 0; } }
+        
+        .info-panel { 
+            margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; 
+            min-height: 100px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; color: #5d4037;
+            font-size: 1.1rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
 
-/* NAV */
-nav {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background: white;
-    padding: 15px 5%;
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
+        /* Quiz Section - Enhanced UI */
+        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .quiz-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--primary-blue); }
+        .option-btn { 
+            display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; 
+            border: 2px solid #ddd; border-radius: 10px; cursor: pointer; transition: 0.2s; text-align: left; font-size: 1rem;
+        }
+        .option-btn:hover:not(:disabled) { border-color: var(--primary-blue); background: #f0f7ff; }
+        .option-btn.correct { background-color: #e8f5e9; border-color: var(--correct); color: #2e7d32; }
+        .option-btn.wrong { background-color: #ffebee; border-color: var(--wrong); color: #c62828; }
+        .option-btn:disabled { cursor: not-allowed; }
 
-.logo { color: var(--primary-blue); font-weight: bold; }
+        #quiz-fb { 
+            margin-top: 20px; font-size: 1.2rem; font-weight: bold; text-align: center; 
+            min-height: 1.5em; transition: 0.3s;
+        }
 
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav li { margin-left: 20px; }
-
-nav a {
-    text-decoration: none;
-    color: #333;
-}
-
-nav a:hover { color: var(--primary-green); }
-
-/* SECTION */
-section {
-    padding: 100px 8%;
-    min-height: 100vh;
-}
-
-h2 {
-    text-align: center;
-    color: var(--primary-blue);
-    margin-bottom: 20px;
-}
-
-/* CARDS */
-.intro-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-    gap: 20px;
-}
-
-.intro-card {
-    background: var(--light-bg);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/* MAP */
-.map-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: auto;
-    position: relative;
-    aspect-ratio: 2/1;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.hotspot {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background: red;
-    border-radius: 50%;
-    transform: translate(-50%,-50%);
-    cursor: pointer;
-}
-
-.hotspot::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 14px;
-    height: 14px;
-    background: red;
-    border-radius: 50%;
-    transform: translate(-50%,-50%);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: translate(-50%,-50%) scale(1); opacity: 0.7; }
-    100% { transform: translate(-50%,-50%) scale(3); opacity: 0; }
-}
-
-.info-panel {
-    margin-top: 20px;
-    padding: 20px;
-    background: #fffde7;
-    border-radius: 10px;
-    text-align: center;
-}
-
-/* QUIZ */
-.quiz-card {
-    max-width: 600px;
-    margin: auto;
-}
-
-.option-btn {
-    width: 100%;
-    margin: 10px 0;
-    padding: 12px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-}
-
-.option-btn:hover { background: #eee; }
-
-/* VOTE */
-.vote-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-    gap: 20px;
-}
-
-.progress-bar {
-    background: #eee;
-    height: 10px;
-}
-
-.progress-fill {
-    background: green;
-    height: 100%;
-    width: 10%;
-}
-
-/* FEEDBACK */
-.feedback-box {
-    max-width: 600px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.feedback-box input,
-.feedback-box textarea {
-    margin: 10px 0;
-    padding: 10px;
-}
-
-.feedback-item {
-    background: #eee;
-    padding: 10px;
-    margin-top: 10px;
-}
-
-footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-</style>
+        footer { text-align: center; padding: 50px; background: #333; color: white; }
+    </style>
 </head>
-
 <body>
 
 <nav>
-<div class="logo">EDU Action</div>
-<ul>
-<li><a href="#home">Home</a></li>
-<li><a href="#region">Region</a></li>
-<li><a href="#quiz">Quiz</a></li>
-<li><a href="#vote">Vote</a></li>
-<li><a href="#feedback">Feedback</a></li>
-</ul>
+    <div class="logo">EDU Action</div>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#region">Region</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+    </ul>
 </nav>
 
-<!-- HOME -->
-<section id="home">
-<h2>SDG 4 Quality Education</h2>
-
-<div class="intro-grid">
-<div class="intro-card">Digital infrastructure</div>
-<div class="intro-card">Open education</div>
-<div class="intro-card">Teacher training</div>
-</div>
-</section>
-
-<!-- MAP -->
 <section id="region">
-<h2>20 Areas Lacking Resources</h2>
-
-<div class="map-container">
-<div class="hotspot" style="top:48%; left:51%" onclick="showInfo('Niger')"></div>
-<div class="hotspot" style="top:50%; left:50%" onclick="showInfo('Nigeria')"></div>
-<div class="hotspot" style="top:62%; left:52%" onclick="showInfo('Congo')"></div>
-<div class="hotspot" style="top:53%; left:57%" onclick="showInfo('Ethiopia')"></div>
-<div class="hotspot" style="top:70%; left:55%" onclick="showInfo('Malawi')"></div>
-<div class="hotspot" style="top:45%; left:67%" onclick="showInfo('Afghanistan')"></div>
-<div class="hotspot" style="top:56%; left:75%" onclick="showInfo('Myanmar')"></div>
-<div class="hotspot" style="top:63%; left:81%" onclick="showInfo('Philippines')"></div>
-<div class="hotspot" style="top:55%; left:31%" onclick="showInfo('Haiti')"></div>
-<div class="hotspot" style="top:68%; left:36%" onclick="showInfo('Brazil')"></div>
-</div>
-
-<div id="info-panel" class="info-panel">Click red dot</div>
+    <h2>20 Areas Lacking Resources</h2>
+    <div class="map-wrapper">
+        <div class="map-container" id="map">
+            <!-- 這裡保留你原本的地圖點位 -->
+            <div class="hotspot" style="top: 52%; left: 45%;" onclick="showInfo('[Niger] One of the lowest literacy rates globally.')"></div>
+            <div class="hotspot" style="top: 58%; left: 48%;" onclick="showInfo('[Nigeria] Conflict prevents millions from entering classrooms.')"></div>
+            <!-- ... 其他點位省略，請沿用你原本的 20 個點位 ... -->
+        </div>
+    </div>
+    <div id="info-panel" class="info-panel">📍 Click a red hotspot to explore specific regional challenges.</div>
 </section>
 
-<!-- QUIZ -->
 <section id="quiz">
-<h2>Quiz</h2>
-
-<div class="quiz-card">
-<p id="q-text"></p>
-<div id="q-options"></div>
-</div>
+    <h2>SDG 4 Knowledge Challenge</h2>
+    <div class="quiz-card" id="quiz-ui">
+        <div class="quiz-header">
+            <span id="q-progress">Question 1/15</span>
+            <span id="q-score">Score: 0</span>
+        </div>
+        <h3 id="q-text" style="margin-bottom:20px;"></h3>
+        <div id="q-options"></div>
+        <p id="quiz-fb"></p> <!-- 回饋訊息顯示位置 -->
+    </div>
 </section>
 
-<!-- VOTE -->
-<section id="vote">
-<h2>Vote</h2>
-
-<div class="vote-grid">
-<div>
-<p>Digital</p>
-<div class="progress-bar"><div id="v1" class="progress-fill"></div></div>
-<button onclick="vote('v1')">Vote</button>
-</div>
-</div>
-</section>
-
-<!-- FEEDBACK -->
-<section id="feedback">
-<h2>Feedback</h2>
-
-<div class="feedback-box">
-<input id="name" placeholder="Name">
-<textarea id="message" placeholder="Feedback"></textarea>
-<button onclick="submitFeedback()">Submit</button>
-<p id="msg"></p>
-</div>
-
-<div id="list"></div>
-</section>
-
-<footer>SDG Project</footer>
+<footer>
+    <p>© 2026 SDG 4 Interactive Platform | Empowering the Future through Education</p>
+</footer>
 
 <script>
-function showInfo(msg){
-document.getElementById("info-panel").innerText=msg;
-}
+    function showInfo(msg) {
+        document.getElementById('info-panel').innerText = msg;
+    }
 
-const quiz=[
-{q:"SDG4?",a:["Education","Water"],c:0}
-];
+    const quizData = [
+        { q: "What is the core focus of UN SDG 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
+        { q: "Approximately what percentage of primary schools globally lack electricity?", a: ["10%", "25%", "50%", "70%"], c: 1 },
+        { q: "Who does the concept of 'Lifelong Learning' include?", a: ["Children only", "Teens only", "Adults only", "Everyone regardless of age"], c: 3 },
+        { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "High-end headphones", "Photocopiers"], c: 1 },
+        { q: "SDG 4 aims for free education for...", a: ["Preschool", "Primary & Secondary", "PhD", "None"], c: 1 },
+        { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
+        { q: "Inclusive education means...", a: ["Only for rich", "Leaving no one behind", "Only for gifted", "Only boys"], c: 1 },
+        { q: "The target year for achieving SDG 4 is...", a: ["2025", "2030", "2045", "2050"], c: 1 },
+        { q: "Literacy rates are often lower for...", a: ["Men", "Women", "City dwellers", "Rich people"], c: 1 },
+        { q: "What helps reduce school absenteeism due to illness?", a: ["More homework", "Clean water & sanitation", "New uniforms", "Video games"], c: 1 },
+        { q: "Vocational training helps with...", a: ["Job skills", "Sleeping", "Gaming", "Watching TV"], c: 0 },
+        { q: "Digital divide refers to inequality in...", a: ["Math", "Internet Access", "Physical height", "Food"], c: 1 },
+        { q: "The key to improving educational quality is...", a: ["More exams", "Qualified teachers", "Heavier books", "Uniformity"], c: 1 },
+        { q: "OER stands for Open Educational...", a: ["Resources", "Rooms", "Records", "Rules"], c: 0 },
+        { q: "Quality education helps break the cycle of...", a: ["Poverty", "Fun", "Exercise", "Sleep"], c: 0 }
+    ];
 
-function loadQuiz(){
-document.getElementById("q-text").innerText=quiz[0].q;
-let box=document.getElementById("q-options");
-quiz[0].a.forEach((opt,i)=>{
-let b=document.createElement("button");
-b.innerText=opt;
-b.onclick=()=>alert(i==quiz[0].c?"Correct":"Wrong");
-box.appendChild(b);
-});
-}
-loadQuiz();
+    let currentQ = 0;
+    let score = 0;
 
-function vote(id){
-let bar=document.getElementById(id);
-bar.style.width="50%";
-}
+    function loadQuiz() {
+        if(currentQ >= quizData.length) {
+            document.getElementById('quiz-ui').innerHTML = `
+                <div style="text-align:center;">
+                    <h3>Challenge Complete!</h3>
+                    <p style="font-size: 2.5rem; color: var(--primary-green); margin: 20px 0;">${score} / ${quizData.length}</p>
+                    <button onclick="location.reload()" class="option-btn" style="text-align:center; background:var(--primary-blue); color:white;">Try Again</button>
+                </div>`;
+            return;
+        }
 
-function submitFeedback(){
-let name=document.getElementById("name").value;
-let msg=document.getElementById("message").value;
+        const data = quizData[currentQ];
+        document.getElementById('q-progress').innerText = `Question: ${currentQ + 1} / ${quizData.length}`;
+        document.getElementById('q-score').innerText = `Score: ${score}`;
+        document.getElementById('q-text').innerText = data.q;
+        document.getElementById('quiz-fb').innerText = ""; // 清空上一題回饋
 
-if(name==""||msg==""){
-document.getElementById("msg").innerText="Fill all";
-return;
-}
+        const optBox = document.getElementById('q-options');
+        optBox.innerHTML = "";
 
-let item=document.createElement("div");
-item.className="feedback-item";
-item.innerText=name+" : "+msg;
-document.getElementById("list").prepend(item);
-}
+        data.a.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAns(i, btn);
+            optBox.appendChild(btn);
+        });
+    }
+
+    function checkAns(selectedIndex, clickedBtn) {
+        // 禁止重複點擊
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach(b => b.disabled = true);
+
+        const fb = document.getElementById('quiz-fb');
+        const correctIndex = quizData[currentQ].c;
+
+        if (selectedIndex === correctIndex) {
+            score++;
+            clickedBtn.classList.add('correct');
+            fb.innerText = "Correct! ✨";
+            fb.style.color = "var(--correct)";
+        } else {
+            clickedBtn.classList.add('wrong');
+            fb.innerText = "Wrong! The answer is: " + quizData[currentQ].a[correctIndex];
+            fb.style.color = "var(--wrong)";
+            
+            // 同時標示出正確答案
+            allBtns[correctIndex].classList.add('correct');
+        }
+
+        currentQ++;
+        // 延遲 2 秒讓使用者看清楚回饋訊息
+        setTimeout(loadQuiz, 2000);
+    }
+
+    window.onload = loadQuiz;
 </script>
 
 </body>
