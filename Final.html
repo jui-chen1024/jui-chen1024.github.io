@@ -139,6 +139,39 @@
         .issue-part h4 { color: #d32f2f; margin-bottom: 10px; }
         .solution-part h4 { color: #2e7d32; margin-bottom: 10px; }
 
+        /* Resources Styles */
+        .resource-list {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+        }
+
+        .resource-item {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-item a {
+            color: var(--primary-blue);
+            font-weight: bold;
+            text-decoration: none;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--primary-blue);
+            transition: 0.3s;
+        }
+
+        .resource-item a:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
         /* Region Map Styles */
         .map-container {
             position: relative;
@@ -214,6 +247,7 @@
 
         @media (max-width: 768px) {
             .issue-pair { grid-template-columns: 1fr; }
+            .resource-item { flex-direction: column; text-align: center; gap: 10px; }
         }
     </style>
 </head>
@@ -225,6 +259,7 @@
         <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
         <li><a onclick="showPage('issues')" id="nav-issues">Issues</a></li>
         <li><a onclick="showPage('region')" id="nav-region">Region</a></li>
+        <li><a onclick="showPage('resources')" id="nav-resources">Resources</a></li>
         <li><a onclick="showPage('quiz')" id="nav-quiz">Quiz</a></li>
         <li><a onclick="showPage('vote')" id="nav-vote">Vote</a></li>
         <li><a onclick="showPage('feedback')" id="nav-feedback">Feedback</a></li>
@@ -253,7 +288,7 @@
     </div>
 </section>
 
-<!-- Issues & Solutions Section (新頁面) -->
+<!-- Issues & Solutions Section -->
 <section id="issues">
     <h2>Issues & Solutions</h2>
     <p class="intro-text">Deep dive into specific barriers and the direct actions taken to resolve them.</p>
@@ -288,6 +323,50 @@
                 <h4>✅ Curriculum Modernization</h4>
                 <p>Collaborating with global experts to provide up-to-date, digital-ready curricula via open platforms.</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Resources Section (新頁面內容) -->
+<section id="resources">
+    <h2>Educational Resources Repository</h2>
+    <p class="intro-text">Access official reports and free tools to support the global goal of quality education for all.</p>
+    
+    <div class="resource-list">
+        <div class="resource-item">
+            <div>
+                <strong>United Nations SDG 4 Official Site</strong>
+                <p>Comprehensive goals, targets, and global progress reports.</p>
+            </div>
+            <a href="https://sdgs.un.org/goals/goal4" target="_blank">Visit Site</a>
+        </div>
+        <div class="resource-item">
+            <div>
+                <strong>UNESCO Global Education Database</strong>
+                <p>Statistical data on literacy, enrollment, and teacher ratios worldwide.</p>
+            </div>
+            <a href="https://uis.unesco.org/" target="_blank">View Data</a>
+        </div>
+        <div class="resource-item">
+            <div>
+                <strong>Khan Academy</strong>
+                <p>World-class free online courses for students of all ages.</p>
+            </div>
+            <a href="https://www.khanacademy.org/" target="_blank">Start Learning</a>
+        </div>
+        <div class="resource-item">
+            <div>
+                <strong>OER Commons</strong>
+                <p>A public digital library of open educational resources.</p>
+            </div>
+            <a href="https://www.oercommons.org/" target="_blank">Explore Library</a>
+        </div>
+        <div class="resource-item">
+            <div>
+                <strong>Global Partnership for Education (GPE)</strong>
+                <p>Supporting lower-income countries to deliver quality education.</p>
+            </div>
+            <a href="https://www.globalpartnership.org/" target="_blank">Learn More</a>
         </div>
     </div>
 </section>
