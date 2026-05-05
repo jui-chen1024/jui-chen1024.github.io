@@ -91,6 +91,20 @@
             font-size: 1.2rem;
         }
 
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .intro-card {
+            background: var(--light-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid var(--primary-green);
+            transition: 0.3s;
+        }
+
         /* Issues & Solutions Styles */
         .issue-container {
             display: flex;
@@ -208,7 +222,7 @@
 <nav>
     <div class="logo">EDU Action</div>
     <ul>
-        <li><a onclick="showPage('home')" id="nav-home">Home</a></li>
+        <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
         <li><a onclick="showPage('issues')" id="nav-issues">Issues</a></li>
         <li><a onclick="showPage('region')" id="nav-region">Region</a></li>
         <li><a onclick="showPage('quiz')" id="nav-quiz">Quiz</a></li>
@@ -217,54 +231,62 @@
     </ul>
 </nav>
 
-<!-- Home Section -->
+<!-- Home Section (內容完全保留) -->
 <section id="home" class="active">
     <h2>Global Education Resources</h2>
     <p class="intro-text">
-        Welcome to the SDG 4 Action Platform. Our mission is to ensure inclusive and equitable quality education for all. Explore the issues, regions in need, and join our community to advocate for change.
+        This website introduces SDG 4: Quality Education. It helps users understand global education issues, explore areas lacking resources, learn possible solutions, and interact through quizzes, voting, and feedback.
     </p>
-    <div style="text-align: center; margin-top: 20px;">
-        <button onclick="showPage('issues')" class="vote-btn" style="padding: 15px 30px; font-size: 1.1rem;">Explore Issues & Solutions</button>
+    <div class="intro-grid">
+        <div class="intro-card">
+            <h3>1. Digital Infrastructure</h3>
+            <p>High-speed internet and stable electricity are important resources for modern education.</p>
+        </div>
+        <div class="intro-card">
+            <h3>2. Open Educational Resources</h3>
+            <p>Free digital materials can help students learn without being limited by money or location.</p>
+        </div>
+        <div class="intro-card">
+            <h3>3. Teacher Training</h3>
+            <p>Professional and fairly supported teachers are essential for improving education quality.</p>
+        </div>
     </div>
 </section>
 
-<!-- Issues & Solutions Section -->
+<!-- Issues & Solutions Section (新頁面) -->
 <section id="issues">
     <h2>Issues & Solutions</h2>
-    <p class="intro-text">Understanding the barriers to education and the actions we can take to overcome them.</p>
+    <p class="intro-text">Deep dive into specific barriers and the direct actions taken to resolve them.</p>
 
     <div class="issue-container">
-        <!-- Pair 1 -->
         <div class="issue-pair">
             <div class="issue-part">
-                <h4>⚠️ The Digital Divide</h4>
-                <p>Lack of stable internet and electricity leaves students in remote areas unable to access digital learning tools.</p>
+                <h4>⚠️ Poverty & Fees</h4>
+                <p>Economic hardship forces many children to leave school to work and support their families.</p>
             </div>
             <div class="solution-part">
-                <h4>✅ Digital Infrastructure</h4>
-                <p>Deploying solar-powered classrooms and offline servers to provide quality content to off-grid communities.</p>
+                <h4>✅ Financial Support</h4>
+                <p>Establishing scholarship programs and community grants to cover costs for low-income students.</p>
             </div>
         </div>
-        <!-- Pair 2 -->
         <div class="issue-pair">
             <div class="issue-part">
-                <h4>⚠️ High Cost of Learning</h4>
-                <p>Expensive textbooks and tuition fees prevent children from low-income families from attending school.</p>
+                <h4>⚠️ Conflict Zones</h4>
+                <p>War and instability damage schools and create dangerous environments for children and teachers.</p>
             </div>
             <div class="solution-part">
-                <h4>✅ Open Resources (OER)</h4>
-                <p>Providing free, openly licensed digital materials so students can learn without financial barriers.</p>
+                <h4>✅ Safe Learning Spaces</h4>
+                <p>Setting up temporary mobile schools and providing psychosocial support to children in disaster areas.</p>
             </div>
         </div>
-        <!-- Pair 3 -->
         <div class="issue-pair">
             <div class="issue-part">
-                <h4>⚠️ Shortage of Teachers</h4>
-                <p>Many regions lack qualified educators, leading to overcrowded classes and low education quality.</p>
+                <h4>⚠️ Outdated Materials</h4>
+                <p>Many schools still rely on textbooks that are decades old or do not meet modern standards.</p>
             </div>
             <div class="solution-part">
-                <h4>✅ Teacher Training</h4>
-                <p>Investing in professional training and fair support to empower teachers in underserved areas.</p>
+                <h4>✅ Curriculum Modernization</h4>
+                <p>Collaborating with global experts to provide up-to-date, digital-ready curricula via open platforms.</p>
             </div>
         </div>
     </div>
@@ -350,7 +372,7 @@
 </section>
 
 <footer>
-    <p>© 2026 SDG 4 Action Platform | Reference: UN & UNESCO Official Data</p>
+    <p>© 2026 SDG 4 Action Platform | Empowering the Future through Education</p>
 </footer>
 
 <script>
@@ -363,24 +385,24 @@
     }
 
     const regionInfo = {
-        "Niger": "Lack of school facilities and low literacy due to poverty.",
-        "Northern Nigeria": "Conflict and security risks disrupt regular schooling.",
-        "DR Congo": "Insufficient textbooks and trained teachers in rural areas.",
-        "Ethiopia": "Remote areas lack electricity and digital tools.",
-        "Afghanistan": "Political restrictions affecting access, especially for girls.",
-        "Bangladesh": "Natural disasters like floods frequently damage school buildings.",
-        "Myanmar": "Conflict zones leave children without safe learning environments.",
-        "Haiti": "Damage from earthquakes and extreme poverty.",
-        "Rural Brazil": "Large distances and lack of transportation to schools.",
-        "Yemen": "War and famine have severely damaged educational systems."
+        "Niger": "Niger lacks educational resources because of poverty, low literacy rates, limited school facilities, and low female enrollment.",
+        "Northern Nigeria": "Northern Nigeria faces conflict and safety problems, which prevent many children from attending school regularly.",
+        "DR Congo": "DR Congo has many rural schools without enough desks, textbooks, trained teachers, or clean sanitation facilities.",
+        "Ethiopia": "Ethiopia faces challenges in rural education because some areas lack electricity, internet access, and digital learning tools.",
+        "Afghanistan": "Afghanistan has limited education access, especially for girls, because of political restrictions and unstable conditions.",
+        "Bangladesh": "Bangladesh is affected by flooding and climate disasters, which can damage schools and interrupt students' learning.",
+        "Myanmar": "Myanmar has conflict zones where children often lose access to stable classrooms and safe learning environments.",
+        "Haiti": "Haiti lacks educational resources because earthquakes, storms, and poverty have damaged many school buildings.",
+        "Rural Brazil": "Rural Brazil faces education inequality because students in remote areas may travel long distances to reach school.",
+        "Yemen": "Yemen lacks educational resources because war and famine have damaged schools and reduced learning opportunities."
     };
 
     function showRegion(c) { document.getElementById('info-panel').innerHTML = `<strong>[${c}]</strong><br>${regionInfo[c]}`; }
 
     const quizData = [
         { q: "What is the core focus of SDG 4?", a: ["Quality Education", "No Poverty", "Climate Action"], c: 0 },
-        { q: "What helps bridge the digital divide?", a: ["More games", "Internet & Electricity", "Newspapers"], c: 1 },
-        { q: "What are OER?", a: ["Private books", "Free open materials", "Locked files"], c: 1 }
+        { q: "What is fundamental for digital education?", a: ["Gaming", "Internet & Electricity", "Newspapers"], c: 1 },
+        { q: "What does Inclusive Education mean?", a: ["Helping all students", "Only elite schools", "Closing rural schools"], c: 0 }
     ];
 
     let currentQ = 0, score = 0;
@@ -411,17 +433,18 @@
         const bar = document.getElementById(id);
         let w = parseInt(bar.style.width) || 10;
         if (w < 100) bar.style.width = (w + 15) + "%";
-        alert("Vote recorded!");
+        alert("Thank you for voting!");
     }
 
     function submitFeedback() {
         const n = document.getElementById("name").value;
         const m = document.getElementById("message").value;
-        if(!n || !m) return;
+        if(!n || !m) { alert("Please fill fields"); return; }
         const item = document.createElement("div");
         item.className = "feedback-item";
         item.innerHTML = `<h4>${n}</h4><p>${m}</p>`;
         document.getElementById("feedback-list").prepend(item);
+        alert("Success!");
     }
 
     window.onload = loadQuiz;
