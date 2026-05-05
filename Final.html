@@ -249,19 +249,6 @@
             .resource-item { flex-direction: column; text-align: center; gap: 10px; }
             .issue-grid { grid-template-columns: 1fr; }
         }
-
-        <!-- 只截重點：你的整份都在，以下是「有改動的地方」 -->
-
-        #home {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        #home.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
@@ -479,28 +466,13 @@
 <footer><p>© 2026 SDG 4 Action Platform</p></footer>
 
 <script>
-    /* ⭐ 把你原本 showPage 整段換掉 */
     function showPage(pageId) {
-        document.querySelectorAll('section').forEach(sec => {
-            sec.classList.remove('active');
-            sec.classList.remove('show'); // ⭐ 清動畫
-        });
-
+        document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
-
-        const page = document.getElementById(pageId);
-        page.classList.add('active');
+        document.getElementById(pageId).classList.add('active');
         document.getElementById('nav-' + pageId).classList.add('active');
-
-    // ⭐ 只有 Home 有動畫
-        if (pageId === 'home') {
-            setTimeout(() => {
-                page.classList.add('show');
-            }, 50);
-        }
-
-    window.scrollTo(0, 0);
-}
+        window.scrollTo(0, 0);
+    }
 
     const regionInfo = {
         "Niger": "Poverty and limited school facilities.",
@@ -566,14 +538,8 @@
         document.getElementById("feedback-list").prepend(item);
     }
 
-    window.onload = function() {
-        loadQuiz();
-        setTimeout(() => {
-            document.getElementById('home').classList.add('show');
-        }, 100);
-    };
-        
+    window.onload = loadQuiz;
 </script>
 
-</body>
-</html>ㅛ
+</body> 
+</html>
