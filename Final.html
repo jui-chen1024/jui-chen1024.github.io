@@ -77,33 +77,6 @@
             display: block;
         }
 
-        /* --- 新增：Home 頁面由下往上進入動畫 --- */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 初始狀態設為透明，當 active 時執行動畫 */
-        #home.active h2, 
-        #home.active .intro-text, 
-        #home.active .intro-card {
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        /* 設定動畫延遲，讓內容有先後順序進入 */
-        #home.active h2 { animation-delay: 0.1s; }
-        #home.active .intro-text { animation-delay: 0.3s; }
-        #home.active .intro-card:nth-child(1) { animation-delay: 0.5s; }
-        #home.active .intro-card:nth-child(2) { animation-delay: 0.6s; }
-        #home.active .intro-card:nth-child(3) { animation-delay: 0.7s; }
-
         h2 {
             text-align: center;
             color: var(--primary-blue);
@@ -293,6 +266,7 @@
     </ul>
 </nav>
 
+<!-- Home Section -->
 <section id="home" class="active">
     <h2>Global Education Resources</h2>
     <p class="intro-text">
@@ -305,4 +279,267 @@
         </div>
         <div class="intro-card">
             <h3>2. Open Educational Resources</h3>
-            <p>Free digit
+            <p>Free digital materials can help students learn without being limited by money or location.</p>
+        </div>
+        <div class="intro-card">
+            <h3>3. Teacher Training</h3>
+            <p>Professional and fairly supported teachers are essential for improving education quality.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Issues Section (6 個翻卡設計) -->
+<section id="issues">
+    <h2>Issues & Solutions</h2>
+    <p class="intro-text">Click on an issue to reveal its potential solution.</p>
+
+    <div class="issue-grid">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="card-front">
+                    <h4>⚠️ Poverty & Fees</h4>
+                    <p>Economic hardship forces many children to leave school to work and support their families.</p>
+                    <span class="flip-hint">Click to see Solution ↺</span>
+                </div>
+                <div class="card-back">
+                    <h4>✅ Financial Support</h4>
+                    <p>Establishing scholarship programs and community grants to cover costs for low-income students.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="card-front">
+                    <h4>⚠️ Conflict Zones</h4>
+                    <p>War and instability damage schools and create dangerous environments for children and teachers.</p>
+                    <span class="flip-hint">Click to see Solution ↺</span>
+                </div>
+                <div class="card-back">
+                    <h4>✅ Safe Learning Spaces</h4>
+                    <p>Setting up temporary mobile schools and providing psychosocial support to children in disaster areas.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="card-front">
+                    <h4>⚠️ Outdated Materials</h4>
+                    <p>Many schools still rely on textbooks that are decades old or do not meet modern standards.</p>
+                    <span class="flip-hint">Click to see Solution ↺</span>
+                </div>
+                <div class="card-back">
+                    <h4>✅ Curriculum Modernization</h4>
+                    <p>Collaborating with global experts to provide up-to-date, digital-ready curricula via open platforms.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="card-front">
+                    <h4>⚠️ Gender Inequality</h4>
+                    <p>In many regions, cultural barriers and lack of facilities prevent girls from completing their education.</p>
+                    <span class="flip-hint">Click to see Solution ↺</span>
+                </div>
+                <div class="card-back">
+                    <h4>✅ Inclusive Policies</h4>
+                    <p>Building safe sanitation facilities and promoting community awareness about the importance of girls' education.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="card-front">
+                    <h4>⚠️ Teacher Shortage</h4>
+                    <p>A lack of qualified educators in remote areas leads to high student-to-teacher ratios and low quality.</p>
+                    <span class="flip-hint">Click to see Solution ↺</span>
+                </div>
+                <div class="card-back">
+                    <h4>✅ Professional Training</h4>
+                    <p>Investing in remote training tools and providing incentives for teachers to work in underserved communities.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-card-inner">
+                <div class="card-front">
+                    <h4>⚠️ Digital Divide</h4>
+                    <p>Without internet or computers, students in poor areas fall behind in the modern digital economy.</p>
+                    <span class="flip-hint">Click to see Solution ↺</span>
+                </div>
+                <div class="card-back">
+                    <h4>✅ Technology Access</h4>
+                    <p>Partnering with tech companies to provide low-cost devices and solar-powered internet hubs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Region Section -->
+<section id="region">
+    <h2>10 Areas Lacking Resources</h2>
+    <div class="map-container">
+        <img class="map-img" src="worldmap.PNG" alt="World Map">
+        <div class="hotspot red" style="top: 37%; left: 50%;" onclick="showRegion('Niger')"></div>
+        <div class="hotspot orange" style="top: 41%; left: 49.5%;" onclick="showRegion('Northern Nigeria')"></div>
+        <div class="hotspot yellow" style="top: 51%; left: 52.5%;" onclick="showRegion('DR Congo')"></div>
+        <div class="hotspot green" style="top: 45%; left: 57%;" onclick="showRegion('Ethiopia')"></div>
+        <div class="hotspot blue" style="top: 32%; left: 64%;" onclick="showRegion('Afghanistan')"></div>
+        <div class="hotspot purple" style="top: 35%; left: 71%;" onclick="showRegion('Bangladesh')"></div>
+        <div class="hotspot pink" style="top:38%; left: 73%;" onclick="showRegion('Myanmar')"></div>
+        <div class="hotspot brown" style="top: 39%; left: 27%;" onclick="showRegion('Haiti')"></div>
+        <div class="hotspot teal" style="top: 56%; left: 34%;" onclick="showRegion('Rural Brazil')"></div>
+        <div class="hotspot black" style="top: 40%; left: 59.5%;" onclick="showRegion('Yemen')"></div>
+    </div>
+    <div id="info-panel" class="info-panel">📍 Click a colored point to see region info.</div>
+</section>
+
+<!-- Resources Section (擴充回 6 個) -->
+<section id="resources">
+    <h2>Educational Resources Repository</h2>
+    <p class="intro-text">Official reports and free tools for quality education.</p>
+    <div class="resource-list">
+        <div class="resource-item">
+            <div><strong>United Nations SDG 4 Official Site</strong><p>Goals and progress reports.</p></div>
+            <a href="https://sdgs.un.org/goals/goal4" target="_blank">Visit Site</a>
+        </div>
+        <div class="resource-item">
+            <div><strong>UNESCO Education Database</strong><p>Global literacy and enrollment stats.</p></div>
+            <a href="https://uis.unesco.org/" target="_blank">View Data</a>
+        </div>
+        <div class="resource-item">
+            <div><strong>Khan Academy</strong><p>Free online courses for all subjects.</p></div>
+            <a href="https://www.khanacademy.org/" target="_blank">Start Learning</a>
+        </div>
+        <div class="resource-item">
+            <div><strong>World Bank Education Data</strong><p>Global educational financing and policy reports.</p></div>
+            <a href="https://data.worldbank.org/topic/education" target="_blank">Explore Data</a>
+        </div>
+        <div class="resource-item">
+            <div><strong>Coursera for Social Impact</strong><p>High-quality courses from top universities.</p></div>
+            <a href="https://www.coursera.org/" target="_blank">Join Course</a>
+        </div>
+        <div class="resource-item">
+            <div><strong>Global Partnership for Education</strong><p>Support for education in developing countries.</p></div>
+            <a href="https://www.globalpartnership.org/" target="_blank">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<!-- Quiz Section -->
+<section id="quiz">
+    <h2>SDG 4 Knowledge Challenge</h2>
+    <div class="quiz-card" id="quiz-ui">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;">
+            <span id="q-progress"></span><span id="q-score">Score: 0</span>
+        </div>
+        <h3 id="q-text" style="margin-bottom:20px;"></h3>
+        <div id="q-options"></div>
+    </div>
+    <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
+        <h3>Challenge Complete!</h3>
+        <p style="font-size: 2.5rem; color: var(--primary-green); margin: 20px 0;" id="final-score-val"></p>
+        <button onclick="restartQuiz()" class="vote-btn">Retry Quiz</button>
+    </div>
+</section>
+
+<!-- Vote Section -->
+<section id="vote">
+    <h2>Your Voice Matters</h2>
+    <div class="vote-grid">
+        <div class="vote-card"><p>Digital Equality</p><div class="progress-bar"><div id="v1" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v1')">Vote</button></div>
+        <div class="vote-card"><p>Teacher Training</p><div class="progress-bar"><div id="v2" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v2')">Vote</button></div>
+    </div>
+</section>
+
+<!-- Feedback Section -->
+<section id="feedback">
+    <h2>Feedback</h2>
+    <div class="feedback-box">
+        <input type="text" id="name" placeholder="Name" style="margin-bottom: 15px; padding: 10px;">
+        <textarea id="message" rows="4" placeholder="Feedback..." style="margin-bottom: 15px; padding: 10px;"></textarea>
+        <button onclick="submitFeedback()" class="vote-btn">Submit</button>
+    </div>
+    <div id="feedback-list" style="margin-top: 30px; max-width: 650px; margin-left: auto; margin-right: auto;"></div>
+</section>
+
+<footer><p>© 2026 SDG 4 Action Platform</p></footer>
+
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        document.getElementById('nav-' + pageId).classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    const regionInfo = {
+        "Niger": "Poverty and limited school facilities.",
+        "Northern Nigeria": "Conflict and safety problems.",
+        "DR Congo": "Insufficient textbooks and trained teachers.",
+        "Ethiopia": "Lack of electricity and digital tools.",
+        "Afghanistan": "Political restrictions, especially for girls.",
+        "Bangladesh": "Climate disasters and flooding.",
+        "Myanmar": "Conflict zones affecting classrooms.",
+        "Haiti": "Natural disasters and extreme poverty.",
+        "Rural Brazil": "Long distances to reach schools.",
+        "Yemen": "War and famine damaging infrastructure."
+    };
+
+    function showRegion(c) { document.getElementById('info-panel').innerHTML = `<strong>[${c}]</strong><br>${regionInfo[c]}`; }
+
+    const quizData = [
+    { q: "What is the core focus of UN Sustainable Development Goal 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
+    { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "Headphones", "Photocopiers"], c: 1 },
+    { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
+    { q: "What defines Open Educational Resources?", a: ["Expensive private materials", "Copyright-locked books", "Free and openly accessible learning materials", "Old newspapers"], c: 2 },
+    { q: "What is the goal of Inclusive Education?", a: ["Teaching only the brightest students", "Helping all students access education", "Increasing tuition", "Creating boys-only schools"], c: 1 },
+    { q: "Why is teacher training important for education quality?", a: ["It helps teachers improve teaching skills", "It reduces the number of schools", "It replaces students", "It increases school fees"], c: 0 },
+    { q: "Which problem can stop children from going to school in conflict areas?", a: ["Too many libraries", "Safety risks", "Free textbooks", "Better roads"], c: 1 },
+    { q: "Which group is often affected by unequal access to education?", a: ["Only adults", "Only tourists", "Girls and children in poverty", "Only athletes"], c: 2 },
+    { q: "How can the internet support education?", a: ["By providing online learning resources", "By removing all teachers", "By making schools unnecessary", "By increasing floods"], c: 0 },
+    { q: "Which resource is important for students in rural schools?", a: ["Luxury uniforms", "Textbooks and trained teachers", "Video games", "Shopping malls"], c: 1 },
+    { q: "What can natural disasters do to education?", a: ["Damage schools and interrupt learning", "Improve all classrooms immediately", "Remove the need for education", "Make exams easier"], c: 0 },
+    { q: "Why do some children drop out of school?", a: ["They may need to work because of poverty", "They have too many teachers", "Schools are too close", "Books are too cheap"], c: 0 },
+    { q: "What does digital inequality mean?", a: ["Everyone has equal internet access", "Some people lack access to technology and internet", "All students study online", "Schools have too many computers"], c: 1 },
+    { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 },
+    { q: "What is one purpose of SDG 4?", a: ["To promote inclusive and equitable quality education", "To stop students from learning", "To reduce global cooperation", "To remove schools"], c: 0 }
+];
+
+    let currentQ = 0, score = 0;
+    function loadQuiz() {
+        if (currentQ >= quizData.length) {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('final-score-val').innerText = score + " / " + quizData.length;
+            return;
+        }
+        const d = quizData[currentQ];
+        document.getElementById('q-progress').innerText = `Question: ${currentQ + 1} / ${quizData.length}`;
+        document.getElementById('q-text').innerText = d.q;
+        const optBox = document.getElementById('q-options'); optBox.innerHTML = "";
+        d.a.forEach((opt, i) => {
+            const btn = document.createElement('button'); btn.className = 'option-btn';
+            btn.innerText = opt; btn.onclick = () => {
+                if(i === d.c) score++;
+                currentQ++; loadQuiz();
+            };
+            optBox.appendChild(btn);
+        });
+    }
+
+    function restartQuiz() { currentQ = 0; score = 0; document.getElementById('quiz-ui').style.display = 'block'; document.getElementById('quiz-result').style.display = 'none'; loadQuiz(); }
+    function vote(id) { const bar = document.getElementById(id); let w = parseInt(bar.style.width) || 10; if (w < 100) bar.style.width = (w + 15) + "%"; alert("Voted!"); }
+    function submitFeedback() { 
+        const n = document.getElementById("name").value; const m = document.getElementById("message").value;
+        if(!n || !m) return;
+        const item = document.createElement("div"); item.className = "feedback-item"; item.innerHTML = `<h4>${n}</h4><p>${m}</p>`;
+        document.getElementById("feedback-list").prepend(item);
+    }
+
+    window.onload = loadQuiz;
+</script>
+
+</body>
+</html>
