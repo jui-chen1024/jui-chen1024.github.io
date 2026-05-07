@@ -476,9 +476,12 @@
     function updateAvatarPosition() {
         const targetNode = document.getElementById(`node-${currentLevel}`);
         const avatar = document.getElementById('player-avatar');
+
         if(targetNode) {
-            avatar.style.left = targetNode.style.left;
-            avatar.style.bottom = (parseInt(targetNode.style.bottom) + 7) + '%';
+            avatar.style.left =
+                `calc(${targetNode.style.left} + 40px)`;
+            avatar.style.bottom =
+                `calc(${targetNode.style.bottom} + 55px)`;
         }
     }
 
