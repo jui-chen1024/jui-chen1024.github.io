@@ -163,8 +163,11 @@
         .red { background:#f44336; } .orange { background:#ff9800; } .yellow { background:#fbc02d; } .green { background:#4caf50; } .blue { background:#2196f3; } .purple { background:#9c27b0; } .pink { background:#e91e63; } .brown { background:#795548; } .teal { background:#009688; } .black { background:#333; }
         .info-panel { margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; }
 
-        /* Quiz Styles */
-        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; }
+        /* Quiz Styles - Updated for Game Design */
+        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; position: relative; }
+        .game-status { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: white; padding: 10px 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .hp-bar { color: #f44336; font-size: 1.2rem; letter-spacing: 3px; }
+        .level-badge { background: var(--primary-blue); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; }
         .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
         
         .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
@@ -267,13 +270,20 @@
 <section id="quiz">
     <h2>SDG 4 Knowledge Challenge</h2>
     <div class="quiz-card" id="quiz-ui">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;"><span id="q-progress"></span><span id="q-score">Score: 0</span></div>
+        <div class="game-status">
+            <span id="q-level" class="level-badge">LV 1: Rookie</span>
+            <span id="q-hp" class="hp-bar">❤️❤️❤️</span>
+            <span id="q-score" style="font-weight:bold;">Exp: 0</span>
+        </div>
+        <p id="q-progress" style="font-size:0.8rem; margin-bottom:10px; color:#666;"></p>
         <h3 id="q-text" style="margin-bottom:20px;"></h3>
         <div id="q-options"></div>
     </div>
     <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
-        <h3>Challenge Complete!</h3><p style="font-size: 2.5rem; color: var(--primary-green); margin: 20px 0;" id="final-score-val"></p>
-        <button onclick="restartQuiz()" class="vote-btn">Retry Quiz</button>
+        <h3 id="final-title">Challenge Complete!</h3>
+        <p id="final-status" style="margin:20px 0; font-size:1.1rem; color: #555;"></p>
+        <p style="font-size: 2.5rem; color: var(--primary-green); font-weight:bold; margin-bottom:20px;" id="final-score-val"></p>
+        <button onclick="restartQuiz()" class="vote-btn">Retry Quest</button>
     </div>
 </section>
 
@@ -331,18 +341,23 @@
         { q: "What is one purpose of SDG 4?", a: ["To promote inclusive and equitable quality education", "To stop students from learning", "To reduce global cooperation", "To remove schools"], c: 0 }
     ];
 
-    let currentQ = 0, score = 0;
+    let currentQ = 0, score = 0, hp = 3;
+    const levels = ["LV 1: Rookie", "LV 2: Scholar", "LV 3: Advocate"];
 
     function loadQuiz() {
         if (currentQ >= quizData.length) {
-            document.getElementById('quiz-ui').style.display = 'none';
-            document.getElementById('quiz-result').style.display = 'block';
-            document.getElementById('final-score-val').innerText = score + " / " + quizData.length;
+            endGame("🏆 Quest Complete!", "You have successfully finished all challenges!");
             return;
         }
-        const d = quizData[currentQ];
+
+        // Update Level, HP and Score
+        const levelIdx = Math.floor(currentQ / 5);
+        document.getElementById('q-level').innerText = levels[levelIdx];
+        document.getElementById('q-hp').innerText = "❤️".repeat(hp);
+        document.getElementById('q-score').innerText = `Exp: ${score}`;
         document.getElementById('q-progress').innerText = `Question: ${currentQ + 1} / ${quizData.length}`;
-        document.getElementById('q-score').innerText = `Score: ${score}`;
+        
+        const d = quizData[currentQ];
         document.getElementById('q-text').innerText = d.q;
         const optBox = document.getElementById('q-options'); optBox.innerHTML = "";
         
@@ -359,37 +374,46 @@
         const d = quizData[currentQ];
         const allButtons = document.querySelectorAll('.option-btn');
         
-        // 鎖定所有按鈕防止連點
         allButtons.forEach(btn => btn.style.pointerEvents = 'none');
 
         if (selectedIndex === d.c) {
-            // 答對了
             score++;
-            document.getElementById('q-score').innerText = `Score: ${score}`;
-            selectedBtn.style.backgroundColor = "#c8e6c9"; // 綠底
+            selectedBtn.style.backgroundColor = "#c8e6c9"; 
             selectedBtn.style.borderColor = "#4caf50";
             selectedBtn.innerText += " ⭕️";
         } else {
-            // 答錯了
-            selectedBtn.style.backgroundColor = "#ffcdd2"; // 紅底
+            hp--;
+            selectedBtn.style.backgroundColor = "#ffcdd2"; 
             selectedBtn.style.borderColor = "#f44336";
             selectedBtn.innerText += " ❌";
 
-            // 顯示正確答案
             allButtons[d.c].style.backgroundColor = "#c8e6c9";
             allButtons[d.c].style.borderColor = "#4caf50";
             allButtons[d.c].innerText += " ⭕️";
         }
 
-        // 1.5 秒後自動進入下一題
-        setTimeout(() => {
-            currentQ++;
-            loadQuiz();
-        }, 1500);
+        if (hp <= 0) {
+            setTimeout(() => {
+                endGame("💀 Game Over!", "You ran out of hearts. Try again to clear this level!");
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                currentQ++;
+                loadQuiz();
+            }, 1500);
+        }
+    }
+
+    function endGame(title, status) {
+        document.getElementById('quiz-ui').style.display = 'none';
+        document.getElementById('quiz-result').style.display = 'block';
+        document.getElementById('final-title').innerText = title;
+        document.getElementById('final-status').innerText = status;
+        document.getElementById('final-score-val').innerText = score + " / " + quizData.length;
     }
 
     function restartQuiz() { 
-        currentQ = 0; score = 0; 
+        currentQ = 0; score = 0; hp = 3;
         document.getElementById('quiz-ui').style.display = 'block'; 
         document.getElementById('quiz-result').style.display = 'none'; 
         loadQuiz(); 
