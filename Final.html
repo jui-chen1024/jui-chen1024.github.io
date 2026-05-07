@@ -106,7 +106,6 @@
             transition: 0.3s;
         }
 
-        /* Issues Flip Card Styles */
         .issue-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -150,168 +149,42 @@
             text-align: center;
         }
 
-        .card-front {
-            background-color: var(--issue-red);
-            color: #d32f2f;
-            border-left: 8px solid #f44336;
-        }
+        .card-front { background-color: var(--issue-red); color: #d32f2f; border-left: 8px solid #f44336; }
+        .card-back { background-color: var(--sol-green); color: #2e7d32; transform: rotateY(180deg); border-left: 8px solid #4caf50; }
+        .flip-hint { font-size: 0.8rem; margin-top: 15px; color: #888; font-style: italic; }
 
-        .card-back {
-            background-color: var(--sol-green);
-            color: #2e7d32;
-            transform: rotateY(180deg);
-            border-left: 8px solid #4caf50;
-        }
+        .resource-list { max-width: 900px; margin: 0 auto; display: grid; gap: 20px; }
+        .resource-item { background: var(--light-bg); padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .resource-item a { color: var(--primary-blue); font-weight: bold; text-decoration: none; background: white; padding: 8px 15px; border-radius: 5px; border: 1px solid var(--primary-blue); transition: 0.3s; }
 
-        .flip-hint {
-            font-size: 0.8rem;
-            margin-top: 15px;
-            color: #888;
-            font-style: italic;
-        }
-
-        /* Resources Styles */
-        .resource-list {
-            max-width: 900px;
-            margin: 0 auto;
-            display: grid;
-            gap: 20px;
-        }
-
-        .resource-item {
-            background: var(--light-bg);
-            padding: 20px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .resource-item a {
-            color: var(--primary-blue);
-            font-weight: bold;
-            text-decoration: none;
-            background: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: 1px solid var(--primary-blue);
-            transition: 0.3s;
-        }
-
-        /* Region Map Styles */
-        .map-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 2 / 1;
-            background: #e0f2f1;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid #cfd8dc;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
+        .map-container { position: relative; width: 100%; aspect-ratio: 2 / 1; background: #e0f2f1; border-radius: 20px; overflow: hidden; border: 2px solid #cfd8dc; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .map-img { width: 100%; height: 100%; object-fit: cover; }
-
-        .hotspot {
-            position: absolute;
-            width: 16px; height: 16px;
-            border-radius: 50%; transform: translate(-50%, -50%);
-            border: 2px solid white; cursor: pointer; z-index: 10;
-        }
-
-        .red { background:#f44336; } .orange { background:#ff9800; }
-        .yellow { background:#fbc02d; } .green { background:#4caf50; }
-        .blue { background:#2196f3; } .purple { background:#9c27b0; }
-        .pink { background:#e91e63; } .brown { background:#795548; }
-        .teal { background:#009688; } .black { background:#333; }
-
-        .info-panel {
-            margin-top: 20px; padding: 25px;
-            background: #fffde7; border-radius: 15px;
-            text-align: center; font-weight: bold;
-            border: 2px dashed #fbc02d;
-        }
+        .hotspot { position: absolute; width: 16px; height: 16px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid white; cursor: pointer; z-index: 10; }
+        .red { background:#f44336; } .orange { background:#ff9800; } .yellow { background:#fbc02d; } .green { background:#4caf50; } .blue { background:#2196f3; } .purple { background:#9c27b0; } .pink { background:#e91e63; } .brown { background:#795548; } .teal { background:#009688; } .black { background:#333; }
+        .info-panel { margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; }
 
         /* Quiz Styles */
         .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; }
-        .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; text-align: left; }
+        .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
         
-        /* Vote Page Styles */
-        .vote-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .vote-card {
-            background: #fff;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-        }
-
-        .vote-card h4 {
-            color: var(--primary-blue);
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
-        .vote-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .vote-option-item {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .vote-option-item:hover {
-            border-color: var(--primary-green);
-            background: #f0f7f0;
-        }
-
-        .vote-option-item.voted {
-            pointer-events: none;
-            border-color: #ccc;
-        }
-
-        .vote-result-bar {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            background: rgba(70, 140, 69, 0.15);
-            z-index: 0;
-            transition: width 1s ease-out;
-        }
-
+        .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        .vote-card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .vote-card h4 { color: var(--primary-blue); margin-bottom: 15px; font-size: 1.1rem; }
+        .vote-options { display: flex; flex-direction: column; gap: 10px; }
+        .vote-option-item { background: #f9f9f9; border: 1px solid #ddd; padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: center; }
+        .vote-option-item:hover { border-color: var(--primary-green); background: #f0f7f0; }
+        .vote-option-item.voted { pointer-events: none; border-color: #ccc; }
+        .vote-result-bar { position: absolute; left: 0; top: 0; height: 100%; background: rgba(70, 140, 69, 0.15); z-index: 0; transition: width 1s ease-out; }
         .option-text { position: relative; z-index: 1; font-weight: 500; }
         .option-percent { position: relative; z-index: 1; font-weight: bold; color: var(--primary-green); display: none; }
 
-        /* Feedback Styles - Updated */
         .feedback-box { max-width: 650px; margin: 0 auto; background: var(--light-bg); padding: 35px; border-radius: 18px; display: flex; flex-direction: column; }
         .feedback-item { background: white; padding: 18px; margin-bottom: 15px; border-left: 5px solid var(--primary-green); border-radius: 10px; }
         .feedback-header { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
-        
         .star-rating { display: flex; gap: 5px; margin-bottom: 15px; font-size: 1.5rem; justify-content: center; }
         .star-rating span { cursor: pointer; color: #ccc; transition: 0.2s; }
         .star-rating span.active { color: var(--star-color); }
         .item-stars { color: var(--star-color); font-size: 0.9rem; }
-
         .vote-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 22px; border-radius: 5px; cursor: pointer; }
 
         footer { text-align: center; padding: 50px; background: #333; color: white; margin-top: 40px; }
@@ -337,7 +210,6 @@
     </ul>
 </nav>
 
-<!-- Sections (Same as original) -->
 <section id="home" class="active">
     <h2>Global Education Resources</h2>
     <p class="intro-text">This website introduces SDG 4: Quality Education. It helps users understand global education issues, explore areas lacking resources, learn possible solutions, and interact through quizzes, voting, and feedback.</p>
@@ -352,7 +224,6 @@
     <h2>Issues & Solutions</h2>
     <p class="intro-text">Click on an issue to reveal its potential solution.</p>
     <div class="issue-grid">
-        <!-- 6 cards same as before -->
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="card-front"><h4>⚠️ Poverty & Fees</h4><p>Economic hardship forces many children to leave school to work.</p><span class="flip-hint">Click to see Solution ↺</span></div><div class="card-back"><h4>✅ Financial Support</h4><p>Establishing scholarship programs and community grants.</p></div></div></div>
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="card-front"><h4>⚠️ Conflict Zones</h4><p>War and instability damage schools and create dangerous environments.</p><span class="flip-hint">Click to see Solution ↺</span></div><div class="card-back"><h4>✅ Safe Learning Spaces</h4><p>Setting up temporary mobile schools and psychosocial support.</p></div></div></div>
         <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="card-front"><h4>⚠️ Outdated Materials</h4><p>Schools rely on textbooks that are decades old or do not meet standards.</p><span class="flip-hint">Click to see Solution ↺</span></div><div class="card-back"><h4>✅ Curriculum Modernization</h4><p>Collaborating with global experts for digital-ready curricula.</p></div></div></div>
@@ -412,7 +283,6 @@
     <div id="vote-container" class="vote-grid"></div>
 </section>
 
-<!-- Feedback Section - Updated with Stars -->
 <section id="feedback">
     <h2>Feedback</h2>
     <div class="feedback-box">
@@ -442,7 +312,7 @@
     const regionInfo = {"Niger":"Poverty and limited school facilities.","Northern Nigeria":"Conflict and safety problems.","DR Congo":"Insufficient textbooks and trained teachers.","Ethiopia":"Lack of electricity and digital tools.","Afghanistan":"Political restrictions, especially for girls.","Bangladesh":"Climate disasters and flooding.","Myanmar":"Conflict zones affecting classrooms.","Haiti":"Natural disasters and extreme poverty.","Rural Brazil":"Long distances to reach schools.","Yemen":"War and famine damaging infrastructure."};
     function showRegion(c) { document.getElementById('info-panel').innerHTML = `<strong>[${c}]</strong><br>${regionInfo[c]}`; }
 
-    // Quiz (Same as before)
+    // Quiz Data
     const quizData = [
         { q: "What is the core focus of UN Sustainable Development Goal 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
         { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "Headphones", "Photocopiers"], c: 1 },
@@ -460,7 +330,9 @@
         { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 },
         { q: "What is one purpose of SDG 4?", a: ["To promote inclusive and equitable quality education", "To stop students from learning", "To reduce global cooperation", "To remove schools"], c: 0 }
     ];
+
     let currentQ = 0, score = 0;
+
     function loadQuiz() {
         if (currentQ >= quizData.length) {
             document.getElementById('quiz-ui').style.display = 'none';
@@ -470,15 +342,58 @@
         }
         const d = quizData[currentQ];
         document.getElementById('q-progress').innerText = `Question: ${currentQ + 1} / ${quizData.length}`;
+        document.getElementById('q-score').innerText = `Score: ${score}`;
         document.getElementById('q-text').innerText = d.q;
         const optBox = document.getElementById('q-options'); optBox.innerHTML = "";
+        
         d.a.forEach((opt, i) => {
-            const btn = document.createElement('button'); btn.className = 'option-btn';
-            btn.innerText = opt; btn.onclick = () => { if(i === d.c) score++; currentQ++; loadQuiz(); };
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => handleAnswer(i, btn);
             optBox.appendChild(btn);
         });
     }
-    function restartQuiz() { currentQ = 0; score = 0; document.getElementById('quiz-ui').style.display = 'block'; document.getElementById('quiz-result').style.display = 'none'; loadQuiz(); }
+
+    function handleAnswer(selectedIndex, selectedBtn) {
+        const d = quizData[currentQ];
+        const allButtons = document.querySelectorAll('.option-btn');
+        
+        // 鎖定所有按鈕防止連點
+        allButtons.forEach(btn => btn.style.pointerEvents = 'none');
+
+        if (selectedIndex === d.c) {
+            // 答對了
+            score++;
+            document.getElementById('q-score').innerText = `Score: ${score}`;
+            selectedBtn.style.backgroundColor = "#c8e6c9"; // 綠底
+            selectedBtn.style.borderColor = "#4caf50";
+            selectedBtn.innerText += " ⭕️";
+        } else {
+            // 答錯了
+            selectedBtn.style.backgroundColor = "#ffcdd2"; // 紅底
+            selectedBtn.style.borderColor = "#f44336";
+            selectedBtn.innerText += " ❌";
+
+            // 顯示正確答案
+            allButtons[d.c].style.backgroundColor = "#c8e6c9";
+            allButtons[d.c].style.borderColor = "#4caf50";
+            allButtons[d.c].innerText += " ⭕️";
+        }
+
+        // 1.5 秒後自動進入下一題
+        setTimeout(() => {
+            currentQ++;
+            loadQuiz();
+        }, 1500);
+    }
+
+    function restartQuiz() { 
+        currentQ = 0; score = 0; 
+        document.getElementById('quiz-ui').style.display = 'block'; 
+        document.getElementById('quiz-result').style.display = 'none'; 
+        loadQuiz(); 
+    }
 
     // Vote Logic
     const voteData = [
@@ -530,7 +445,7 @@
         });
     }
 
-    // Feedback Updated Logic
+    // Feedback Logic
     let currentRating = 0;
     function setRating(r) {
         currentRating = r;
@@ -549,13 +464,7 @@
             const item = document.createElement("div");
             item.className = "feedback-item";
             let stars = "★".repeat(f.rating) + "☆".repeat(5 - f.rating);
-            item.innerHTML = `
-                <div class="feedback-header">
-                    <h4>${f.name}</h4>
-                    <span class="item-stars">${stars}</span>
-                </div>
-                <p>${f.message}</p>
-            `;
+            item.innerHTML = `<div class="feedback-header"><h4>${f.name}</h4><span class="item-stars">${stars}</span></div><p>${f.message}</p>`;
             list.appendChild(item);
         });
     }
@@ -563,28 +472,19 @@
     function submitFeedback() { 
         const n = document.getElementById("name").value;
         const m = document.getElementById("message").value;
-        if(!n || !m || currentRating === 0) {
-            alert("Please provide your name, message, and a rating!");
-            return;
-        }
-        
+        if(!n || !m || currentRating === 0) { alert("Please provide your name, message, and a rating!"); return; }
         const newFeedback = { name: n, message: m, rating: currentRating };
         const stored = JSON.parse(localStorage.getItem("sdgFeedback")) || [];
-        stored.unshift(newFeedback); // Add to beginning
+        stored.unshift(newFeedback);
         localStorage.setItem("sdgFeedback", JSON.stringify(stored));
-        
         renderFeedback();
-        
-        // Reset inputs
-        document.getElementById("name").value = "";
-        document.getElementById("message").value = "";
-        setRating(0);
+        document.getElementById("name").value = ""; document.getElementById("message").value = ""; setRating(0);
     }
 
     window.onload = function() {
         loadQuiz();
         initVotes();
-        renderFeedback(); // Load stored feedback
+        renderFeedback();
     };
 </script>
 
