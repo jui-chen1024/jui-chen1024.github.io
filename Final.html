@@ -178,6 +178,17 @@
 /* 角色選取框 */
         .char-option {font-size: 3rem; padding: 20px;  border: 2px solid #ddd;border-radius: 15px; cursor: pointer; transition: 0.3s;}
         .char-option.selected { border-color: var(--primary-blue); background-color: #e3f2fd;  transform: scale(1.1);}
+        /* 答題按鈕 - 變成長條大按鈕 */
+        .option-btn {display: block;width: 100%;padding: 18px 25px; margin: 12px 0; background: white;border: 2px solid #eee;border-radius: 12px;cursor: pointer;text-align: left;font-size: 1.1rem;transition: all 0.3s ease;box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+
+        .option-btn:hover {border-color: var(--primary-blue);background-color: #f8fbff;}
+
+/* 答對與答錯的顏色反饋 */
+        .correct-flash {background-color: #c8e6c9 !important;border-color: #4caf50 !important;color: #2e7d32 !important;}
+
+        .wrong-flash {background-color: #ffcdd2 !important; border-color: #f44336 !important;color: #c62828 !important;}
+
+        .feedback-icon {float: right; font-weight: bold;}
 
     
         .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
@@ -308,15 +319,14 @@
             <p id="map-hint" style="font-weight: bold; color: var(--primary-blue);">點擊發光的關卡開始挑戰！</p>
         </div>
     </div>
-
-    <!-- 4. 答題挑戰頁面 -->
+    
     <div id="challenge-screen" style="display:none;">
-        <div class="quiz-card">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;">
+        <div class="quiz-card" style="padding: 40px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 25px; font-weight: bold; color: #666;">
                 <span id="level-indicator" style="color: var(--primary-blue);">Level 1</span>
                 <span id="q-progress">Question: 1 / 2</span>
             </div>
-            <h3 id="q-text" style="margin-bottom:20px;"></h3>
+            <h3 id="q-text" style="margin-bottom:30px; font-size: 1.4rem; line-height: 1.5;"></h3>
             <div id="q-options"></div>
         </div>
     </div>
@@ -465,31 +475,41 @@
             optBox.appendChild(btn);
         });
     }
-
-    function handleChallengeAnswer(selected, btn, correct) {
+        function handleChallengeAnswer(selected, btn, correct) {
         const allButtons = document.querySelectorAll('.option-btn');
-        allButtons.forEach(b => b.style.pointerEvents = 'none');
+        allButtons.forEach(b => b.style.pointerEvents = 'none'); // 鎖定按鈕
 
         if (selected === correct) {
-            btn.style.backgroundColor = "#c8e6c9";
-            btn.innerText += " ⭕️";
+            // 答對邏輯
+            btn.classList.add('correct-flash');
+            btn.innerHTML += `<span class="feedback-icon">⭕️</span>`;
             currentLevelQ++;
+            
             setTimeout(() => {
                 if (currentLevelQ >= QUESTIONS_PER_LEVEL) {
                     if (currentLevel < 7) {
                         currentLevel++;
-                        showMap(); // 晉級並跳回地圖
+                        showMap(); 
                     } else {
                         document.getElementById('challenge-screen').style.display = 'none';
                         document.getElementById('quiz-result').style.display = 'block';
                     }
-                } else { loadChallengeQuestion(); }
+                } else { 
+                    loadChallengeQuestion(); 
+                }
             }, 1200);
         } else {
-            btn.style.backgroundColor = "#ffcdd2";
-            btn.innerText += " ❌";
-            allButtons[correct].style.backgroundColor = "#c8e6c9";
-            setTimeout(() => loadChallengeQuestion(), 1500);
+            // 答錯邏輯
+            btn.classList.add('wrong-flash');
+            btn.innerHTML += `<span class="feedback-icon">❌</span>`;
+            
+            // 同時顯示正確答案
+            allButtons[correct].classList.add('correct-flash');
+            allButtons[correct].innerHTML += `<span class="feedback-icon">⭕️</span>`;
+            
+            setTimeout(() => {
+                loadChallengeQuestion(); // 重新挑戰本題
+            }, 1500);
         }
     }
 
