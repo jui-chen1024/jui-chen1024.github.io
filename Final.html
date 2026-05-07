@@ -165,12 +165,13 @@
       
         .char-option {font-size: 3rem; padding: 20px; border: 2px solid #ddd;border-radius: 15px; cursor: pointer; transition: 0.3s;}
         .char-option.selected {border-color: var(--primary-blue); background-color: #e3f2fd; transform: scale(1.1);}
-        .game-layout {display: grid; grid-template-columns: 350px 1fr; gap: 30px; max-width: 1100px; margin: 0 auto;}
-        .level-map {position: relative; height: 600px; background: #fff; border-radius: 20px; border: 2px solid #eee;}
-        .level-node {position: absolute; width: 60px; height: 45px; border: 3px solid var(--primary-blue);border-radius: 50%; display: flex; align-items: center; justify-content: center;font-weight: bold; color: var(--primary-blue); background: white; z-index: 2;}
-        .level-node.active { background: #e3f2fd; box-shadow: 0 0 15px rgba(44, 125, 160, 0.4); }
-        .level-node.completed { background: var(--primary-green); color: white; border-color: var(--primary-green); }
-        #player-avatar {position: absolute; font-size: 2.5rem; transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);z-index: 3; width: 60px; text-align: center;}
+        .game-layout {display: grid; grid-template-columns: 350px 1fr; gap: 30px; max-width: 1100px; margin: 0 auto;}/* 圓圈按鈕樣式 */
+        .level-node {position: absolute;width: 65px;height: 50px;border: 3px solid var(--primary-blue);border-radius: 50%;display: flex;align-items: center;justify-content: center;font-weight: bold;color: var(--primary-blue);background: white;z-index: 2;cursor: not-allowed;transition: 0.3s;}
+
+        .level-node.active {cursor: pointer;background: #e3f2fd;box-shadow: 0 0 20px rgba(44, 125, 160, 0.5);transform: scale(1.1);}
+        .level-node.completed {background: var(--primary-green);color: white;border-color: var(--primary-green);cursor: pointer;}
+
+        #player-avatar {position: absolute;font-size: 2.5rem;transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);z-index: 3;width: 65px;text-align: center;pointer-events: none;}
 
     
         .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
@@ -273,10 +274,13 @@
 <section id="quiz">
     <h2>Quiz Game</h2>
     
+    <!-- 1. 開始畫面 -->
     <div id="quiz-start-screen" class="quiz-card" style="text-align: center;">
+        <p class="intro-text">完成 7 個關卡，成為教育推廣大使！</p>
         <button onclick="goToCharacterSelect()" class="vote-btn">START GAME</button>
     </div>
 
+    <!-- 2. 角色選取 -->
     <div id="character-select" class="quiz-card" style="display:none; text-align: center;">
         <h3>Select Your Character</h3>
         <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
@@ -284,30 +288,38 @@
             <div class="char-option" onclick="selectChar('🐼', this)">🐼</div>
             <div class="char-option" onclick="selectChar('🐰', this)">🐰</div>
         </div>
-        <button id="continue-btn" onclick="startLevelMap()" class="vote-btn" disabled>CONTINUE</button>
+        <button id="continue-btn" onclick="showMap()" class="vote-btn" disabled>CONTINUE</button>
     </div>
 
-    <div id="game-container" style="display:none;">
-        <div class="game-layout">
-            <div class="level-map">
-                <div style="position: absolute; top: 10px; right: 20px; font-size: 2rem;">👑</div>
-                <div id="map-path"></div>
-                <div id="player-avatar"></div>
-            </div>
-            <div class="quiz-card" id="quiz-ui" style="margin:0;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                    <span id="level-title" style="font-weight:bold; color:var(--primary-blue);">Level 1</span>
-                    <span id="q-progress">1 / 5</span>
-                </div>
-                <h3 id="q-text"></h3>
-                <div id="q-options"></div>
-            </div>
+    <!-- 3. 闖關地圖畫面 -->
+    <div id="map-screen" style="display:none; max-width: 800px; margin: 0 auto;">
+        <div class="level-map" style="height: 500px; position: relative; background: #fff; border-radius: 20px; border: 2px solid #eee; overflow: hidden;">
+            <div style="position: absolute; top: 10px; right: 20px; font-size: 2rem;">👑</div>
+            <div id="map-path"></div>
+            <div id="player-avatar"></div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <p id="map-hint" style="font-weight: bold; color: var(--primary-blue);">點擊當前等級開始挑戰！</p>
         </div>
     </div>
 
+    <!-- 4. 答題挑戰頁面 (隱藏直到點擊地圖) -->
+    <div id="challenge-screen" style="display:none;">
+        <div class="quiz-card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;">
+                <span id="level-indicator" style="color: var(--primary-blue);">Level 1</span>
+                <span id="q-progress">Question: 1 / 2</span>
+            </div>
+            <h3 id="q-text" style="margin-bottom:20px;"></h3>
+            <div id="q-options"></div>
+        </div>
+    </div>
+
+    <!-- 5. 最終結果 -->
     <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
         <h3>🎉 全關卡達成！</h3>
-        <button onclick="restartQuiz()" class="vote-btn">再玩一次</button>
+        <p>你已成功通過所有 SDG 4 的考驗！</p>
+        <button onclick="restartQuiz()" class="vote-btn" style="margin-top: 20px;">再玩一次</button>
     </div>
 </section>
 
@@ -345,8 +357,7 @@
     // Region Data
     const regionInfo = {"Niger":"Poverty and limited school facilities.","Northern Nigeria":"Conflict and safety problems.","DR Congo":"Insufficient textbooks and trained teachers.","Ethiopia":"Lack of electricity and digital tools.","Afghanistan":"Political restrictions, especially for girls.","Bangladesh":"Climate disasters and flooding.","Myanmar":"Conflict zones affecting classrooms.","Haiti":"Natural disasters and extreme poverty.","Rural Brazil":"Long distances to reach schools.","Yemen":"War and famine damaging infrastructure."};
     function showRegion(c) { document.getElementById('info-panel').innerHTML = `<strong>[${c}]</strong><br>${regionInfo[c]}`; }
-
-    // Quiz Data
+// --- Quiz 核心邏輯與資料 ---
     const quizData = [
         { q: "What is the core focus of UN Sustainable Development Goal 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
         { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "Headphones", "Photocopiers"], c: 1 },
@@ -361,134 +372,121 @@
         { q: "What can natural disasters do to education?", a: ["Damage schools and interrupt learning", "Improve all classrooms immediately", "Remove the need for education", "Make exams easier"], c: 0 },
         { q: "Why do some children drop out of school?", a: ["They may need to work because of poverty", "They have too many teachers", "Schools are too close", "Books are too cheap"], c: 0 },
         { q: "What does digital inequality mean?", a: ["Everyone has equal internet access", "Some people lack access to technology and internet", "All students study online", "Schools have too many computers"], c: 1 },
-        { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 },
-        { q: "What is one purpose of SDG 4?", a: ["To promote inclusive and equitable quality education", "To stop students from learning", "To reduce global cooperation", "To remove schools"], c: 0 }
+        { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 }
     ];
-    // --- 闖關遊戲核心變數 ---
-    let selectedEmoji = '';
-    let currentLevel = 1;
-    let currentLevelQ = 0; 
 
-    // 1. 切換到選角色畫面
+    let selectedEmoji = '';
+    let currentLevel = 1;      
+    let currentLevelQ = 0;     
+    const QUESTIONS_PER_LEVEL = 2; // 每個等級 2 題
+
     function goToCharacterSelect() {
         document.getElementById('quiz-start-screen').style.display = 'none';
         document.getElementById('character-select').style.display = 'block';
     }
 
-    // 2. 處理角色選取
     function selectChar(emoji, el) {
         selectedEmoji = emoji;
-        // 把所有的選取框顏色變回原本的
         document.querySelectorAll('.char-option').forEach(opt => opt.classList.remove('selected'));
-        // 幫被點選的那個加上藍色邊框
         el.classList.add('selected');
-        // 讓 CONTINUE 按鈕可以點擊
         document.getElementById('continue-btn').disabled = false;
     }
 
-    // 3. 啟動闖關地圖
-    function startLevelMap() {
+    // 進入地圖頁面
+    function showMap() {
         document.getElementById('character-select').style.display = 'none';
-        document.getElementById('game-container').style.display = 'block';
-        // 把你選的角色 emoji 放進地圖
+        document.getElementById('challenge-screen').style.display = 'none';
+        document.getElementById('map-screen').style.display = 'block';
         document.getElementById('player-avatar').innerText = selectedEmoji;
-        renderMapNodes();       // 畫圓圈
-        updateAvatarPosition(); // 移動角色
-        loadLevelQuestion();    // 出題目
+        renderMapNodes();
+        updateAvatarPosition();
     }
 
-    // 4. 在地圖上畫出 7 個關卡的圓圈 (照第三張圖的 S 型)
+    // 繪製 7 個關卡
     function renderMapNodes() {
         const path = document.getElementById('map-path');
-        // 這是圓圈的座標 (x:左右%, b:距離底部%)
         const coords = [
-            {x: 40, b: 5}, {x: 70, b: 18}, {x: 75, b: 35}, {x: 45, b: 48}, 
-            {x: 15, b: 62}, {x: 40, b: 78}, {x: 75, b: 88}
+            {x: 15, b: 10}, {x: 45, b: 20}, {x: 75, b: 30}, {x: 75, b: 55}, 
+            {x: 45, b: 65}, {x: 15, b: 75}, {x: 45, b: 88}
         ];
-        path.innerHTML = ''; // 清空原本的
+        path.innerHTML = '';
         coords.forEach((pos, i) => {
+            const lv = i + 1;
             const node = document.createElement('div');
-            const lvNum = i + 1;
-            // 判斷關卡狀態：已完成 (completed)、現在 (active)
-            node.className = `level-node ${lvNum < currentLevel ? 'completed' : (lvNum === currentLevel ? 'active' : '')}`;
-            node.id = `node-${lvNum}`;
+            node.id = `node-${lv}`;
+            node.className = 'level-node';
+            if (lv < currentLevel) node.classList.add('completed');
+            if (lv === currentLevel) node.classList.add('active');
             node.style.left = pos.x + '%';
             node.style.bottom = pos.b + '%';
-            node.innerText = `Lv${lvNum}`;
+            node.innerText = `Lv${lv}`;
+            node.onclick = () => { if (lv === currentLevel) startChallenge(); };
             path.appendChild(node);
         });
     }
 
-    // 5. 讓角色移動到當前等級的圓圈上
     function updateAvatarPosition() {
         const targetNode = document.getElementById(`node-${currentLevel}`);
         const avatar = document.getElementById('player-avatar');
         if(targetNode) {
             avatar.style.left = targetNode.style.left;
-            // 把角色放在圓圈稍微上方一點點的位置
-            avatar.style.bottom = (parseInt(targetNode.style.bottom) + 6) + '%';
+            avatar.style.bottom = (parseInt(targetNode.style.bottom) + 7) + '%';
         }
     }
 
-    // 6. 載入當前等級的題目 (每關需答對 5 題)
-    function loadLevelQuestion() {
-        // 從你的 quizData 裡面抓題
-        const qIdx = ((currentLevel - 1) * 5 + currentLevelQ) % quizData.length;
+    // 進入答題畫面
+    function startChallenge() {
+        document.getElementById('map-screen').style.display = 'none';
+        document.getElementById('challenge-screen').style.display = 'block';
+        currentLevelQ = 0; 
+        loadChallengeQuestion();
+    }
+
+    function loadChallengeQuestion() {
+        const qIdx = ((currentLevel - 1) * QUESTIONS_PER_LEVEL + currentLevelQ) % quizData.length;
         const d = quizData[qIdx];
-        
-        document.getElementById('level-title').innerText = `Level ${currentLevel}`;
-        document.getElementById('q-progress').innerText = `Progress: ${currentLevelQ + 1} / 5`;
+        document.getElementById('level-indicator').innerText = `Level ${currentLevel}`;
+        document.getElementById('q-progress').innerText = `Question: ${currentLevelQ + 1} / ${QUESTIONS_PER_LEVEL}`;
         document.getElementById('q-text').innerText = d.q;
-        
         const optBox = document.getElementById('q-options');
         optBox.innerHTML = "";
-        
         d.a.forEach((opt, i) => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.innerText = opt;
-            btn.onclick = () => {
-                const allButtons = document.querySelectorAll('.option-btn');
-                allButtons.forEach(b => b.style.pointerEvents = 'none'); // 防止亂點
-
-                if(i === d.c) { // 答對了
-                    btn.style.backgroundColor = "#c8e6c9";
-                    currentLevelQ++;
-                    
-                    setTimeout(() => {
-                        if(currentLevelQ >= 5) { // 代表這一關 5 題都對了，晉級！
-                            if(currentLevel < 7) {
-                                currentLevel++;
-                                currentLevelQ = 0;
-                                renderMapNodes();       // 更新地圖圓圈顏色
-                                updateAvatarPosition(); // 角色往前跳一格
-                                loadLevelQuestion();
-                            } else {
-                                // 7 關全部過完
-                                document.getElementById('game-container').style.display = 'none';
-                                document.getElementById('quiz-result').style.display = 'block';
-                            }
-                        } else {
-                            // 繼續這一關的下一題
-                            loadLevelQuestion();
-                        }
-                    }, 1000);
-                } else { // 答錯了
-                    btn.style.backgroundColor = "#ffcdd2";
-                    // 顯示正確答案
-                    allButtons[d.c].style.backgroundColor = "#c8e6c9";
-                    // 1.5 秒後重新載入這一題
-                    setTimeout(() => loadLevelQuestion(), 1500);
-                }
-            };
+            btn.onclick = () => handleChallengeAnswer(i, btn, d.c);
             optBox.appendChild(btn);
         });
     }
 
-    // 7. 重來 (直接刷新網頁最快)
-    function restartQuiz() {
-        location.reload();
+    function handleChallengeAnswer(selected, btn, correct) {
+        const allButtons = document.querySelectorAll('.option-btn');
+        allButtons.forEach(b => b.style.pointerEvents = 'none');
+
+        if (selected === correct) {
+            btn.style.backgroundColor = "#c8e6c9";
+            btn.innerText += " ⭕️";
+            currentLevelQ++;
+            setTimeout(() => {
+                if (currentLevelQ >= QUESTIONS_PER_LEVEL) {
+                    if (currentLevel < 7) {
+                        currentLevel++;
+                        showMap(); // 晉級並跳回地圖
+                    } else {
+                        document.getElementById('challenge-screen').style.display = 'none';
+                        document.getElementById('quiz-result').style.display = 'block';
+                    }
+                } else { loadChallengeQuestion(); }
+            }, 1200);
+        } else {
+            btn.style.backgroundColor = "#ffcdd2";
+            btn.innerText += " ❌";
+            allButtons[correct].style.backgroundColor = "#c8e6c9";
+            setTimeout(() => loadChallengeQuestion(), 1500);
+        }
     }
+
+    function restartQuiz() { location.reload(); }
 
     // Vote Logic
     const voteData = [
