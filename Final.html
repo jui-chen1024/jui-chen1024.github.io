@@ -65,10 +65,10 @@
 
         /* 地圖 S 路徑 */
         .map-wrapper { position: relative; width: 300px; height: 550px; margin: 0 auto; background: radial-gradient(circle, #ddd 1px, transparent 1px); background-size: 20px 20px; }
-        .node { position: absolute; width: 60px; height: 60px; background: white; border: 3px solid #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 5; cursor: not-allowed; transition: 0.3s; transform: translate(-50%, 50%); }
+        .node { position: absolute; width: 60px; height: 60px; background: white; border: 3px solid #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 5; cursor: not-allowed; transition: 0.3s; }
         .node.unlocked { border-color: var(--primary-blue); cursor: pointer; color: var(--primary-blue); }
         .node.completed { background: var(--primary-green); border-color: var(--primary-green); color: white; cursor: pointer; }
-        #player-marker { position: absolute; font-size: 2.5rem; z-index: 10; transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); transform: translate(-50%, -40px); pointer-events: none; }
+        #player-marker { position: absolute; font-size: 2.5rem; z-index: 10; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); transform: translate(-10px, -45px); pointer-events: none; }
         .crown-mark { position: absolute; top: -40px; right: 20px; font-size: 2.5rem; }
 
         /* S 型坐標 (LV1 在底, LV7 在頂) */
@@ -270,7 +270,7 @@
         { q: "What is digital inequality?", a: ["Equal access", "Lack of tech/internet", "Online study", "Too many PCs"], c: 1 },
         { q: "Action to improve access?", a: ["Remote schools", "Close schools", "More conflict", "Less training"], c: 0 },
         { q: "One purpose of SDG 4?", a: ["Inclusive/Equitable Quality", "Stop learning", "Less cooperation", "Remove schools"], c: 0 },
-        // LV 4
+        // LV 4 - LV 7 (Reuse or add more if needed)
         { q: "SDG 4 targets which age group?", a: ["Only children", "Only adults", "All age groups", "Only teens"], c: 2 },
         { q: "Which organization leads SDG 4 globally?", a: ["UNESCO", "WHO", "FIFA", "NASA"], c: 0 },
         { q: "Education for sustainable development includes?", a: ["Climate action", "Human rights", "Peace", "All of the above"], c: 3 },
@@ -291,7 +291,7 @@
         // LV 7
         { q: "SDG 4.1 aims for free?", a: ["Primary/Secondary edu", "University", "Coffee", "Flights"], c: 0 },
         { q: "Global citizenship education?", a: ["Promotes peace", "Promotes war", "Is only local", "Is a myth"], c: 0 },
-        { q: "Data on education is used for?", a: ["Monitoring progress", "Deleting files", "Hiding裝備", "Nothing"], c: 0 },
+        { q: "Data on education is used for?", a: ["Monitoring progress", "Deleting files", "Hiding facts", "Nothing"], c: 0 },
         { q: "Digital literacy is?", a: ["Using tech safely", "Watching TV", "Fixing cars", "Running fast"], c: 0 },
         { q: "Total pass required to win?", a: ["All levels", "One level", "Half level", "Zero"], c: 0 }
     ];
@@ -301,7 +301,7 @@
         if(step === 'toChar') document.getElementById('quiz-char').classList.remove('hidden');
         if(step === 'toMap') {
             document.getElementById('quiz-map').classList.remove('hidden');
-            setTimeout(updateMap, 100);
+            updateMap();
         }
     }
 
@@ -309,28 +309,21 @@
         userChar = emoji;
         document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        document.getElementById('player-marker').innerText = userChar;
         document.getElementById('btn-to-map').classList.remove('hidden');
     }
 
     function updateMap() {
         const marker = document.getElementById('player-marker');
-        const targetNode = document.getElementById(`lv-${unlockedLv}`);
-        
-        if (targetNode) {
-            marker.style.bottom = targetNode.style.bottom;
-            marker.style.left = targetNode.style.left;
-        }
+        marker.innerText = userChar;
+        const target = document.querySelector(`.pos-${unlockedLv}`);
+        marker.style.bottom = target.style.bottom;
+        marker.style.left = target.style.left;
 
         for(let i=1; i<=7; i++) {
             const node = document.getElementById(`lv-${i}`);
-            if(i < unlockedLv) {
-                node.className = `node pos-${i} completed`;
-            } else if(i === unlockedLv) {
-                node.className = `node pos-${i} unlocked`;
-            } else {
-                node.className = `node pos-${i}`;
-            }
+            node.className = `node pos-${i}`;
+            if(i < unlockedLv) node.classList.add('completed');
+            else if(i === unlockedLv) node.classList.add('unlocked');
         }
     }
 
@@ -338,7 +331,7 @@
         if(lv > unlockedLv) return;
         currentLv = lv;
         currentInLv = 0;
-        document.querySelectorAll('#quiz .quiz-card').forEach(c => c.classList.add('hidden'));
+        quizFlow('toPlay');
         document.getElementById('quiz-play').classList.remove('hidden');
         loadQuestion();
     }
@@ -376,6 +369,7 @@
                 } else {
                     if(currentLv === 7) {
                         quizFlow('win');
+                        document.getElementById('quiz-win').classList.remove('hidden');
                     } else {
                         if(currentLv === unlockedLv) unlockedLv++;
                         alert(`Perfect! Level ${currentLv} Complete.`);
@@ -434,3 +428,6 @@
 </script>
 </body>
 </html>
+
+這是我現在的程式碼 quiz的部分我想要再更好一點
+我想要使用者選取的角色會跟著在路徑上移動 完成某一等級後 就前往下一個等級到圈圈上
