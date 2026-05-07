@@ -365,7 +365,7 @@
     <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
         <h3>🎉 All Levels Completed!</h3>
         <p>You have successfully passed all the SDG 4 challenges! Congratulations on becoming an Education Ambassador!</p>
-        <button onclick="restartQuiz()" class="vote-btn" style="margin-top: 20px;">再玩一次</button>
+        <button onclick="restartQuiz()" class="vote-btn" style="margin-top: 20px;">Play again</button>
     </div>
 </section>
 
@@ -947,7 +947,31 @@
         }
     }
 
-    function restartQuiz() { location.reload(); }
+    function restartQuiz() {
+
+    currentLevel = 1;
+    currentLevelQ = 0;
+
+    selectedEmoji = '';
+
+    // 隱藏結果頁
+    document.getElementById('quiz-result').style.display = 'none';
+
+    // 顯示角色選擇頁
+    document.getElementById('quiz-start-screen').style.display = 'block';
+
+    // 隱藏地圖與題目
+    document.getElementById('map-screen').style.display = 'none';
+    document.getElementById('challenge-screen').style.display = 'none';
+
+    // 清除角色選取效果
+    document.querySelectorAll('.char-option').forEach(opt => {
+        opt.classList.remove('selected');
+    });
+
+    // 禁用開始按鈕
+    document.getElementById('continue-btn').disabled = true;
+    }
 
     // Vote Logic
     const voteData = [
