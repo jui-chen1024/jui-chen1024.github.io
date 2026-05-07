@@ -167,6 +167,21 @@
         .char-option.selected {border-color: var(--primary-blue); background-color: #e3f2fd; transform: scale(1.1);}
         .game-layout {display: grid; grid-template-columns: 350px 1fr; gap: 30px; max-width: 1100px; margin: 0 auto;}
         .level-map {position: relative; height: 600px; background: #fff; border-radius: 20px; border: 2px solid #eee;}
+        .map-line {position: absolute; width: 100%; height: 100%;top: 0; left: 0;z-index: 1;}
+        
+        #map-path,
+        #player-avatar { position: relative; z-index: 2;}
+
+        .animated-path { stroke-dasharray: 12; animation: roadMove 2s linear infinite;}
+
+        @keyframes roadMove {
+            from {
+                stroke-dashoffset: 0;
+            }
+            to {
+                stroke-dashoffset: -24;
+            }
+        }
         /* 闖關圓圈樣式 */
         .level-node {position: absolute;width: 65px;height: 50px;border: 3px solid var(--primary-blue);border-radius: 50%;display: flex;align-items: center;justify-content: center;font-weight: bold;color: var(--primary-blue);background: white;z-index: 2;cursor: not-allowed;transition: 0.3s;}
 /* 當前可點擊的關卡 */
@@ -311,12 +326,27 @@
     <!-- 3. 闖關地圖畫面 -->
     <div id="map-screen" style="display:none; max-width: 800px; margin: 0 auto;">
         <div class="level-map" style="height: 500px; position: relative; background: #fff; border-radius: 20px; border: 2px solid #eee; overflow: hidden;">
-            <div id="map-path"></div>
-            <div id="player-avatar"></div>
-        </div>
-        <div style="text-align: center; margin-top: 20px;">
-            <p id="map-hint" style="font-weight: bold; color: var(--primary-blue);">Click the levels in order to complete all the challenges!</p>
-        </div>
+
+    <!-- 路線 -->
+        <svg class="map-line" viewBox="0 0 800 500" preserveAspectRatio="none">
+            <path class="animated-path"
+                d="
+                M120 450
+                Q250 390 360 340
+                T600 220
+                T360 120
+                T120 70
+                T360 30 "
+                stroke="#d6e4ea"
+                stroke-width="14"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+           </svg>
+
+       <div id="map-path"></div>
+       <div id="player-avatar"></div>
+       </div>
     </div>
     
     <div id="challenge-screen" style="display:none;">
@@ -325,7 +355,7 @@
                 <span id="level-indicator" style="color: var(--primary-blue);">Level 1</span>
                 <span id="q-progress">Question: 1 / 2</span>
             </div>
-            <h3 id="q-text" style="margin-bottom:30px; font-size: 1.4rem; line-height: 1.5;"></h3>
+            <h3 id="q-text" style="margin-bottom:30px; font-size: 1.4rem; line-height: 15;"></h3>
             <div id="q-options"></div>
         </div>
     </div>
