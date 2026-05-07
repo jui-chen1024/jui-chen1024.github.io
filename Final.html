@@ -407,26 +407,412 @@
     function showRegion(c) { document.getElementById('info-panel').innerHTML = `<strong>[${c}]</strong><br>${regionInfo[c]}`; }
 // --- Quiz 核心邏輯與資料 ---
     const quizData = [
-        { q: "What is the core focus of UN Sustainable Development Goal 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
-        { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "Headphones", "Photocopiers"], c: 1 },
-        { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
-        { q: "What defines Open Educational Resources?", a: ["Expensive private materials", "Copyright-locked books", "Free and openly accessible learning materials", "Old newspapers"], c: 2 },
-        { q: "What is the goal of Inclusive Education?", a: ["Teaching only the brightest students", "Helping all students access education", "Increasing tuition", "Creating boys-only schools"], c: 1 },
-        { q: "Why is teacher training important for education quality?", a: ["It helps teachers improve teaching skills", "It reduces the number of schools", "It replaces students", "It increases school fees"], c: 0 },
-        { q: "Which problem can stop children from going to school in conflict areas?", a: ["Too many libraries", "Safety risks", "Free textbooks", "Better roads"], c: 1 },
-        { q: "Which group is often affected by unequal access to education?", a: ["Only adults", "Only tourists", "Girls and children in poverty", "Only athletes"], c: 2 },
-        { q: "How can the internet support education?", a: ["By providing online learning resources", "By removing all teachers", "By making schools unnecessary", "By increasing floods"], c: 0 },
-        { q: "Which resource is important for students in rural schools?", a: ["Luxury uniforms", "Textbooks and trained teachers", "Video games", "Shopping malls"], c: 1 },
-        { q: "What can natural disasters do to education?", a: ["Damage schools and interrupt learning", "Improve all classrooms immediately", "Remove the need for education", "Make exams easier"], c: 0 },
-        { q: "Why do some children drop out of school?", a: ["They may need to work because of poverty", "They have too many teachers", "Schools are too close", "Books are too cheap"], c: 0 },
-        { q: "What does digital inequality mean?", a: ["Everyone has equal internet access", "Some people lack access to technology and internet", "All students study online", "Schools have too many computers"], c: 1 },
-        { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 }
-    ];
+
+    // Level 1 — Basic Education
+    {
+        level: 1,
+        questions: [
+            {
+                q: "What is one basic right for every child?",
+                a: [
+                    "Owning a smartphone",
+                    "Access to education",
+                    "Traveling abroad",
+                    "Driving a car"
+                ],
+                c: 1
+            },
+            {
+                q: "Where do most children receive formal education?",
+                a: [
+                    "Shopping malls",
+                    "Parks",
+                    "School",
+                    "Movie theaters"
+                ],
+                c: 2
+            },
+            {
+                q: "Which item is commonly used for learning in class?",
+                a: [
+                    "Video games",
+                    "Toys",
+                    "Sports trophies",
+                    "Textbooks"
+                ],
+                c: 3
+            },
+            {
+                q: "Who is mainly responsible for teaching students at school?",
+                a: [
+                    "Teachers",
+                    "Athletes",
+                    "Actors",
+                    "Musicians"
+                ],
+                c: 0
+            },
+            {
+                q: "What is an important goal of primary education?",
+                a: [
+                    "Becoming famous",
+                    "Learning basic reading and math skills",
+                    "Winning competitions",
+                    "Making money quickly"
+                ],
+                c: 1
+            }
+        ]
+    },
+
+    // Level 2 — Equal Access to Education
+    {
+        level: 2,
+        questions: [
+            {
+                q: "What is the biggest barrier to education?",
+                a: [
+                    "Transportation",
+                    "Poverty",
+                    "Language differences",
+                    "School uniforms"
+                ],
+                c: 1
+            },
+            {
+                q: "Who should have equal access to education?",
+                a: [
+                    "Only children",
+                    "Only city students",
+                    "Everyone",
+                    "Only top students"
+                ],
+                c: 2
+            },
+            {
+                q: "What can help students in rural areas most?",
+                a: [
+                    "More uniforms",
+                    "Larger schools",
+                    "Better internet",
+                    "More homework"
+                ],
+                c: 2
+            },
+            {
+                q: "Which support is most important for students?",
+                a: [
+                    "School clubs",
+                    "Cafeterias",
+                    "Sports events",
+                    "Scholarships"
+                ],
+                c: 3
+            },
+            {
+                q: "What should schools improve first?",
+                a: [
+                    "Safety",
+                    "Decorations",
+                    "Cafeterias",
+                    "Technology"
+                ],
+                c: 0
+            }
+        ]
+    },
+
+    // Level 3 — Technology in Education
+    {
+        level: 3,
+        questions: [
+            {
+                q: "Which digital tool is most useful for learning?",
+                a: [
+                    "Educational apps",
+                    "Smart watches",
+                    "Online videos",
+                    "Tablets"
+                ],
+                c: 2
+            },
+            {
+                q: "What is the biggest advantage of online learning?",
+                a: [
+                    "Easier exams",
+                    "Flexibility",
+                    "Less homework",
+                    "Shorter lessons"
+                ],
+                c: 1
+            },
+            {
+                q: "What is the biggest challenge in online classes?",
+                a: [
+                    "Communication",
+                    "Online games",
+                    "Screen time",
+                    "Internet connection"
+                ],
+                c: 3
+            },
+            {
+                q: "How should schools use AI tools?",
+                a: [
+                    "Replacing teachers",
+                    "Homework help",
+                    "Removing classes",
+                    "Giving all answers"
+                ],
+                c: 1
+            },
+            {
+                q: "What technology should schools invest in more?",
+                a: [
+                    "Computers",
+                    "VR learning",
+                    "Gaming devices",
+                    "Smart boards"
+                ],
+                c: 0
+            }
+        ]
+    },
+
+    // Level 4 — Student Well-being
+    {
+        level: 4,
+        questions: [
+            {
+                q: "What affects student mental health the most?",
+                a: [
+                    "School uniforms",
+                    "Academic pressure",
+                    "Cafeteria food",
+                    "Social relationships"
+                ],
+                c: 1
+            },
+            {
+                q: "What helps reduce stress at school?",
+                a: [
+                    "More vacations",
+                    "Fewer subjects",
+                    "Counseling services",
+                    "More exams"
+                ],
+                c: 2
+            },
+            {
+                q: "Which activity helps students relax most?",
+                a: [
+                    "Homework",
+                    "Gaming",
+                    "Sports",
+                    "Music"
+                ],
+                c: 2
+            },
+            {
+                q: "What support do students need most?",
+                a: [
+                    "Emotional support",
+                    "Academic support",
+                    "Career guidance",
+                    "School clubs"
+                ],
+                c: 0
+            },
+            {
+                q: "What creates a positive school environment?",
+                a: [
+                    "Competition",
+                    "Strict rules",
+                    "Respect",
+                    "Discipline"
+                ],
+                c: 2
+            }
+        ]
+    },
+
+    // Level 5 — Future Skills
+    {
+        level: 5,
+        questions: [
+            {
+                q: "Which skill is most important for future jobs?",
+                a: [
+                    "Creativity",
+                    "Problem-solving",
+                    "Memorization",
+                    "Communication"
+                ],
+                c: 3
+            },
+            {
+                q: "What should schools teach more?",
+                a: [
+                    "Coding",
+                    "Financial education",
+                    "Public speaking",
+                    "Fashion design"
+                ],
+                c: 1
+            },
+            {
+                q: "Which learning style prepares students best for the future?",
+                a: [
+                    "Memorization",
+                    "Traditional lectures",
+                    "Project-based learning",
+                    "Self-study"
+                ],
+                c: 2
+            },
+            {
+                q: "What is most important in teamwork?",
+                a: [
+                    "Leadership",
+                    "Cooperation",
+                    "Responsibility",
+                    "Competition"
+                ],
+                c: 1
+            },
+            {
+                q: "What helps students become independent learners?",
+                a: [
+                    "Homework",
+                    "Technology",
+                    "Time management",
+                    "Self-motivation"
+                ],
+                c: 2
+            }
+        ]
+    },
+
+    // Level 6 — Global Education
+    {
+        level: 6,
+        questions: [
+            {
+                q: "What can improve global education most?",
+                a: [
+                    "More exams",
+                    "Longer classes",
+                    "International cooperation",
+                    "More schools"
+                ],
+                c: 2
+            },
+            {
+                q: "What should education encourage?",
+                a: [
+                    "Competition",
+                    "Standardized testing",
+                    "Strict discipline",
+                    "Cultural understanding"
+                ],
+                c: 3
+            },
+            {
+                q: "Which language skill is most useful globally?",
+                a: [
+                    "Writing",
+                    "Speaking",
+                    "Listening",
+                    "Grammar practice"
+                ],
+                c: 1
+            },
+            {
+                q: "What is most important for global citizens?",
+                a: [
+                    "Academic scores",
+                    "Fast decision-making",
+                    "Respect for diversity",
+                    "Strong leadership"
+                ],
+                c: 2
+            },
+            {
+                q: "How can students learn about other cultures best?",
+                a: [
+                    "Social media",
+                    "Movies",
+                    "Exchange programs",
+                    "Video games"
+                ],
+                c: 2
+            }
+        ]
+    },
+
+    // Level 7 — Sustainable Future
+    {
+        level: 7,
+        questions: [
+            {
+                q: "How can education help the environment?",
+                a: [
+                    "Using more paper",
+                    "Building larger schools",
+                    "Teaching sustainability",
+                    "Giving more exams"
+                ],
+                c: 2
+            },
+            {
+                q: "What topic should schools discuss more?",
+                a: [
+                    "Video games",
+                    "Climate change",
+                    "Fashion trends",
+                    "Celebrity news"
+                ],
+                c: 1
+            },
+            {
+                q: "What action can students take for sustainability?",
+                a: [
+                    "Buying more products",
+                    "Using more electricity",
+                    "Wasting paper",
+                    "Recycling"
+                ],
+                c: 3
+            },
+            {
+                q: "How should schools promote sustainability?",
+                a: [
+                    "Eco-friendly activities",
+                    "More printed worksheets",
+                    "Longer school hours",
+                    "More homework"
+                ],
+                c: 0
+            },
+            {
+                q: "What is the best way students can create change?",
+                a: [
+                    "School competitions",
+                    "Community action",
+                    "Online shopping",
+                    "Social media posts"
+                ],
+                c: 1
+            }
+        ]
+    }
+
+];
 
     let selectedEmoji = '';
     let currentLevel = 1;      
     let currentLevelQ = 0;     
-    const QUESTIONS_PER_LEVEL = 2; // 每個等級 2 題
+    const QUESTIONS_PER_LEVEL = 5; // 每個等級 2 題
 
     function goToCharacterSelect() {
         document.getElementById('quiz-start-screen').style.display = 'none';
@@ -494,21 +880,35 @@
     }
 
     function loadChallengeQuestion() {
-        const qIdx = ((currentLevel - 1) * QUESTIONS_PER_LEVEL + currentLevelQ) % quizData.length;
-        const d = quizData[qIdx];
-        document.getElementById('level-indicator').innerText = `Level ${currentLevel}`;
-        document.getElementById('q-progress').innerText = `Question: ${currentLevelQ + 1} / ${QUESTIONS_PER_LEVEL}`;
+        const levelData = quizData[currentLevel - 1];
+        const d = levelData.questions[currentLevelQ];
+
+        document.getElementById('level-indicator').innerText =
+           `Level ${currentLevel}`;
+
+        document.getElementById('q-progress').innerText =
+           `Question: ${currentLevelQ + 1} / 5`;
+
         document.getElementById('q-text').innerText = d.q;
+
         const optBox = document.getElementById('q-options');
+
         optBox.innerHTML = "";
+
         d.a.forEach((opt, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => handleChallengeAnswer(i, btn, d.c);
+
+        const btn = document.createElement('button');
+
+        btn.className = 'option-btn';
+
+        btn.innerText = opt;
+
+        btn.onclick = () =>
+            handleChallengeAnswer(i, btn, d.c);
+
             optBox.appendChild(btn);
         });
-    }
+        }
         function handleChallengeAnswer(selected, btn, correct) {
         const allButtons = document.querySelectorAll('.option-btn');
         allButtons.forEach(b => b.style.pointerEvents = 'none'); // 鎖定按鈕
