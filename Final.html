@@ -161,12 +161,18 @@
         .map-img { width: 100%; height: 100%; object-fit: cover; }
         .hotspot { position: absolute; width: 16px; height: 16px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid white; cursor: pointer; z-index: 10; }
         .red { background:#f44336; } .orange { background:#ff9800; } .yellow { background:#fbc02d; } .green { background:#4caf50; } .blue { background:#2196f3; } .purple { background:#9c27b0; } .pink { background:#e91e63; } .brown { background:#795548; } .teal { background:#009688; } .black { background:#333; }
-        .info-panel { margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; }
+        .info-panel { margin-top: 20px; padding: 25px; background: #fffde7; border-radius: 15px; text-align: center; font-weight: bold; border: 2px dashed #fbc02d; }/* 這是新的闖關地圖與角色選取樣式 */
+      
+        .char-option {font-size: 3rem; padding: 20px; border: 2px solid #ddd;border-radius: 15px; cursor: pointer; transition: 0.3s;}
+        .char-option.selected {border-color: var(--primary-blue); background-color: #e3f2fd; transform: scale(1.1);}
+        .game-layout {display: grid; grid-template-columns: 350px 1fr; gap: 30px; max-width: 1100px; margin: 0 auto;}
+        .level-map {position: relative; height: 600px; background: #fff; border-radius: 20px; border: 2px solid #eee;}
+        .level-node {position: absolute; width: 60px; height: 45px; border: 3px solid var(--primary-blue);border-radius: 50%; display: flex; align-items: center; justify-content: center;font-weight: bold; color: var(--primary-blue); background: white; z-index: 2;}
+        .level-node.active { background: #e3f2fd; box-shadow: 0 0 15px rgba(44, 125, 160, 0.4); }
+        .level-node.completed { background: var(--primary-green); color: white; border-color: var(--primary-green); }
+        #player-avatar {position: absolute; font-size: 2.5rem; transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);z-index: 3; width: 60px; text-align: center;}
 
-        /* Quiz Styles */
-        .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; }
-        .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
-        
+    
         .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
         .vote-card { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
         .vote-card h4 { color: var(--primary-blue); margin-bottom: 15px; font-size: 1.1rem; }
@@ -265,15 +271,43 @@
 </section>
 
 <section id="quiz">
-    <h2>SDG 4 Knowledge Challenge</h2>
-    <div class="quiz-card" id="quiz-ui">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;"><span id="q-progress"></span><span id="q-score">Score: 0</span></div>
-        <h3 id="q-text" style="margin-bottom:20px;"></h3>
-        <div id="q-options"></div>
+    <h2>Quiz Game</h2>
+    
+    <div id="quiz-start-screen" class="quiz-card" style="text-align: center;">
+        <button onclick="goToCharacterSelect()" class="vote-btn">START GAME</button>
     </div>
+
+    <div id="character-select" class="quiz-card" style="display:none; text-align: center;">
+        <h3>Select Your Character</h3>
+        <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+            <div class="char-option" onclick="selectChar('👻', this)">👻</div>
+            <div class="char-option" onclick="selectChar('🐼', this)">🐼</div>
+            <div class="char-option" onclick="selectChar('🐰', this)">🐰</div>
+        </div>
+        <button id="continue-btn" onclick="startLevelMap()" class="vote-btn" disabled>CONTINUE</button>
+    </div>
+
+    <div id="game-container" style="display:none;">
+        <div class="game-layout">
+            <div class="level-map">
+                <div style="position: absolute; top: 10px; right: 20px; font-size: 2rem;">👑</div>
+                <div id="map-path"></div>
+                <div id="player-avatar"></div>
+            </div>
+            <div class="quiz-card" id="quiz-ui" style="margin:0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <span id="level-title" style="font-weight:bold; color:var(--primary-blue);">Level 1</span>
+                    <span id="q-progress">1 / 5</span>
+                </div>
+                <h3 id="q-text"></h3>
+                <div id="q-options"></div>
+            </div>
+        </div>
+    </div>
+
     <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
-        <h3>Challenge Complete!</h3><p style="font-size: 2.5rem; color: var(--primary-green); margin: 20px 0;" id="final-score-val"></p>
-        <button onclick="restartQuiz()" class="vote-btn">Retry Quiz</button>
+        <h3>🎉 全關卡達成！</h3>
+        <button onclick="restartQuiz()" class="vote-btn">再玩一次</button>
     </div>
 </section>
 
@@ -330,69 +364,130 @@
         { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 },
         { q: "What is one purpose of SDG 4?", a: ["To promote inclusive and equitable quality education", "To stop students from learning", "To reduce global cooperation", "To remove schools"], c: 0 }
     ];
+    // --- 闖關遊戲核心變數 ---
+    let selectedEmoji = '';
+    let currentLevel = 1;
+    let currentLevelQ = 0; 
 
-    let currentQ = 0, score = 0;
+    // 1. 切換到選角色畫面
+    function goToCharacterSelect() {
+        document.getElementById('quiz-start-screen').style.display = 'none';
+        document.getElementById('character-select').style.display = 'block';
+    }
 
-    function loadQuiz() {
-        if (currentQ >= quizData.length) {
-            document.getElementById('quiz-ui').style.display = 'none';
-            document.getElementById('quiz-result').style.display = 'block';
-            document.getElementById('final-score-val').innerText = score + " / " + quizData.length;
-            return;
+    // 2. 處理角色選取
+    function selectChar(emoji, el) {
+        selectedEmoji = emoji;
+        // 把所有的選取框顏色變回原本的
+        document.querySelectorAll('.char-option').forEach(opt => opt.classList.remove('selected'));
+        // 幫被點選的那個加上藍色邊框
+        el.classList.add('selected');
+        // 讓 CONTINUE 按鈕可以點擊
+        document.getElementById('continue-btn').disabled = false;
+    }
+
+    // 3. 啟動闖關地圖
+    function startLevelMap() {
+        document.getElementById('character-select').style.display = 'none';
+        document.getElementById('game-container').style.display = 'block';
+        // 把你選的角色 emoji 放進地圖
+        document.getElementById('player-avatar').innerText = selectedEmoji;
+        renderMapNodes();       // 畫圓圈
+        updateAvatarPosition(); // 移動角色
+        loadLevelQuestion();    // 出題目
+    }
+
+    // 4. 在地圖上畫出 7 個關卡的圓圈 (照第三張圖的 S 型)
+    function renderMapNodes() {
+        const path = document.getElementById('map-path');
+        // 這是圓圈的座標 (x:左右%, b:距離底部%)
+        const coords = [
+            {x: 40, b: 5}, {x: 70, b: 18}, {x: 75, b: 35}, {x: 45, b: 48}, 
+            {x: 15, b: 62}, {x: 40, b: 78}, {x: 75, b: 88}
+        ];
+        path.innerHTML = ''; // 清空原本的
+        coords.forEach((pos, i) => {
+            const node = document.createElement('div');
+            const lvNum = i + 1;
+            // 判斷關卡狀態：已完成 (completed)、現在 (active)
+            node.className = `level-node ${lvNum < currentLevel ? 'completed' : (lvNum === currentLevel ? 'active' : '')}`;
+            node.id = `node-${lvNum}`;
+            node.style.left = pos.x + '%';
+            node.style.bottom = pos.b + '%';
+            node.innerText = `Lv${lvNum}`;
+            path.appendChild(node);
+        });
+    }
+
+    // 5. 讓角色移動到當前等級的圓圈上
+    function updateAvatarPosition() {
+        const targetNode = document.getElementById(`node-${currentLevel}`);
+        const avatar = document.getElementById('player-avatar');
+        if(targetNode) {
+            avatar.style.left = targetNode.style.left;
+            // 把角色放在圓圈稍微上方一點點的位置
+            avatar.style.bottom = (parseInt(targetNode.style.bottom) + 6) + '%';
         }
-        const d = quizData[currentQ];
-        document.getElementById('q-progress').innerText = `Question: ${currentQ + 1} / ${quizData.length}`;
-        document.getElementById('q-score').innerText = `Score: ${score}`;
+    }
+
+    // 6. 載入當前等級的題目 (每關需答對 5 題)
+    function loadLevelQuestion() {
+        // 從你的 quizData 裡面抓題
+        const qIdx = ((currentLevel - 1) * 5 + currentLevelQ) % quizData.length;
+        const d = quizData[qIdx];
+        
+        document.getElementById('level-title').innerText = `Level ${currentLevel}`;
+        document.getElementById('q-progress').innerText = `Progress: ${currentLevelQ + 1} / 5`;
         document.getElementById('q-text').innerText = d.q;
-        const optBox = document.getElementById('q-options'); optBox.innerHTML = "";
+        
+        const optBox = document.getElementById('q-options');
+        optBox.innerHTML = "";
         
         d.a.forEach((opt, i) => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.innerText = opt;
-            btn.onclick = () => handleAnswer(i, btn);
+            btn.onclick = () => {
+                const allButtons = document.querySelectorAll('.option-btn');
+                allButtons.forEach(b => b.style.pointerEvents = 'none'); // 防止亂點
+
+                if(i === d.c) { // 答對了
+                    btn.style.backgroundColor = "#c8e6c9";
+                    currentLevelQ++;
+                    
+                    setTimeout(() => {
+                        if(currentLevelQ >= 5) { // 代表這一關 5 題都對了，晉級！
+                            if(currentLevel < 7) {
+                                currentLevel++;
+                                currentLevelQ = 0;
+                                renderMapNodes();       // 更新地圖圓圈顏色
+                                updateAvatarPosition(); // 角色往前跳一格
+                                loadLevelQuestion();
+                            } else {
+                                // 7 關全部過完
+                                document.getElementById('game-container').style.display = 'none';
+                                document.getElementById('quiz-result').style.display = 'block';
+                            }
+                        } else {
+                            // 繼續這一關的下一題
+                            loadLevelQuestion();
+                        }
+                    }, 1000);
+                } else { // 答錯了
+                    btn.style.backgroundColor = "#ffcdd2";
+                    // 顯示正確答案
+                    allButtons[d.c].style.backgroundColor = "#c8e6c9";
+                    // 1.5 秒後重新載入這一題
+                    setTimeout(() => loadLevelQuestion(), 1500);
+                }
+            };
             optBox.appendChild(btn);
         });
     }
 
-    function handleAnswer(selectedIndex, selectedBtn) {
-        const d = quizData[currentQ];
-        const allButtons = document.querySelectorAll('.option-btn');
-        
-        // 鎖定所有按鈕防止連點
-        allButtons.forEach(btn => btn.style.pointerEvents = 'none');
-
-        if (selectedIndex === d.c) {
-            // 答對了
-            score++;
-            document.getElementById('q-score').innerText = `Score: ${score}`;
-            selectedBtn.style.backgroundColor = "#c8e6c9"; // 綠底
-            selectedBtn.style.borderColor = "#4caf50";
-            selectedBtn.innerText += " ⭕️";
-        } else {
-            // 答錯了
-            selectedBtn.style.backgroundColor = "#ffcdd2"; // 紅底
-            selectedBtn.style.borderColor = "#f44336";
-            selectedBtn.innerText += " ❌";
-
-            // 顯示正確答案
-            allButtons[d.c].style.backgroundColor = "#c8e6c9";
-            allButtons[d.c].style.borderColor = "#4caf50";
-            allButtons[d.c].innerText += " ⭕️";
-        }
-
-        // 1.5 秒後自動進入下一題
-        setTimeout(() => {
-            currentQ++;
-            loadQuiz();
-        }, 1500);
-    }
-
-    function restartQuiz() { 
-        currentQ = 0; score = 0; 
-        document.getElementById('quiz-ui').style.display = 'block'; 
-        document.getElementById('quiz-result').style.display = 'none'; 
-        loadQuiz(); 
+    // 7. 重來 (直接刷新網頁最快)
+    function restartQuiz() {
+        location.reload();
     }
 
     // Vote Logic
