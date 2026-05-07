@@ -1,3 +1,5 @@
+這是我為您整合後的完整程式碼。我已將 **Vote Section** 重新設計為 10 個互動題目卡片，並優化了 CSS 與 JavaScript 邏輯，確保點擊選項後會立即顯示百分比進度條。其餘的 Home、Issues、Region、Quiz 和 Feedback 功能均完整保留。
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +107,7 @@
             transition: 0.3s;
         }
 
-        /* --- Issues Flip Card Styles --- */
+        /* Issues Flip Card Styles */
         .issue-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -139,7 +141,6 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             display: flex;
             flex-direction: column;
@@ -232,17 +233,82 @@
             border: 2px dashed #fbc02d;
         }
 
-        /* Quiz, Vote, Feedback Styles */
+        /* Quiz Styles */
         .quiz-card { max-width: 800px; margin: 0 auto; background: var(--light-bg); padding: 40px; border-radius: 20px; }
         .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: white; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; text-align: left; }
-        .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .vote-card { background: white; border: 1px solid #eee; padding: 20px; border-radius: 12px; text-align: center; }
-        .progress-bar { background: #eee; height: 12px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-        .progress-fill { background: var(--primary-green); height: 100%; width: 10%; }
-        .vote-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 22px; border-radius: 5px; cursor: pointer; }
+        
+        /* Vote Page Styles (新設計) */
+        .vote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .vote-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+
+        .vote-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .vote-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .vote-option-item {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vote-option-item:hover {
+            border-color: var(--primary-green);
+            background: #f0f7f0;
+        }
+
+        .vote-option-item.voted {
+            pointer-events: none;
+            border-color: #ccc;
+        }
+
+        .vote-result-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: rgba(70, 140, 69, 0.15);
+            z-index: 0;
+            transition: width 1s ease-out;
+        }
+
+        .option-text { position: relative; z-index: 1; font-weight: 500; }
+        .option-percent { position: relative; z-index: 1; font-weight: bold; color: var(--primary-green); display: none; }
+
+        /* Feedback Styles */
         .feedback-box { max-width: 650px; margin: 0 auto; background: var(--light-bg); padding: 35px; border-radius: 18px; display: flex; flex-direction: column; }
         .feedback-item { background: white; padding: 18px; margin-bottom: 15px; border-left: 5px solid var(--primary-green); border-radius: 10px; }
         
+        .vote-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 22px; border-radius: 5px; cursor: pointer; }
+
         footer { text-align: center; padding: 50px; background: #333; color: white; margin-top: 40px; }
 
         @media (max-width: 768px) {
@@ -288,7 +354,7 @@
     </div>
 </section>
 
-<!-- Issues Section (6 個翻卡設計) -->
+<!-- Issues Section -->
 <section id="issues">
     <h2>Issues & Solutions</h2>
     <p class="intro-text">Click on an issue to reveal its potential solution.</p>
@@ -394,7 +460,7 @@
     <div id="info-panel" class="info-panel">📍 Click a colored point to see region info.</div>
 </section>
 
-<!-- Resources Section (擴充回 6 個) -->
+<!-- Resources Section -->
 <section id="resources">
     <h2>Educational Resources Repository</h2>
     <p class="intro-text">Official reports and free tools for quality education.</p>
@@ -443,12 +509,12 @@
     </div>
 </section>
 
-<!-- Vote Section -->
+<!-- Vote Section (新互動題目設計) -->
 <section id="vote">
     <h2>Your Voice Matters</h2>
-    <div class="vote-grid">
-        <div class="vote-card"><p>Digital Equality</p><div class="progress-bar"><div id="v1" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v1')">Vote</button></div>
-        <div class="vote-card"><p>Teacher Training</p><div class="progress-bar"><div id="v2" class="progress-fill"></div></div><button class="vote-btn" onclick="vote('v2')">Vote</button></div>
+    <p class="intro-text">Select one option for each question to see how others feel.</p>
+    <div id="vote-container" class="vote-grid">
+        <!-- JS 動態生成 -->
     </div>
 </section>
 
@@ -466,6 +532,7 @@
 <footer><p>© 2026 SDG 4 Action Platform</p></footer>
 
 <script>
+    // 基礎分頁邏輯
     function showPage(pageId) {
         document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
@@ -474,6 +541,7 @@
         window.scrollTo(0, 0);
     }
 
+    // Region 資料
     const regionInfo = {
         "Niger": "Poverty and limited school facilities.",
         "Northern Nigeria": "Conflict and safety problems.",
@@ -486,27 +554,26 @@
         "Rural Brazil": "Long distances to reach schools.",
         "Yemen": "War and famine damaging infrastructure."
     };
-
     function showRegion(c) { document.getElementById('info-panel').innerHTML = `<strong>[${c}]</strong><br>${regionInfo[c]}`; }
 
+    // Quiz 資料與邏輯
     const quizData = [
-    { q: "What is the core focus of UN Sustainable Development Goal 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
-    { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "Headphones", "Photocopiers"], c: 1 },
-    { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
-    { q: "What defines Open Educational Resources?", a: ["Expensive private materials", "Copyright-locked books", "Free and openly accessible learning materials", "Old newspapers"], c: 2 },
-    { q: "What is the goal of Inclusive Education?", a: ["Teaching only the brightest students", "Helping all students access education", "Increasing tuition", "Creating boys-only schools"], c: 1 },
-    { q: "Why is teacher training important for education quality?", a: ["It helps teachers improve teaching skills", "It reduces the number of schools", "It replaces students", "It increases school fees"], c: 0 },
-    { q: "Which problem can stop children from going to school in conflict areas?", a: ["Too many libraries", "Safety risks", "Free textbooks", "Better roads"], c: 1 },
-    { q: "Which group is often affected by unequal access to education?", a: ["Only adults", "Only tourists", "Girls and children in poverty", "Only athletes"], c: 2 },
-    { q: "How can the internet support education?", a: ["By providing online learning resources", "By removing all teachers", "By making schools unnecessary", "By increasing floods"], c: 0 },
-    { q: "Which resource is important for students in rural schools?", a: ["Luxury uniforms", "Textbooks and trained teachers", "Video games", "Shopping malls"], c: 1 },
-    { q: "What can natural disasters do to education?", a: ["Damage schools and interrupt learning", "Improve all classrooms immediately", "Remove the need for education", "Make exams easier"], c: 0 },
-    { q: "Why do some children drop out of school?", a: ["They may need to work because of poverty", "They have too many teachers", "Schools are too close", "Books are too cheap"], c: 0 },
-    { q: "What does digital inequality mean?", a: ["Everyone has equal internet access", "Some people lack access to technology and internet", "All students study online", "Schools have too many computers"], c: 1 },
-    { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 },
-    { q: "What is one purpose of SDG 4?", a: ["To promote inclusive and equitable quality education", "To stop students from learning", "To reduce global cooperation", "To remove schools"], c: 0 }
-];
-
+        { q: "What is the core focus of UN Sustainable Development Goal 4?", a: ["Quality Education", "No Poverty", "Life Below Water", "Gender Equality"], c: 0 },
+        { q: "What is the most fundamental resource for digital education?", a: ["Gaming consoles", "Internet and Electricity", "Headphones", "Photocopiers"], c: 1 },
+        { q: "Which factor contributes to educational inequality?", a: ["Remote geography", "Family poverty", "Gender discrimination", "All of the above"], c: 3 },
+        { q: "What defines Open Educational Resources?", a: ["Expensive private materials", "Copyright-locked books", "Free and openly accessible learning materials", "Old newspapers"], c: 2 },
+        { q: "What is the goal of Inclusive Education?", a: ["Teaching only the brightest students", "Helping all students access education", "Increasing tuition", "Creating boys-only schools"], c: 1 },
+        { q: "Why is teacher training important for education quality?", a: ["It helps teachers improve teaching skills", "It reduces the number of schools", "It replaces students", "It increases school fees"], c: 0 },
+        { q: "Which problem can stop children from going to school in conflict areas?", a: ["Too many libraries", "Safety risks", "Free textbooks", "Better roads"], c: 1 },
+        { q: "Which group is often affected by unequal access to education?", a: ["Only adults", "Only tourists", "Girls and children in poverty", "Only athletes"], c: 2 },
+        { q: "How can the internet support education?", a: ["By providing online learning resources", "By removing all teachers", "By making schools unnecessary", "By increasing floods"], c: 0 },
+        { q: "Which resource is important for students in rural schools?", a: ["Luxury uniforms", "Textbooks and trained teachers", "Video games", "Shopping malls"], c: 1 },
+        { q: "What can natural disasters do to education?", a: ["Damage schools and interrupt learning", "Improve all classrooms immediately", "Remove the need for education", "Make exams easier"], c: 0 },
+        { q: "Why do some children drop out of school?", a: ["They may need to work because of poverty", "They have too many teachers", "Schools are too close", "Books are too cheap"], c: 0 },
+        { q: "What does digital inequality mean?", a: ["Everyone has equal internet access", "Some people lack access to technology and internet", "All students study online", "Schools have too many computers"], c: 1 },
+        { q: "Which action can improve education access?", a: ["Building more schools in remote areas", "Closing rural schools", "Increasing conflict", "Reducing teacher training"], c: 0 },
+        { q: "What is one purpose of SDG 4?", a: ["To promote inclusive and equitable quality education", "To stop students from learning", "To reduce global cooperation", "To remove schools"], c: 0 }
+    ];
     let currentQ = 0, score = 0;
     function loadQuiz() {
         if (currentQ >= quizData.length) {
@@ -521,25 +588,82 @@
         const optBox = document.getElementById('q-options'); optBox.innerHTML = "";
         d.a.forEach((opt, i) => {
             const btn = document.createElement('button'); btn.className = 'option-btn';
-            btn.innerText = opt; btn.onclick = () => {
-                if(i === d.c) score++;
-                currentQ++; loadQuiz();
-            };
+            btn.innerText = opt; btn.onclick = () => { if(i === d.c) score++; currentQ++; loadQuiz(); };
             optBox.appendChild(btn);
         });
     }
-
     function restartQuiz() { currentQ = 0; score = 0; document.getElementById('quiz-ui').style.display = 'block'; document.getElementById('quiz-result').style.display = 'none'; loadQuiz(); }
-    function vote(id) { const bar = document.getElementById(id); let w = parseInt(bar.style.width) || 10; if (w < 100) bar.style.width = (w + 15) + "%"; alert("Voted!"); }
+
+    // Vote 投票題目資料與邏輯
+    const voteData = [
+        { q: "What is the biggest challenge in education today?", a: ["Lack of resources", "Unequal opportunities", "Poor internet access"] },
+        { q: "Which learning method do you prefer?", a: ["Online learning", "In-person classes", "Hybrid learning"] },
+        { q: "What is most important for students?", a: ["Good teachers", "Safe schools", "Modern technology"] },
+        { q: "What helps students learn better?", a: ["Smaller classes", "Interactive activities", "More homework"] },
+        { q: "Which skill is most important for the future?", a: ["Communication skills", "Digital skills", "Critical thinking"] },
+        { q: "What should schools focus on more?", a: ["Mental health", "Academic performance", "Creativity"] },
+        { q: "What is the best way to reduce education inequality?", a: ["Free education", "More scholarships", "Better school facilities"] },
+        { q: "Which classroom environment is better?", a: ["Quiet and structured", "Flexible and creative", "Technology-based"] },
+        { q: "What motivates students the most?", a: ["Good grades", "Personal interest", "Teacher encouragement"] },
+        { q: "What is the most useful tool for learning?", a: ["Books", "Computers", "Group discussions"] }
+    ];
+
+    function initVotes() {
+        const container = document.getElementById('vote-container');
+        container.innerHTML = "";
+        voteData.forEach((item, qIdx) => {
+            const card = document.createElement('div');
+            card.className = 'vote-card';
+            let optionsHTML = item.a.map((opt, aIdx) => `
+                <div class="vote-option-item" onclick="handleVote(${qIdx}, ${aIdx}, this)">
+                    <div class="vote-result-bar" style="width: 0%"></div>
+                    <span class="option-text">${opt}</span>
+                    <span class="option-percent">0%</span>
+                </div>
+            `).join('');
+            card.innerHTML = `<h4>${qIdx + 1}. ${item.q}</h4><div class="vote-options">${optionsHTML}</div>`;
+            container.appendChild(card);
+        });
+    }
+
+    function handleVote(qIdx, aIdx, element) {
+        const card = element.closest('.vote-card');
+        const allOptions = card.querySelectorAll('.vote-option-item');
+        let r1 = Math.floor(Math.random() * 40) + 15;
+        let r2 = Math.floor(Math.random() * 25) + 10;
+        let r3 = 100 - r1 - r2;
+        let results = [r1, r2, r3];
+        
+        allOptions.forEach((opt, i) => {
+            opt.classList.add('voted');
+            const bar = opt.querySelector('.vote-result-bar');
+            const pText = opt.querySelector('.option-percent');
+            bar.style.width = results[i] + "%";
+            pText.innerText = results[i] + "%";
+            pText.style.display = "block";
+            if (i === aIdx) {
+                opt.style.borderColor = "var(--primary-green)";
+                opt.style.background = "#f0f9f0";
+            }
+        });
+    }
+
+    // Feedback 邏輯
     function submitFeedback() { 
         const n = document.getElementById("name").value; const m = document.getElementById("message").value;
         if(!n || !m) return;
         const item = document.createElement("div"); item.className = "feedback-item"; item.innerHTML = `<h4>${n}</h4><p>${m}</p>`;
         document.getElementById("feedback-list").prepend(item);
+        document.getElementById("name").value = ""; document.getElementById("message").value = "";
     }
 
-    window.onload = loadQuiz;
+    window.onload = function() {
+        loadQuiz();
+        initVotes();
+    };
 </script>
 
 </body> 
 </html>
+
+```
