@@ -293,7 +293,7 @@
     
     <!-- 1. 開始畫面 -->
     <div id="quiz-start-screen" class="quiz-card" style="text-align: center;">
-        <p class="intro-text" style="margin-bottom: 20px;">完成 7 個關卡，成為教育推廣大使！</p>
+        <p class="intro-text" style="margin-bottom: 20px;">Complete Lv1~Lv7 and become an Education Ambassador!</p>
         <button onclick="goToCharacterSelect()" class="vote-btn">START GAME</button>
     </div>
 
@@ -316,7 +316,7 @@
             <div id="player-avatar"></div>
         </div>
         <div style="text-align: center; margin-top: 20px;">
-            <p id="map-hint" style="font-weight: bold; color: var(--primary-blue);">點擊發光的關卡開始挑戰！</p>
+            <p id="map-hint" style="font-weight: bold; color: var(--primary-blue);">Click the levels in order to complete all the challenges!</p>
         </div>
     </div>
     
@@ -333,21 +333,22 @@
 
     <!-- 5. 最終結果 -->
     <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
-        <h3>🎉 全關卡達成！</h3>
-        <p>你已成功通過所有 SDG 4 的考驗！</p>
+        <h3>🎉 All Levels Completed!</h3>
+        <p>You have successfully passed all the SDG 4 challenges! Congratulations on becoming an Education Ambassador!</p>
         <button onclick="restartQuiz()" class="vote-btn" style="margin-top: 20px;">再玩一次</button>
     </div>
 </section>
 
 
 <section id="vote">
-    <h2>Your Voice Matters</h2>
-    <p class="intro-text">Select one option for each question to see how others feel.</p>
+    <h2>Share Your Opinion</h2>
+    <p class="intro-text">Vote for the option you agree with and explore different perspectives on education.</p>
     <div id="vote-container" class="vote-grid"></div>
 </section>
 
 <section id="feedback">
     <h2>Feedback</h2>
+    <p class="intro-text">Please rate us and share your suggestions or compliments!</p>
     <div class="feedback-box">
         <div class="star-rating" id="star-input">
             <span onclick="setRating(1)">★</span><span onclick="setRating(2)">★</span><span onclick="setRating(3)">★</span><span onclick="setRating(4)">★</span><span onclick="setRating(5)">★</span>
