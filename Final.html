@@ -876,6 +876,43 @@
             margin: 0 auto; 
 
         }
+        /* ===== Vote 卡牌依號碼漸入 ===== */
+
+.vote-card{
+    opacity:0;
+    transform:translateY(40px);
+
+    animation:voteFade .8s ease forwards;
+}
+
+.vote-card:nth-child(1){animation-delay:.2s;}
+.vote-card:nth-child(2){animation-delay:.4s;}
+.vote-card:nth-child(3){animation-delay:.6s;}
+.vote-card:nth-child(4){animation-delay:.8s;}
+.vote-card:nth-child(5){animation-delay:1s;}
+.vote-card:nth-child(6){animation-delay:1.2s;}
+.vote-card:nth-child(7){animation-delay:1.4s;}
+.vote-card:nth-child(8){animation-delay:1.6s;}
+.vote-card:nth-child(9){animation-delay:1.8s;}
+.vote-card:nth-child(10){animation-delay:2s;}
+
+@keyframes voteFade{
+
+from{
+opacity:0;
+transform:
+translateY(40px)
+scale(.96);
+}
+
+to{
+opacity:1;
+transform:
+translateY(0)
+scale(1);
+}
+
+}
 
         .vote-card { 
 
@@ -1553,6 +1590,9 @@ const db = getFirestore(app);
 
     void page.offsetWidth;
         page.classList.add('slide-up');
+        if(pageId==="vote"){
+initVotes();
+}
 
         document
     .getElementById('nav-'+pageId)
