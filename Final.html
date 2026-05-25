@@ -1513,7 +1513,30 @@
 
 <footer><p>© 2026 SDG 4 Action Platform</p></footer>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+orderBy
+}
+from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAwPx0uX71Mp4QITEAsNlAE0h7JbhUenTA",
+authDomain: "sdg4-feedback.firebaseapp.com",
+projectId: "sdg4-feedback",
+storageBucket: "sdg4-feedback.firebasestorage.app",
+messagingSenderId: "801113322221",
+appId: "1:801113322221:web:f48f48acdc407e390e52e4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 
     function showPage(pageId){
        document.querySelectorAll('section').forEach(sec=>{
@@ -2217,34 +2240,8 @@ renderFeedback();
     window.onload=async function(){
 initVotes();
 await renderFeedback();
-}
-
-</script>
+    }
     
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-query,
-orderBy
-}
-from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyAwPx0uX71Mp4QITEAsNlAE0h7JbhUenTA",
-authDomain: "sdg4-feedback.firebaseapp.com",
-projectId: "sdg4-feedback",
-storageBucket: "sdg4-feedback.firebasestorage.app",
-messagingSenderId: "801113322221",
-appId: "1:801113322221:web:f48f48acdc407e390e52e4"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 </script>
     
 </body> 
