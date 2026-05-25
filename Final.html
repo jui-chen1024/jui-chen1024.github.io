@@ -2142,79 +2142,106 @@
 
     }
 
-    function renderFeedback() {
+    async function renderFeedback(){
 
-        const list = document.getElementById("feedback-list");
+const list=document.getElementById("feedback-list");
 
-        const stored = JSON.parse(localStorage.getItem("sdgFeedback")) || [];
+list.innerHTML="Loading...";
 
-        list.innerHTML = "";
+const snapshot=
+await getDocs(
+query(
+collection(db,"feedback")
+));
 
-        stored.forEach(f => {
+list.innerHTML="";
 
-            const item = document.createElement("div");
+snapshot.forEach(doc=>{
 
-            item.className = "feedback-item";
+const f=doc.data();
 
-            let stars = "★".repeat(f.rating) + "☆".repeat(5 - f.rating);
+const stars=
+"★".repeat(f.rating)+
+"☆".repeat(5-f.rating);
 
-            item.innerHTML = `<div class="feedback-header"><h4>${f.name}</h4><span class="item-stars">${stars}</span></div><p>${f.message}</p>`;
+list.innerHTML+=`
+<div class="feedback-item">
+<div class="feedback-header">
+<h4>${f.name}</h4>
+<span class="item-stars">${stars}</span>
+</div>
+<p>${f.message}</p>
+</div>
+`;
 
-            list.appendChild(item);
+});
 
-        });
+}
 
-    }
+    async function submitFeedback(){
 
-    function submitFeedback() { 
+const n=
+document.getElementById("name").value;
 
-        const n = document.getElementById("name").value;
+const m=
+document.getElementById("message").value;
 
-        const m = document.getElementById("message").value;
+if(!n||!m||currentRating===0){
 
-        if(!n || !m || currentRating === 0) { 
+alert("Fill all fields");
 
-            alert("Please provide your name, message, and a rating!"); 
+return;
 
-            return; 
+}
 
-        }
+await addDoc(
+collection(db,"feedback"),
+{
+name:n,
+message:m,
+rating:currentRating,
+createdAt:Date.now()
+}
+);
 
-        const newFeedback = { 
+document.getElementById("name").value="";
 
-            name: n, 
+document.getElementById("message").value="";
 
-            message: m, 
+setRating(0);
 
-            rating: currentRating 
+renderFeedback();
 
-        };
+}
 
-        const stored = JSON.parse(localStorage.getItem("sdgFeedback")) || [];
+    window.onload=async function(){
+initVotes();
+await renderFeedback();
+}
 
-        stored.unshift(newFeedback);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+orderBy
+}
+from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
 
-        localStorage.setItem("sdgFeedback", JSON.stringify(stored));
+const firebaseConfig = {
+apiKey: "AIzaSyAwPx0uX71Mp4QITEAsNlAE0h7JbhUenTA",
+authDomain: "sdg4-feedback.firebaseapp.com",
+projectId: "sdg4-feedback",
+storageBucket: "sdg4-feedback.firebasestorage.app",
+messagingSenderId: "801113322221",
+appId: "1:801113322221:web:f48f48acdc407e390e52e4"
+};
 
-        renderFeedback();
-
-        document.getElementById("name").value = ""; 
-
-        document.getElementById("message").value = ""; 
-
-        setRating(0);
-
-    }
-
-    window.onload = function() {
-
-        initVotes();
-
-        renderFeedback();
-
-    };
-
-</script>
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 </body> 
 
