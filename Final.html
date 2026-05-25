@@ -2165,17 +2165,18 @@ const db = getFirestore(app);
 
     }
 
-    window.submitFeedback=async function(){
+    async function renderFeedback(){
 
 const list=document.getElementById("feedback-list");
 
 list.innerHTML="Loading...";
 
-const snapshot=
-await getDocs(
+const snapshot=await getDocs(
 query(
-collection(db,"feedback")
-));
+collection(db,"feedback"),
+orderBy("createdAt","desc")
+)
+);
 
 list.innerHTML="";
 
@@ -2198,6 +2199,39 @@ list.innerHTML+=`
 `;
 
 });
+
+}
+    window.submitFeedback = async function(){
+
+const n=document.getElementById("name").value.trim();
+
+const m=document.getElementById("message").value.trim();
+
+if(!n || !m || currentRating===0){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+await addDoc(
+collection(db,"feedback"),
+{
+name:n,
+message:m,
+rating:currentRating,
+createdAt:new Date()
+}
+);
+
+document.getElementById("name").value="";
+
+document.getElementById("message").value="";
+
+setRating(0);
+
+await renderFeedback();
 
 }
 
