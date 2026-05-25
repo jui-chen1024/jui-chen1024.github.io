@@ -1580,7 +1580,31 @@
 
 <script>
 
-    function showPage(pageId) {
+    function showPage(pageId){
+       document.querySelectorAll('section').forEach(sec=>{
+       sec.classList.remove('active');
+       sec.classList.remove('slide-up');
+    });
+
+    document.querySelectorAll('nav a').forEach(link=>
+    link.classList.remove('active'));
+
+    const page=
+    document.getElementById(pageId);
+    page.classList.add('active');
+
+    void page.offsetWidth;
+        page.classList.add('slide-up');
+
+        document
+    .getElementById('nav-'+pageId)
+    .classList.add('active');
+
+    window.scrollTo({
+    top:0,
+    behavior:'smooth'
+    });
+}
 
         document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
 
