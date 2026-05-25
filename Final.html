@@ -1538,7 +1538,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-    window.showPage=function(pageId){{
+    window.showPage=function(pageId){
        document.querySelectorAll('section').forEach(sec=>{
        sec.classList.remove('active');
        sec.classList.remove('slide-up');
@@ -1564,7 +1564,7 @@ const db = getFirestore(app);
     });
     }
 
-    window.showEducationFact=function() {{
+    window.showEducationFact=function() {
 
         const facts = [
 
@@ -1586,7 +1586,7 @@ const db = getFirestore(app);
 
     }
 
-    window.showAction=function(type) {{
+    window.showAction=function(type) {
 
         const result = document.getElementById("action-result");
 
@@ -1630,7 +1630,7 @@ const db = getFirestore(app);
 
     };
 
-    window.showRegion=function(c) { { 
+    window.showRegion=function(c) { 
 
         document.getElementById('info-panel').innerHTML = `<strong>[${c}]</strong><br>${regionInfo[c]}`; 
 
@@ -1788,7 +1788,7 @@ const db = getFirestore(app);
 
     const QUESTIONS_PER_LEVEL = 5;
 
-    window.showMap=function(){ {
+    window.showMap=function(){ 
         document.getElementById('quiz-start-screen').style.display='none';
     const character =
         document.getElementById('character-select');
@@ -1803,7 +1803,7 @@ const db = getFirestore(app);
 
     }
 
-    window.selectChar=function(emoji,el){{
+    window.selectChar=function(emoji,el){
 
         selectedEmoji = emoji;
 
@@ -1815,7 +1815,7 @@ const db = getFirestore(app);
 
     }
 
-    window.showMap=function(){{
+    window.showMap=function(){
 
         document.getElementById('character-select').style.display='none';
 
@@ -2023,7 +2023,7 @@ const db = getFirestore(app);
 
     }
 
-    window.restartQuiz=function(){{
+    window.restartQuiz=function(){
 
         currentLevel = 1;
 
