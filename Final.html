@@ -1560,15 +1560,24 @@ scale(1);
 
     </div>
 
-    <div id="quiz-result" style="display:none; text-align:center;" class="quiz-card">
+<div id="quiz-result"
+style="display:none;text-align:center;"
+class="quiz-card">
 
-        <h3>🎉 All Levels Completed!</h3>
+<h3>
+🎉 Education Ambassador
+</h3>
 
-        <p>You have successfully passed all the SDG 4 challenges! Congratulations on becoming an Education Ambassador!</p>
+<div id="badge-wall"></div>
 
-        <button onclick="restartQuiz()" class="vote-btn" style="margin-top: 20px;">Play again</button>
+<button onclick="restartQuiz()"
+class="vote-btn">
 
-    </div>
+Play Again
+
+</button>
+
+</div>
 
 </section>
 
@@ -2120,25 +2129,41 @@ document.getElementById(
 
                     if (currentLevel < 7) {
 
-                        earnedBadges.push(
-badgeData[currentLevel-1]
-);
+    earnedBadges.push(
+        badgeData[currentLevel-1]
+    );
 
-showBadgePopup(
-badgeData[currentLevel-1]
-);
+    showBadgePopup(
+        badgeData[currentLevel-1]
+    );
 
-                        currentLevel++;
+    currentLevel++;
 
-                        showMap(); 
+    showMap();
 
-                    } else {
+} else {
 
-                        document.getElementById('challenge-screen').style.display = 'none';
+    earnedBadges.push(
+        badgeData[6]
+    );
 
-                        document.getElementById('quiz-result').style.display = 'block';
+    document.getElementById(
+        'badge-wall'
+    ).innerHTML =
+    earnedBadges.map(
+        b => `<div style="
+            font-size:1.2rem;
+            margin:10px;
+        ">🏅 ${b}</div>`
+    ).join('');
 
-                    }
+    document.getElementById(
+        'challenge-screen'
+    ).style.display = 'none';
+
+    document.getElementById(
+        'quiz-result'
+    ).style.display = 'block';
 
                 } else { 
 
@@ -2424,7 +2449,26 @@ renderFeedback();
 initVotes();
 await renderFeedback();
     }
-    
+
+    function showBadgePopup(badge){
+
+document.getElementById(
+'badge-name'
+).innerText=badge;
+
+document.getElementById(
+'badge-popup'
+).style.display='block';
+
+setTimeout(()=>{
+
+document.getElementById(
+'badge-popup'
+).style.display='none';
+
+},2000);
+
+}
 </script>
     
 </body> 
