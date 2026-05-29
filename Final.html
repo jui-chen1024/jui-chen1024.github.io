@@ -1623,7 +1623,11 @@ Play Again
 
     <div id="feedback-list" style="margin-top: 30px; max-width: 650px; margin-left: auto; margin-right: auto;"></div>
 
-    <div id="badge-popup">
+    
+
+</section>
+
+<div id="badge-popup">
 
 🏅 New Badge Earned!
 
@@ -1631,8 +1635,6 @@ Play Again
 
 </div>
 
-
-</section>
 
 <footer><p>© 2026 SDG 4 Action Platform</p></footer>
 
@@ -2144,8 +2146,13 @@ document.getElementById(
 } else {
 
     earnedBadges.push(
-        badgeData[6]
-    );
+    badgeData[6]
+);
+
+showBadgePopup(
+    badgeData[6]
+);
+                
 
     document.getElementById(
         'badge-wall'
@@ -2164,6 +2171,7 @@ document.getElementById(
     document.getElementById(
         'quiz-result'
     ).style.display = 'block';
+                    }
 
                 } else { 
 
