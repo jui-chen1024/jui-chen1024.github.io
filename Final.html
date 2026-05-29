@@ -801,6 +801,8 @@ transition:1s;
 
         }
 
+    
+
         #player-avatar {
 
             position: absolute;
@@ -819,6 +821,46 @@ transition:1s;
 
         }
 
+
+        #badge-popup{
+
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:
+translate(-50%,-50%);
+
+background:white;
+
+padding:30px;
+
+border-radius:20px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.2);
+
+z-index:9999;
+
+display:none;
+
+text-align:center;
+
+font-size:1.4rem;
+}
+
+#badge-name{
+
+margin-top:15px;
+
+font-size:1.8rem;
+
+color:#468c45;
+
+font-weight:bold;
+}
+        
         .option-btn {
 
             display: block;
@@ -1572,6 +1614,15 @@ scale(1);
 
     <div id="feedback-list" style="margin-top: 30px; max-width: 650px; margin-left: auto; margin-right: auto;"></div>
 
+    <div id="badge-popup">
+
+🏅 New Badge Earned!
+
+<div id="badge-name"></div>
+
+</div>
+
+
 </section>
 
 <footer><p>© 2026 SDG 4 Action Platform</p></footer>
@@ -1848,6 +1899,18 @@ initVotes();
 
     let selectedEmoji = '';
 
+    let earnedBadges=[];
+
+const badgeData=[
+"📖 Learning Starter",
+"🌍 Equality Supporter",
+"💻 Digital Explorer",
+"❤️ Mental Health Guardian",
+"🚀 Future Skills Builder",
+"🤝 Global Citizen",
+"🌱 Sustainability Champion"
+];
+
     let currentLevel = 1;      
 
     let currentLevelQ = 0;     
@@ -2056,6 +2119,14 @@ document.getElementById(
                 if (currentLevelQ >= QUESTIONS_PER_LEVEL) {
 
                     if (currentLevel < 7) {
+
+                        earnedBadges.push(
+badgeData[currentLevel-1]
+);
+
+showBadgePopup(
+badgeData[currentLevel-1]
+);
 
                         currentLevel++;
 
