@@ -780,25 +780,25 @@
             cursor: pointer;
 
         }
-
-  #player-avatar {
+#player-avatar {
 
     position: absolute;
 
     font-size: 2.5rem;
 
-    transition:
-    left 1.5s ease,
-    bottom 1.5s ease;
-
-    z-index: 3;
-
-    width: 65px;
+    width: 80px;
 
     text-align: center;
 
     pointer-events: none;
 
+    z-index: 3;
+
+    transform: translateX(-50%);
+
+    transition:
+        left 1.5s ease,
+        bottom 1.5s ease;
 }
 
 
@@ -2075,9 +2075,11 @@ ${earned ? 'none' : 'grayscale(100%)'};
 
         if(targetNode) {
 
-            avatar.style.left = `calc(${targetNode.style.left} + 40px)`;
+            avatar.style.left =
+targetNode.style.left;
 
-            avatar.style.bottom = `calc(${targetNode.style.bottom} + 55px)`;
+avatar.style.bottom =
+`calc(${targetNode.style.bottom} + 75px)`;
 
         }
 
