@@ -781,25 +781,25 @@
 
         }
 
-    
+  #player-avatar {
 
-        #player-avatar {
+    position: absolute;
 
-            position: absolute;
+    font-size: 2.5rem;
 
-            font-size: 2.5rem;
+    transition:
+    left 1.5s ease,
+    bottom 1.5s ease;
 
-            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 3;
 
-            z-index: 3;
+    width: 65px;
 
-            width: 65px;
+    text-align: center;
 
-            text-align: center;
+    pointer-events: none;
 
-            pointer-events: none;
-
-        }
+}
 
 
         #badge-popup{
@@ -2154,14 +2154,25 @@ ${earned ? 'none' : 'grayscale(100%)'};
     );
 
     renderBadgeWall();
+document.getElementById(
+'challenge-screen'
+).style.display='none';
                         
     showBadgePopup(
-        badgeData[currentLevel-1]
-    );
+    badgeData[currentLevel-1]
+);
 
-    currentLevel++;
+currentLevel++;
+
+setTimeout(() => {
+
+    document.getElementById(
+        'challenge-screen'
+    ).style.display='none';
 
     showMap();
+
+},1000);
 
 } else {
 
@@ -2499,7 +2510,7 @@ document.getElementById(
 'badge-popup'
 ).style.display='none';
 
-},2000);
+},1000);
 
 }
 
