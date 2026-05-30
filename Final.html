@@ -2075,11 +2075,9 @@ ${earned ? 'none' : 'grayscale(100%)'};
 
         if(targetNode) {
 
-            avatar.style.left =
-targetNode.style.left;
+          avatar.style.left = `calc(${targetNode.style.left} + 30px)`;
 
-avatar.style.bottom =
-`calc(${targetNode.style.bottom} + 75px)`;
+avatar.style.bottom = `calc(${targetNode.style.bottom} + 55px)`;
 
         }
 
