@@ -1478,6 +1478,17 @@ scale(1);
 
         <button onclick="goToCharacterSelect()" class="vote-btn">START GAME</button>
 
+    <div id="home-badges"
+style="
+margin-top:30px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+">
+
+</div>
+
     </div>
 
     <div id="character-select" class="quiz-card" style="display:none; text-align: center;">
@@ -1499,6 +1510,16 @@ scale(1);
     </div>
 
     <div id="map-screen" style="display:none; max-width: 800px; margin: 0 auto;">
+<div
+onclick="goBackHome()"
+style="
+cursor:pointer;
+margin-bottom:15px;
+font-weight:bold;
+color:#2c7da0;
+">
+← Go Back
+</div>    
 
         <div class="level-map">
 
@@ -1896,6 +1917,41 @@ const badgeData=[
 "🌱 Sustainability Champion"
 ];
 
+function renderBadgeWall(){
+
+const container=
+document.getElementById(
+'home-badges'
+);
+
+container.innerHTML='';
+
+badgeData.forEach(badge=>{
+
+const earned=
+earnedBadges.includes(badge);
+
+container.innerHTML+=`
+<div style="
+padding:10px 14px;
+border-radius:20px;
+font-size:.95rem;
+font-weight:bold;
+background:
+${earned ? '#f0f9f0' : '#eeeeee'};
+color:
+${earned ? '#333' : '#999'};
+filter:
+${earned ? 'none' : 'grayscale(100%)'};
+">
+🏅 ${badge}
+</div>
+`;
+
+});
+
+}
+
     let currentLevel = 1;      
 
     let currentLevelQ = 0;     
@@ -2097,6 +2153,8 @@ const badgeData=[
         badgeData[currentLevel-1]
     );
 
+    renderBadgeWall();
+                        
     showBadgePopup(
         badgeData[currentLevel-1]
     );
@@ -2415,10 +2473,15 @@ renderFeedback();
 
 }
 
-    window.onload=async function(){
+window.onload=async function(){
+
 initVotes();
+
 await renderFeedback();
-    }
+
+renderBadgeWall();
+
+}
 
     function showBadgePopup(badge){
 
@@ -2437,6 +2500,20 @@ document.getElementById(
 ).style.display='none';
 
 },2000);
+
+}
+
+window.goBackHome=function(){
+
+document.getElementById(
+'map-screen'
+).style.display='none';
+
+document.getElementById(
+'quiz-start-screen'
+).style.display='block';
+
+renderBadgeWall();
 
 }
 </script>
